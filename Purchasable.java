@@ -1,8 +1,8 @@
 package sengGame;
 
 public class Purchasable {
-	private int buyPrice;
-	private int sellPrice;
+	private double buyPrice;
+	private double sellPrice;
 	private String description;
 	
 	// Constructor methods
@@ -12,18 +12,18 @@ public class Purchasable {
 		description = "Default Item";
 	}
 	
-	public Purchasable(int buy, int sell, String describe) {
+	public Purchasable(double buy, double sell, String describe) {
 		buyPrice = buy;
 		sellPrice = sell;
 		description = describe;
 	}
 	
 	//  getters
-	public int getBuyPrice() {
+	public double getBuyPrice() {
 		return buyPrice;
 	}
 	
-	public int getSellPrice() {
+	public double getSellPrice() {
 		return sellPrice;
 	}
 	
