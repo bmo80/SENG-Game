@@ -14,10 +14,11 @@ public class MainGame {
 	private int money;
 	
 	// Constructor method, mainly for testing
-	public MainGame(String name, int duration, ArrayList<Athlete> team, int chosenDifficulty) {
+	public MainGame(String name, int duration, int chosenDifficulty) {
 		teamName = name;
 		seasonDuration = duration;
-		teamList = team;
+		//Testing team
+		teamList = setTeam();
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
@@ -35,7 +36,10 @@ public class MainGame {
 		seasonDuration = input.nextInt();  
 		System.out.print("Set difficulty (1-3): ");  
 		difficulty = input.nextInt();
-		input.close();
+
+		//Breaks Other inputs if closed early
+//		input.close();
+		
 		// Currently TeamList is set as a static team
 		teamList = setTeam();
 		currentWeek = 1;
@@ -88,7 +92,7 @@ public class MainGame {
 		return inventory;
 	}
 	
-	// setter methods - NOT ALL
+	// setter methods - NOT ALL -- Could add text confirmation
 	public void changeWeek() {
 		currentWeek ++;
 	}
@@ -176,7 +180,7 @@ public class MainGame {
 	//Prints Athletes in collection by name
 	public void printTeam(ArrayList<Athlete> collection) {
 		for(Athlete athlete:collection) {
-			System.out.println(athlete.getName());
+			System.out.println(athlete.shortDescription());
 		}
 	}
 	
@@ -187,7 +191,16 @@ public class MainGame {
 		}
 	}
 	
-	//Broken as of 6:30 12/4 - No line found issue (nextLine isnt working :( )
+	//Method to check String input - designed for main game inputs -- IN PROGRESS
+//	public void checkInput(String message) {
+//		Scanner input = new Scanner(System.in);
+//		System.out.print(message);
+//		String choice = input.nextLine();
+//		
+//	}
+	
+	
+	// could make helper function: returnInput: does all input checks and returns value
 	// method for being 'at the club' - can swap out athletes and use items
 	public void atClub() {
 		String choice = "";
@@ -195,35 +208,35 @@ public class MainGame {
 		while(!(choice.toUpperCase() == "E")) {
 			
 			System.out.print("Bench/Unbench Athletes? ('B'/'U' or 'E' to exit): ");  
-			//BROKEN UGHHHHH
-			choice = input.nextLine();
+			//fixed by not closing in setup
+			choice = input.nextLine(); 
 			
-			if(choice.toUpperCase() == "B") {
-				System.out.print("\nCurrent Active Team...");
+			if(choice.toUpperCase().equals("B")) {
+				System.out.print("\nCurrent Active Team...\n");
 				printTeam(teamList);
 				System.out.print("Who to bench (enter name or 'E' to exit): ");
 				// Need to ensure unique names
 				String athleteChoice = input.nextLine();
-				if(athleteChoice.toUpperCase() == "E") {
+				if(athleteChoice.toUpperCase().equals("E")) {
 					choice = "E";
 					break;
 				}
 				unbenchAthlete(athleteFromString(athleteChoice));
 			}
 			
-			else if(choice.toUpperCase() == "U") {
-				System.out.print("\nCurrent Bench...");
+			else if(choice.toUpperCase().equals("U")) {
+				System.out.print("\nCurrent Bench...\n");
 				printTeam(benchList);
 				System.out.print("Who to unbench (enter name or 'E' to exit): ");
 				String athleteChoice = input.nextLine();
-				if(athleteChoice.toUpperCase() == "E") {
+				if(athleteChoice.toUpperCase().equals("E")) {
 					choice = "E";
 					break;
 				}
 				benchAthlete(athleteFromString(athleteChoice));
 			}
 			
-			else if(choice.toUpperCase() == "E") {
+			else if(choice.toUpperCase().equals("E")) {
 				break;
 			}		
 			
@@ -231,11 +244,14 @@ public class MainGame {
 			for(Item item:inventory) {
 				System.out.println(item);
 			}
-			System.out.print("Which item to use (enter name or 'E' to exit): ");  
+			System.out.print("Which item to use (enter name or 'E' to exit): ");
 			String itemChoice = input.nextLine();
+			if(itemChoice.toUpperCase().equals("E")) {
+				break;
+			}
 			System.out.print("Who to use on (enter name or 'E' to exit): ");
 			String athleteChoice = input.nextLine();
-			if(athleteChoice.toUpperCase() == "E" || itemChoice.toUpperCase() == "E") {
+			if(athleteChoice.toUpperCase().equals("E")) {
 				choice = "E";
 				break;
 			}
@@ -245,16 +261,26 @@ public class MainGame {
 		input.close();
 	}
 	
+	
+	//method that runs main game inputs
+	public void playGame() {
+		Scanner input = new Scanner(System.in);
+	}
+	
+	
+	
+	
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame();
+		MainGame run = new MainGame("Test Team",10,3);
 		System.out.println(run);
 		run.printInventory();
 		run.printTeam(run.getTeamList());
 		run.printTeam(run.getBenchList());
-		//Fix next line
-		run.atClub();
+		while(run.seasonDuration - run.currentWeek >= 0) {
+			run.playGame();
+		}
 
 	}
 	
