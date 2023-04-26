@@ -11,7 +11,8 @@ public class MainGame {
 	private int currentWeek;
 	private ArrayList<Athlete> benchList;
 	private ArrayList<Item> inventory;
-	private int money;
+	private double money;
+	private int totalPoints;
 	
 	// Constructor method, mainly for testing
 	public MainGame(String name, int duration, int chosenDifficulty) {
@@ -23,7 +24,7 @@ public class MainGame {
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		inventory = new ArrayList<Item>();
-		money = 0;
+		money = 0.00;
 	}
 	
 	// Setup Constructor method
@@ -45,7 +46,7 @@ public class MainGame {
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		inventory = new ArrayList<Item>();
-		money = 0;
+		money = 0.00;
 	}
 	
 	//Override toString method
@@ -64,10 +65,14 @@ public class MainGame {
 		Athlete B = new Athlete("defend1",2,6,"D");
 		Athlete C = new Athlete("attack2",3,1,"A");
 		Athlete D = new Athlete("defend2",1,4,"D");
+		Athlete E = new Athlete("attack3",10,0,"A");
+		Athlete F = new Athlete("defend3",1,9,"D");
 		team.add(A);
 		team.add(B);
 		team.add(C);
 		team.add(D);
+		team.add(E);
+		team.add(F);
 		return team;
 	}
 	
@@ -84,7 +89,7 @@ public class MainGame {
 		return difficulty;
 	}
 	
-	public int getMoney() {
+	public double getMoney() {
 		return money;
 	}
 	
@@ -93,24 +98,29 @@ public class MainGame {
 	}
 	
 	// setter methods - NOT ALL -- Could add text confirmation
+	//not necessary??
 	public void changeWeek() {
 		currentWeek ++;
 	}
 	
 	public void addAthlete(Athlete chosenAthlete) {
-		if(teamList.size() >= 8){
+		if(teamList.size() >= 6){
 			// Call Exception - team full - overflow to bench?
+			benchAthlete(chosenAthlete);
 		}else {
 			teamList.add(chosenAthlete);
 		}
 	}
 	
 	public void benchAthlete(Athlete chosenAthlete) {
-		if(benchList.size() >= 4){
+		if(benchList.size() >= 5){
 			// Call exception - bench full
-		}else if(!teamList.contains(chosenAthlete)) {
-			// Call exception - athlete not in team
-		}else{
+		}
+		// not strictly necessary I believe
+//		else if(!teamList.contains(chosenAthlete)) {
+//			// Call exception - athlete not in team
+//		}
+		else{
 			benchList.add(chosenAthlete);
 			// removes first instance - ENSURE unique Athletes!
 			teamList.remove(chosenAthlete);
@@ -143,6 +153,38 @@ public class MainGame {
 		}
 	}
 	
+	public void buyItem(Item item) {
+		if(money-item.getBuyPrice()>0) {
+			money = money - item.getBuyPrice();
+			inventory.add(item);
+		}
+	}
+	
+	public void buyAthlete(Athlete athlete) {
+		if(money-athlete.getBuyPrice()>0) {
+			money = money - athlete.getBuyPrice();
+			addAthlete(athlete);
+			// check for space before removing money??
+		}
+	}
+	
+	
+	//Print methods
+	//Prints Athletes in collection by name
+	public void printTeam(ArrayList<Athlete> collection) {
+		for(Athlete athlete:collection) {
+			System.out.println(athlete.shortDescription());
+		}
+	}
+	
+	//Prints inventory
+	public void printInventory() {
+		for(Item ite:inventory) {
+			System.out.println(ite);
+		}
+	}
+	
+	
 	
 	// Special methods
 	public Item itemFromString(String stringItem) {
@@ -161,49 +203,60 @@ public class MainGame {
 	public Athlete athleteFromString(String stringAthlete) {
 		for(Athlete athlete:teamList) {
 			//unique names!!! 
-			if(athlete.getName() == stringAthlete) {
+			if(athlete.getName().equals(stringAthlete)) {
 				return athlete;
 			}
 		}
 		//If not on team, checks bench too
 		for(Athlete athlete:benchList) {
-			if(athlete.getName() == stringAthlete) {
+			if(athlete.getName().equals(stringAthlete)) {
 				return athlete;
 			}
 		}
 		//if not found calls exception - Athlete not on team or on bench
-		//returns default athlete for now
+		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
 		Athlete ath = new Athlete();
 		return ath;
 	}
 	
-	//Prints Athletes in collection by name
-	public void printTeam(ArrayList<Athlete> collection) {
-		for(Athlete athlete:collection) {
-			System.out.println(athlete.shortDescription());
+	public void resetStamina() {
+		for(Athlete athlete:teamList) {
+			athlete.changeStamina(10);
+		}
+		for(Athlete athlete:teamList) {
+			athlete.changeStamina(10);
 		}
 	}
 	
-	//Prints inventory
-	public void printInventory() {
-		for(Item ite:inventory) {
-			System.out.println(ite);
-		}
+	public void trainAthlete() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Who will you train?");
+		String choice = input.nextLine();
+		athleteFromString(choice).changeDefence(1);
+		athleteFromString(choice).changeOffence(1);
 	}
-	
+
 	//Method to check String input - designed for main game inputs -- IN PROGRESS
 //	public void checkInput(String message) {
 //		Scanner input = new Scanner(System.in);
 //		System.out.print(message);
 //		String choice = input.nextLine();
-//		
+//		while(!(choice in options)) {
+//			try again
+//		}
+//		return choice
+//		//input.close();
 //	}
 	
 	
 	// could make helper function: returnInput: does all input checks and returns value
 	// method for being 'at the club' - can swap out athletes and use items
-	public void atClub() {
+	public void gotoClub() {
 		String choice = "";
+		System.out.println(teamName+"'s active team:");
+		printTeam(teamList);
+		System.out.println("\n"+teamName+"'s Bench team:");
+		printTeam(benchList);
 		Scanner input = new Scanner(System.in);
 		while(!(choice.toUpperCase() == "E")) {
 			
@@ -221,7 +274,7 @@ public class MainGame {
 					choice = "E";
 					break;
 				}
-				unbenchAthlete(athleteFromString(athleteChoice));
+				benchAthlete(athleteFromString(athleteChoice));
 			}
 			
 			else if(choice.toUpperCase().equals("U")) {
@@ -233,14 +286,15 @@ public class MainGame {
 					choice = "E";
 					break;
 				}
-				benchAthlete(athleteFromString(athleteChoice));
+				unbenchAthlete(athleteFromString(athleteChoice));
 			}
 			
 			else if(choice.toUpperCase().equals("E")) {
 				break;
 			}		
 			
-			System.out.print("Current Inventory...");
+			System.out.print("Current Inventory:");
+			printInventory();
 			for(Item item:inventory) {
 				System.out.println(item);
 			}
@@ -258,13 +312,67 @@ public class MainGame {
 			useItem(itemFromString(itemChoice),athleteFromString(athleteChoice));
 		
 		}
-		input.close();
+//		input.close();
 	}
 	
+	public void gotoStadium() {
+		//Fill in random generation of teams (6 opponents: 3 def, 3 atk)
+		// For testing purposes im assuming they will be in a 2D list.
+		//For testing purposes lets say there are 3 teams to choose from
+//		Scanner input = new Scanner(System.in);
+//		int choice = input.nextInt();
+		//selects the opposing team based on user input
+//		playMatch(opponentsList[choice-1]);
+	}
 	
+	public void gotoMarket() {
+		//Fill in randomly generated items and players (Maybe 2 items and 4 players?)
+		// For testing purposes im assuming the all items will be in one list
+//		Scanner input = new Scanner(System.in);
+//		int choice = input.nextInt();
+//		//determines whether purchase is item or athlete
+//		// for testing purposes im assuming the first 2 are items
+//		if(choice>2) {
+//			buyAthlete(itemList[choice-1];);
+//		}else {
+//			buyItem(itemList[choice-1];);
+//		}
+	}
+	
+	public void takeBye() {
+		currentWeek ++;
+		resetStamina();
+//		 train athlete - if chosen
+		trainAthlete();
+		// try for random events
+//		runRandomEvents();
+		//resetMarket();
+		//resetStadium();
+	}
+	
+	public void playMatch() {
+		
+		
+		currentWeek ++;
+	}
 	//method that runs main game inputs
 	public void playGame() {
+		System.out.println(String.format("Money: $%s"
+				+ "\nWeek: %s", money,currentWeek));
 		Scanner input = new Scanner(System.in);
+		System.out.print("Where to go? Club('C'), Market('M'), Stadium('S'), Bye('B')");
+		String choice = input.nextLine();
+		if(choice.toUpperCase().equals("C")) {
+			gotoClub();
+		}else if(choice.toUpperCase().equals("S")) {
+			gotoStadium();
+		}else if(choice.toUpperCase().equals("M")) {
+			gotoMarket();
+		}else if(choice.toUpperCase().equals("B")) {
+			takeBye();
+		}else {
+			System.out.println("Invalid input");
+		}
 	}
 	
 	
@@ -274,13 +382,17 @@ public class MainGame {
 	public static void main(String[] args) {
 		//Implement tests
 		MainGame run = new MainGame("Test Team",10,3);
-		System.out.println(run);
 		run.printInventory();
-		run.printTeam(run.getTeamList());
-		run.printTeam(run.getBenchList());
+		System.out.println(run.getTeamList().get(0).getName()=="attack1");
+//		run.printTeam(run.getTeamList());
+//		run.printTeam(run.getBenchList());
 		while(run.seasonDuration - run.currentWeek >= 0) {
+			System.out.println(run);
 			run.playGame();
 		}
+		System.out.println(String.format("The %s team finished the %s week"
+				+ " season with $%s and %s points"
+				+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
 
 	}
 	
