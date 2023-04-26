@@ -1,6 +1,6 @@
 package sengGame;
 
-public class Item {
+public class Item extends Purchasable{
 	private String name;
 	//4 types: Stamina,Offence,Defence,Health - use ENUM???
 	private String type;
@@ -8,12 +8,15 @@ public class Item {
 	
 	//Constructors
 	public Item() {
+		super();
 		name = "Default item";
 		type = "Stamina";
 		effect = 10;
 	}
 	
-	public Item(String defName, String defType, int defEffect) {
+	public Item(String defName, String defType, int defEffect, double cost) {
+		//For now the sell price is 80% of buy price
+		super(cost,0.8*cost,String.format("%s is a %s item", defName,defType));
 		name = defName;
 		type = defType;
 		effect = defEffect;
