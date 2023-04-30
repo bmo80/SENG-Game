@@ -109,27 +109,11 @@ public class Athlete extends Purchasable {
 	}
 	
 	public void changeOffence(int change) {
-		if(offence + change > 10) {
-			offence = 10;
-			//Send message?? - 'Offence cannot exceed 10'
-		}else if(offence + change < 0) {
-			offence = 0;
-			//Send message?? - 'Offence cannot be negative'
-		}else {
-			offence = offence + change;
-		}	
+		offence = change;	
 	}
 	
 	public void changeDefence(int change) {
-		if(defence + change > 10) {
-			defence = 10;
-			//Send message?? - 'Defence cannot exceed 10'
-		}else if(defence + change < 0) {
-			defence = 0;
-			//Send message?? - 'Defence cannot be negative'
-		}else {
-			defence = defence + change;
-		}	
+		defence = change;
 	}
 	
 	public void changeHealth(int change) {
@@ -165,10 +149,9 @@ public class Athlete extends Purchasable {
 		isInjured = injury;
 	}
 	
-	
-	//Main method for testing
-	public static void main(String[] args) {
-		Athlete ath = new Athlete();
-		System.out.println(ath);
+	public void changeName(String newName) {
+		name = newName;
 	}
+	
+	
 }

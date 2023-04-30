@@ -48,6 +48,7 @@ public class MainGame {
 		benchList = new ArrayList<Athlete>();
 		inventory = new ArrayList<Item>();
 		money = 0.00;
+		input.close();
 	}
 	
 	//Override toString method
@@ -249,6 +250,7 @@ public class MainGame {
 		String choice = input.nextLine();
 		athleteFromString(choice).changeDefence(2);
 		athleteFromString(choice).changeOffence(2);
+		input.close();
 	}
 	
 	
@@ -354,7 +356,7 @@ public class MainGame {
 			useItem(itemFromString(itemChoice),athleteFromString(athleteChoice));
 		
 		}
-//		input.close();
+		input.close();
 	}
 	
 	public void gotoStadium() {
@@ -382,17 +384,11 @@ public class MainGame {
 	
 	
 	public void gotoMarket() {
-		//Fill in randomly generated items and players (Maybe 2 items and 4 players?)
-		// For testing purposes im assuming the all items will be in one list
-//		Scanner input = new Scanner(System.in);
-//		int choice = input.nextInt();
-//		//determines whether purchase is item or athlete
-//		// for testing purposes im assuming the first 2 are items
-//		if(choice>2) {
-//			buyAthlete(itemList[choice-1];);
-//		}else {
-//			buyItem(itemList[choice-1];);
-//		}
+		System.out.println("Welcome to the Market!\n");
+		MarketPlace market = new MarketPlace();
+		for(Athlete player: market.players) {
+			System.out.println(player.shortDescription());
+		}
 	}
 	
 	public void takeBye() {
@@ -480,6 +476,7 @@ public class MainGame {
 		}else {
 			System.out.println("Invalid input");
 		}
+		input.close();
 	}
 	
 	
@@ -488,17 +485,19 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame("Test Team",5,3);
+		//MainGame run = new MainGame("Test Team",5,3);
 		
-		run.printInventory();
+		//run.printInventory();
 		
-		while(run.seasonDuration - run.currentWeek >= 0) {
-			System.out.println(run);
-			run.playGame();
-		}
-		System.out.println(String.format("The %s team finished the %s week"
-				+ " season with $%s and %s points"
-				+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
+		//while(run.seasonDuration - run.currentWeek >= 0) {
+			//System.out.println(run);
+			//run.playGame();
+		//}
+		//System.out.println(String.format("The %s team finished the %s week"
+				//+ " season with $%s and %s points"
+				//+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
+		MainGame game = new MainGame();
+		game.gotoMarket();
 
 	}
 	
