@@ -2,8 +2,9 @@ package sengGame;
 
 public class Item extends Purchasable{
 	private String name;
-	//4 types: Stamina,Offence,Defence,Health - use ENUM???
-	//STA,ATK,DEF,HP
+	//3 MAIN types: Stamina,Offence,Defence
+	//STA,ATK,DEF
+	// Special items ATK up but DEF down or other way around.  ALL stats up?
 	private String type;
 	private int effect;
 	
@@ -15,9 +16,9 @@ public class Item extends Purchasable{
 		effect = 10;
 	}
 	
-	public Item(String defName, String defType, int defEffect, double cost) {
-		//For now the sell price is 80% of buy price
-		super(cost,0.8*cost,String.format("%s is a %s item", defName,defType));
+	public Item(String defName, String defType, int defEffect, int cost) {
+		//For now the sell price is the buy price - 10,000 * difficulty
+		super(cost*10,cost*8,String.format("%s is a %s item", defName,defType));
 		name = defName;
 		type = defType;
 		effect = defEffect;

@@ -2,12 +2,9 @@ package sengGame;
 
 public class Athlete extends Purchasable {
 	private String name;
-	// decide on max values 
 	private int stamina;
 	private int offence;
 	private int defence;
-	private int health;
-	// could change to int
 	private String position;
 	private boolean isInjured;
 	private int previousInjuries;
@@ -15,11 +12,11 @@ public class Athlete extends Purchasable {
 	// Constructors
 	public Athlete(){
 		super();
+		//Reserved name
 		name = "Default Athlete";
 		stamina = 10; 
 		offence = 5;
 		defence = 5;
-		health = 100;
 		position = "D";
 		isInjured = false;
 		previousInjuries = 0;		
@@ -32,7 +29,6 @@ public class Athlete extends Purchasable {
 		// Put checks in place
 		offence = setOffence;
 		defence = setDefence;
-		health = 100;
 		// put check in place
 		position = setPosition;
 		isInjured = false;
@@ -43,14 +39,14 @@ public class Athlete extends Purchasable {
 	@Override
 	public String toString() {
 		return String.format("%s has an Offence stat of %s, a Defence stat of %s"
-				+ " and is in position %s.\nThey have %s stamina, %s health, %s"
+				+ " and is in position %s.\nThey have %s stamina, %s"
 				+ " previous injuries and are currently" + (isInjured?"":" not") + " injured"
-				+ "",name, offence, defence, position, stamina, health, previousInjuries);
+				+ "",name, offence, defence, position, stamina, previousInjuries);
 	}
 	
 	public String shortDescription() {
-		return String.format("%s: ATK(%s) DEF(%s) POS(%s) STA(%s) HP(%s) "+
-	(isInjured?"Injured":""),name, offence, defence, position, stamina, health);
+		return String.format("%s: ATK(%s) DEF(%s) POS(%s) STA(%s)) "+
+	(isInjured?"Injured":""),name, offence, defence, position, stamina);
 	}
 	
 	// getter methods
@@ -68,10 +64,6 @@ public class Athlete extends Purchasable {
 	
 	public int getDefence() {
 		return defence;
-	}
-	
-	public int getHealth() {
-		return health;
 	}
 	
 	public String getPosition() {
@@ -116,17 +108,6 @@ public class Athlete extends Purchasable {
 		defence = change;
 	}
 	
-	public void changeHealth(int change) {
-		if(health + change > 100) {
-			health = 100;
-			//Send message?? - 'Health cannot exceed 100'
-		}else if(health + change < 0) {
-			health = 0;
-			//Send message?? - 'Health cannot be negative'
-		}else {
-			health = health + change;
-		}	
-	}
 	
 	public void changePosition(String newPosition) {
 		//Could add more dynamic options

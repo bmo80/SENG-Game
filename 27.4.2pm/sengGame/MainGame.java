@@ -11,7 +11,7 @@ public class MainGame {
 	private int currentWeek;
 	private ArrayList<Athlete> benchList;
 	private ArrayList<Item> inventory;
-	private double money;
+	private int money;
 	private int totalPoints;
 	
 	// Constructor method, mainly for testing
@@ -47,7 +47,7 @@ public class MainGame {
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		inventory = new ArrayList<Item>();
-		money = 0.00;
+		money = 0;
 		input.close();
 	}
 	
@@ -87,6 +87,10 @@ public class MainGame {
 		return teamList;
 	}
 	
+	public String getTeamName() {
+		return teamName;
+	}
+	
 	public ArrayList<Athlete> getBenchList() {
 		return benchList;
 	}
@@ -95,7 +99,7 @@ public class MainGame {
 		return difficulty;
 	}
 	
-	public double getMoney() {
+	public int getMoney() {
 		return money;
 	}
 	
@@ -107,6 +111,16 @@ public class MainGame {
 	//not necessary??
 	public void changeWeek() {
 		currentWeek ++;
+		//Generate NEW market and stadium
+		//Also run the Random event method which calls popup window if event happens
+	}
+	
+	public void changeMoney(int amount) {
+		money += amount;
+	}
+	
+	public void changePoints(int amount) {
+		totalPoints += amount;
 	}
 	
 	public void addAthlete(Athlete chosenAthlete) {
@@ -126,7 +140,7 @@ public class MainGame {
 //		else if(!teamList.contains(chosenAthlete)) {
 //			// Call exception - athlete not in team
 //		}
-		else{
+		else if(chosenAthlete.getName().equals("Default Athlete")){
 			benchList.add(chosenAthlete);
 			// removes first instance - ENSURE unique Athletes!
 			teamList.remove(chosenAthlete);
@@ -154,9 +168,6 @@ public class MainGame {
 		if(chosenItem.getType() == "DEF") {
 			chosenAthlete.changeDefence(chosenItem.getEffect());
 		}
-		if(chosenItem.getType() == "HP") {
-			chosenAthlete.changeHealth(chosenItem.getEffect());
-		}
 		inventory.remove(chosenItem);
 	}
 	
@@ -175,7 +186,7 @@ public class MainGame {
 		}
 	}
 	
-	public Boolean allInjured() {
+	public Boolean checkallInjured() {
 		for(Athlete athlete: teamList) {
 			if(!athlete.getIsInjured()) {
 				return false;
@@ -248,9 +259,15 @@ public class MainGame {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Who will you train?");
 		String choice = input.nextLine();
-		athleteFromString(choice).changeDefence(2);
-		athleteFromString(choice).changeOffence(2);
-		input.close();
+		//Choose one OR the other - Hardest diff Currently has no change
+		Athlete athlete = athleteFromString(choice);
+		if(athlete.getPosition().equals('A')){
+			athlete.changeOffence(3-difficulty);
+		} else {
+			athlete.changeDefence(3-difficulty);
+		}
+//		never close input --> breaks next input
+//		input.close();
 	}
 	
 	
@@ -348,6 +365,10 @@ public class MainGame {
 				break;
 			}
 			System.out.print("Who to use on (enter name or 'E' to exit): ");
+			System.out.println("\n"+teamName+"'s active team:");
+			printTeam(teamList);
+			System.out.println("\n"+teamName+"'s Bench team:");
+			printTeam(benchList);
 			String athleteChoice = input.nextLine();
 			if(athleteChoice.toUpperCase().equals("E")) {
 				choice = "E";
@@ -443,12 +464,12 @@ public class MainGame {
 		}else if(playerScore>opsScore){
 			//Send message - You won!
 			//Arbitrary points and money atm
-			totalPoints = totalPoints + 2;
-			money = money + 2500;
+			totalPoints += 1 + difficulty;
+			money = money + 2500*(3-difficulty);
 		}else {
 			//Tie condition - send message
 			totalPoints ++;
-			money = money + 1000;
+			money = money + 1000*(3-difficulty);
 		}
 		
 		
@@ -465,6 +486,7 @@ public class MainGame {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Where to go? Club('C'), Market('M'), Stadium('S'), Bye('B')");
 		String choice = input.nextLine();
+		// All should run windows
 		if(choice.toUpperCase().equals("C")) {
 			gotoClub();
 		}else if(choice.toUpperCase().equals("S")) {
@@ -474,9 +496,10 @@ public class MainGame {
 		}else if(choice.toUpperCase().equals("B")) {
 			takeBye();
 		}else {
+			//Make an error window pop up
 			System.out.println("Invalid input");
 		}
-		input.close();
+//		input.close();
 	}
 	
 	
@@ -485,19 +508,19 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		//MainGame run = new MainGame("Test Team",5,3);
+		MainGame run = new MainGame("Test Team",5,3);
 		
 		//run.printInventory();
-		
-		//while(run.seasonDuration - run.currentWeek >= 0) {
-			//System.out.println(run);
-			//run.playGame();
-		//}
-		//System.out.println(String.format("The %s team finished the %s week"
-				//+ " season with $%s and %s points"
-				//+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
-		MainGame game = new MainGame();
-		game.gotoMarket();
+		//Setup market and Stadium
+		while(run.seasonDuration - run.currentWeek >= 0) {
+			System.out.println(run);
+			run.playGame();
+		}
+		System.out.println(String.format("The %s team finished the %s week"
+				+ " season with $%s and %s points"
+				+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
+//		MainGame game = new MainGame();
+//		game.gotoMarket();
 
 	}
 	
