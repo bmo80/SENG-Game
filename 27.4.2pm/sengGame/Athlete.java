@@ -44,7 +44,7 @@ public class Athlete extends Purchasable {
 				+ "",name, offence, defence, position, stamina, previousInjuries);
 	}
 	
-	public String shortDescription() {
+	public String getShortDescription() {
 		return String.format("%s: ATK(%s) DEF(%s) POS(%s) STA(%s)) "+
 	(isInjured?"Injured":""),name, offence, defence, position, stamina);
 	}
@@ -101,11 +101,11 @@ public class Athlete extends Purchasable {
 	}
 	
 	public void changeOffence(int change) {
-		offence = change;	
+		offence += change;	
 	}
 	
 	public void changeDefence(int change) {
-		defence = change;
+		defence += change;
 	}
 	
 	

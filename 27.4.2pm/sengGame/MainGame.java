@@ -6,7 +6,7 @@ public class MainGame {
 	private String teamName;
 	private int seasonDuration;
 	private ArrayList<Athlete> teamList;
-	//Out of 3 for now
+	//0,1 or 2
 	private int difficulty;
 	private int currentWeek;
 	private ArrayList<Athlete> benchList;
@@ -20,7 +20,7 @@ public class MainGame {
 		seasonDuration = duration;
 		//Testing team
 		teamList = setTeam();
-		difficulty = chosenDifficulty;
+		difficulty = chosenDifficulty -1;
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		//test inventory
@@ -30,14 +30,15 @@ public class MainGame {
 	
 	// Setup Constructor method
 	public MainGame() {
+		//Put checks in place for all
 		Scanner input = new Scanner(System.in);
 		System.out.print("Name your team (3-15 chars): ");  
 		// might break?
 		teamName = input.nextLine();  
 		System.out.print("How long is the season (5-15 weeks): ");  
 		seasonDuration = input.nextInt();  
-		System.out.print("Set difficulty (1-3): ");  
-		difficulty = input.nextInt();
+		System.out.print("Set difficulty (1-3): ");
+		difficulty = input.nextInt()-1;
 
 		//Breaks Other inputs if closed early
 //		input.close();
@@ -186,14 +187,7 @@ public class MainGame {
 		}
 	}
 	
-	public Boolean checkallInjured() {
-		for(Athlete athlete: teamList) {
-			if(!athlete.getIsInjured()) {
-				return false;
-			}
-		}
-		return true;
-	}
+
 	
 	
 	//Print methods
@@ -261,7 +255,7 @@ public class MainGame {
 		String choice = input.nextLine();
 		//Choose one OR the other - Hardest diff Currently has no change
 		Athlete athlete = athleteFromString(choice);
-		if(athlete.getPosition().equals('A')){
+		if(athlete.getPosition().equals("A")){
 			athlete.changeOffence(3-difficulty);
 		} else {
 			athlete.changeDefence(3-difficulty);
@@ -271,30 +265,6 @@ public class MainGame {
 	}
 	
 	
-	
-	//VERY icky method - basically just a beta/skeleton version
-	public void matchSort(ArrayList<Athlete> teamToSort) {
-		//expects team with 6 members - 3 attack, 3 defense
-		ArrayList<Athlete> atkTeam = new ArrayList<Athlete>();
-		ArrayList<Athlete> defTeam = new ArrayList<Athlete>();
-		for(Athlete athlete: teamToSort) {
-			if(athlete.getPosition().equals("A")) {
-				if((atkTeam.size()>0)&&(athlete.getOffence()>atkTeam.get(atkTeam.size()-1).getOffence())){
-					atkTeam.add(0,athlete);
-				}else {
-					atkTeam.add(athlete);
-				}
-			}else if(athlete.getPosition().equals("D")) {
-				if((defTeam.size()>0)&&(athlete.getDefence()>defTeam.get(defTeam.size()-1).getDefence())){
-					defTeam.add(0,athlete);
-				}else {
-					defTeam.add(athlete);
-				}
-			}
-		}
-		atkTeam.addAll(defTeam);
-		teamToSort= atkTeam;
-	}
 	
 
 	//Method to check String input - designed for main game inputs -- IN PROGRESS
@@ -381,24 +351,28 @@ public class MainGame {
 	}
 	
 	public void gotoStadium() {
-		//Fill in random generation of teams (6 opponents: 3 def, 3 atk)
-		// For testing purposes im assuming they will be in a 2D list.
-		//For testing purposes lets say there are 3 teams to choose from
-//		Scanner input = new Scanner(System.in);
-//		int choice = input.nextInt();
-		//selects the opposing team based on user input
-		playMatch(makeOpponents());
+		//Fill in random generation of teams (6 opponent Athletes per team)
+		// They will be in a 2D list.
+		
+		//Match class should be working 
+		Match game = new Match(teamList,makeOpponents(), difficulty);
+		if(game.verify()) {
+			int[] list;
+			list = game.playMatch();
+			changeMoney(list[1]);
+			changePoints(list[0]);
+		}
 	}
 	
-	
+	//JUST FOR TESTING
 	public ArrayList<Athlete> makeOpponents(){
 		ArrayList<Athlete> team = new ArrayList<Athlete>();
-		team.add(new Athlete("attack1",8,2,"A"));
-		team.add(new Athlete("defend1",2,7,"D"));
-		team.add(new Athlete("attack2",1,1,"A"));
-		team.add(new Athlete("defend2",1,1,"D"));
-		team.add(new Athlete("attack3",1,0,"A"));
-		team.add(new Athlete("defend3",1,1,"D"));
+		team.add(new Athlete("OPPattack1",8,2,"A"));
+		team.add(new Athlete("OPPdefend1",2,7,"D"));
+		team.add(new Athlete("OPPattack2",1,1,"A"));
+		team.add(new Athlete("OPPdefend2",1,1,"D"));
+		team.add(new Athlete("OPPattack3",1,0,"A"));
+		team.add(new Athlete("OPPdefend3",1,1,"D"));
 		return team;
 	}
 	
@@ -408,12 +382,14 @@ public class MainGame {
 		System.out.println("Welcome to the Market!\n");
 		MarketPlace market = new MarketPlace();
 		for(Athlete player: market.players) {
-			System.out.println(player.shortDescription());
+			System.out.println(player.getShortDescription());
 		}
 	}
 	
+	
 	public void takeBye() {
 		currentWeek ++;
+		//does NOT reset injury/ health
 		resetStamina();
 //		 train athlete - if chosen
 		trainAthlete();
@@ -423,59 +399,6 @@ public class MainGame {
 		//resetStadium();
 	}
 	
-	
-	
-	
-	//Currently this works by playing each athlete against their corresponding opponent
-	//BUT!! this could be changed: the best athlete will continue to compete until 
-	//they lose all their stamina!
-	public void playMatch(ArrayList<Athlete> opponents) {
-		// ensure match can start - might move to Stadium method
-		if(teamList.size()<6) {
-			//Team too small error
-		}else if(allInjured()) {
-			//Team all injured error
-		}
-		// ensure teams are sorted before match begins
-		matchSort(opponents);
-		matchSort(teamList);
-		int opsScore = 0;
-		int playerScore = 0;
-		for(int i=0;i<6;i++) {
-			//if there is a tie the Player gets a point - could change with difficulty
-			if(teamList.get(i).getStamina()==0) {
-				//Default win as athlete is exhausted
-				opsScore ++ ;
-			}else if(opponents.get(i).getPositionStat()>teamList.get(i).getPositionStat()){
-				opsScore ++ ;
-				//Lost face off leads to losing stamina equal to difficulty
-				teamList.get(i).changeStamina(-difficulty);			
-			}else {
-				playerScore ++ ;
-			}
-			teamList.get(i).changeStamina(-1);
-		}
-		//if there is a tie the Player still gets money and points  - but less
-		//This is an implementation of criteria 3b.iv
-		if(allInjured()) {
-			//Send message - All athletes were injured so default loss 
-		}else if(opsScore>playerScore) {
-			//Send message - Opponents win
-		}else if(playerScore>opsScore){
-			//Send message - You won!
-			//Arbitrary points and money atm
-			totalPoints += 1 + difficulty;
-			money = money + 2500*(3-difficulty);
-		}else {
-			//Tie condition - send message
-			totalPoints ++;
-			money = money + 1000*(3-difficulty);
-		}
-		
-		
-		// change week after match???
-//		currentWeek ++;
-	}
 	
 	
 	
