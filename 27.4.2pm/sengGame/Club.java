@@ -2,7 +2,12 @@ package sengGame;
 
 import java.util.Scanner;
 
-public class Club extends MainGame {
+public class Club {
+	
+	private ArrayList<Athlete> benchList;
+	private ArrayList<Athlete> teamList;
+	private ArrayList<Item> Inventory;
+	
 	public void gotoClub() {
 		String choice = "";
 		System.out.println("\n"+getTeamName()+"'s active team:");
