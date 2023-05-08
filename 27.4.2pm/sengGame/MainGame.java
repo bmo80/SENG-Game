@@ -84,17 +84,20 @@ public class MainGame {
 	
 	
 	// getter methods - NOT ALL
-	public ArrayList<Athlete> getTeamList() {
-		return teamList;
-	}
+	
+	//Should be in Team manager class
+// 	public ArrayList<Athlete> getTeamList() {
+// 		return teamList;
+// 	}
 	
 	public String getTeamName() {
 		return teamName;
 	}
 	
-	public ArrayList<Athlete> getBenchList() {
-		return benchList;
-	}
+	// BenchList is now separte object - print via TeamManager class
+// 	public ArrayList<Athlete> getBenchList() {
+// 		return benchList;
+// 	}
 	
 	public int getDifficulty() {
 		return difficulty;
@@ -124,41 +127,44 @@ public class MainGame {
 		totalPoints += amount;
 	}
 	
-	public void addAthlete(Athlete chosenAthlete) {
-		if(teamList.size() >= 6){
-			// Call Exception - team full - overflow to bench?
-			benchAthlete(chosenAthlete);
-		}else {
-			teamList.add(chosenAthlete);
-		}
-	}
+	//Use via TeamManager class
+// 	public void addAthlete(Athlete chosenAthlete) {
+// 		if(teamList.size() >= 6){
+// 			// Call Exception - team full - overflow to bench?
+// 			benchAthlete(chosenAthlete);
+// 		}else {
+// 			teamList.add(chosenAthlete);
+// 		}
+// 	}
 	
-	public void benchAthlete(Athlete chosenAthlete) {
-		if(benchList.size() >= 5){
-			// Call exception - bench full
-		}
-		// not strictly necessary I believe
-//		else if(!teamList.contains(chosenAthlete)) {
-//			// Call exception - athlete not in team
-//		}
-		else if(chosenAthlete.getName().equals("Default Athlete")){
-			benchList.add(chosenAthlete);
-			// removes first instance - ENSURE unique Athletes!
-			teamList.remove(chosenAthlete);
-		}
-	}
+// 	public void benchAthlete(Athlete chosenAthlete) {
+// 		if(benchList.size() >= 5){
+// 			// Call exception - bench full
+// 		}
+// 		// not strictly necessary I believe
+// //		else if(!teamList.contains(chosenAthlete)) {
+// //			// Call exception - athlete not in team
+// //		}
+// 		else if(chosenAthlete.getName().equals("Default Athlete")){
+// 			benchList.add(chosenAthlete);
+// 			// removes first instance - ENSURE unique Athletes!
+// 			teamList.remove(chosenAthlete);
+// 		}
+// 	}
 	
-	public void unbenchAthlete(Athlete chosenAthlete) {
-		if(!benchList.contains(chosenAthlete)) {
-			// Call exception - Athlete not on bench
-		}else {
-			// removes first instance - ENSURE unique Athletes!
-			benchList.remove(chosenAthlete);
-			// Could call team full exception...
-			addAthlete(chosenAthlete);
-		}
-	}
+// 	public void unbenchAthlete(Athlete chosenAthlete) {
+// 		if(!benchList.contains(chosenAthlete)) {
+// 			// Call exception - Athlete not on bench
+// 		}else {
+// 			// removes first instance - ENSURE unique Athletes!
+// 			benchList.remove(chosenAthlete);
+// 			// Could call team full exception...
+// 			addAthlete(chosenAthlete);
+// 		}
+// 	}
 	
+	
+	//MarketPlace functions
 	public void useItem(Item chosenItem,Athlete chosenAthlete) {
 		if(chosenItem.getType() == "STA") {
 			chosenAthlete.changeStamina(chosenItem.getEffect());
@@ -191,12 +197,7 @@ public class MainGame {
 	
 	
 	//Print methods
-	//Prints Athletes in collection by name
-	public void printTeam(ArrayList<Athlete> collection) {
-		for(Athlete athlete:collection) {
-			System.out.println(athlete.shortDescription());
-		}
-	}
+
 	
 	//Prints inventory
 	public void printInventory() {
@@ -221,33 +222,35 @@ public class MainGame {
 	}
 	
 	//Returns athlete object from given athlete name
-	public Athlete athleteFromString(String stringAthlete) {
-		for(Athlete athlete:teamList) {
-			//unique names!!! 
-			if(athlete.getName().equals(stringAthlete)) {
-				return athlete;
-			}
-		}
-		//If not on team, checks bench too
-		for(Athlete athlete:benchList) {
-			if(athlete.getName().equals(stringAthlete)) {
-				return athlete;
-			}
-		}
-		//if not found calls exception - Athlete not on team or on bench
-		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
-		Athlete ath = new Athlete();
-		return ath;
-	}
+	//Use via TeamManager Class
+// 	public Athlete athleteFromString(String stringAthlete) {
+// 		for(Athlete athlete:teamList) {
+// 			//unique names!!! 
+// 			if(athlete.getName().equals(stringAthlete)) {
+// 				return athlete;
+// 			}
+// 		}
+// 		//If not on team, checks bench too
+// 		for(Athlete athlete:benchList) {
+// 			if(athlete.getName().equals(stringAthlete)) {
+// 				return athlete;
+// 			}
+// 		}
+// 		//if not found calls exception - Athlete not on team or on bench
+// 		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
+// 		Athlete ath = new Athlete();
+// 		return ath;
+// 	}
 	
-	public void resetStamina() {
-		for(Athlete athlete:teamList) {
-			athlete.changeStamina(10);
-		}
-		for(Athlete athlete:teamList) {
-			athlete.changeStamina(10);
-		}
-	}
+	//Within TeamManager
+// 	public void resetStamina() {
+// 		for(Athlete athlete:teamList) {
+// 			athlete.changeStamina(10);
+// 		}
+// 		for(Athlete athlete:teamList) {
+// 			athlete.changeStamina(10);
+// 		}
+// 	}
 	
 	public void trainAthlete() {
 		Scanner input = new Scanner(System.in);
