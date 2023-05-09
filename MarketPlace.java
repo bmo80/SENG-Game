@@ -1,100 +1,127 @@
-package sengGame;
+package broken;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MarketPlace extends MainGame{
+public class MarketPlace{
 	
-	private int number = 2;
-	ArrayList<Athlete> players;
+	//Number constant to define amount of atk/def players
+	private int NUMBER = 3;
+	private ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
 	//3 MAIN types: Stamina,Offence,Defence
-	ArrayList<Item> items;
+	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private int difficulty;
+	//Added current Team and bench Team as vars
+	private ArrayList<Athlete> team;
+	private ArrayList<Athlete> bench;
+	private ArrayList<Item> inventory;
 
 	//Use to generate new players and refresh items after new week
-	public void generateNewMarket(int diff) {
+	//Changed from method into constructor
+	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench, ArrayList<Item> currentInventory) {
 		difficulty = diff;
-		players = new ArrayList<Athlete>();
-		generateAthletes(number, "A");
-		generateAthletes(number, "D");
-		items = new ArrayList<Item>();
+		team = currentTeam;
+		bench = currentBench;
+		inventory = currentInventory;
+		generateAthletes(NUMBER, "A");
+		generateAthletes(NUMBER, "D");
 		generateItems();
 	}
 	//Entering the market to buy/sell things.
 	public void enterMarket() {
 		
-		System.out.println("Welcome to the MarketPlace, here you can buy or sell items and players");
-		System.out.println("Players and items reset once you have played your weekly game (E to exit)\n");
+//		System.out.println("Welcome to the MarketPlace, here you can buy or sell items and players");
+//		System.out.println("Players and items reset once you have played your weekly game (E to exit)\n");
 		Scanner scan = new Scanner(System.in);
 		String userInput= "";
-		while(!userInput.equals("E")) {
+		while(!userInput.toUpperCase().equals("E")) {
+			//Moved the text here so the user knows when the input resets.
+			System.out.println("Welcome to the MarketPlace, here you can buy or sell items and players\n"
+					+ "Players and items reset once you have played your weekly game \n"
+					+ "To see Players Enter 'P', to see Items Enter 'I' or 'E' to exit");
 			userInput = scan.nextLine();
-			if(userInput.equals("P")) {
+			//Allows for lower case p to be accepted too
+			if(userInput.toUpperCase().equals("P")) {
 				System.out.println("Players available for purchase this week...\n");
 				printPlayers();
+				System.out.println("Which player would you like to purchase? (Enter FULL name)");
 				String athleteName = scan.nextLine();
-				System.out.println("Which player would you like to purchase?");
-				for(Athlete athlete: players) {
+				for(Athlete athlete: playersForSale) {
 					if(athlete.getName().equals(athleteName)) {
-						addAthlete(athlete);
+						//Needs to be changed so that athlete can go to bench, 
+						//or team (by swapping a team player to bench)
+						team.add(athlete);
 						break;
 					}
 				}
-				
-				
+			}else if(userInput.toUpperCase().equals("I")) {
+				System.out.println("Items available for purchase this week...\n");
+				printItems();
+				System.out.println("Which Item would you like to purchase? (Enter FULL name)");
+				String itemName = scan.nextLine();
+				for(Item item: itemsForSale) {
+					if(item.getName().equals(itemName)) {
+						//Needs to be changed so that athlete can go to bench, 
+						//or team (by swapping a team player to bench)
+						inventory.add(item);
+						break;
+					}
+				}
+			}else if(userInput.toUpperCase().equals("E")) {
+				System.out.println("Leaving Market...");				
+			}else {
+				System.out.println("\nInvalid input...\n");
 			}
 		
-			
-			userInput = scan.nextLine();	
+			//Why was this here???
+//			userInput = scan.nextLine();	
 		}
-		scan.close();
+		//do NOT close the scanner - it WILL cause breaks.
+//		scan.close();
 	}
 	
 	
 	//Creates "number" amount of players in a given position
 	private void generateAthletes(int size, String position) {
 		for(int i=0; i<size; i++) {
-			players.add(getAthlete(position));
+			playersForSale.add(getAthlete(position));
 		}
 	}
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
 	private Athlete getAthlete(String position) {
-		AthleteGenerator athlete = new AthleteGenerator(position);
-		return athlete;
+		return new Athlete();
+		//Commented out for testing
+//		AthleteGenerator athlete = new AthleteGenerator(position);
+//		return athlete;
 	}
 	
 	//Generates one of each type of item
+	//Currently No randomness
 	private void generateItems() {
-		items.add(getItem("Stamina", "Stamina Training Kit", 5-difficulty, 1000));
-		items.add(getItem("Attack", "Attack Training Kit", 3-difficulty, 1000));
-		items.add(getItem("Defence", "Defence Training Kit", 3-difficulty, 1000));
+		//Cleaned up generation and removed unnecessary getItem method
+		itemsForSale.add(new Item("Stamina", "Stamina Training Kit", 5-difficulty, 1000));
+		itemsForSale.add(new Item("Attack", "Attack Training Kit", 3-difficulty, 1000));
+		itemsForSale.add(new Item("Defence", "Defence Training Kit", 3-difficulty, 1000));
 		
-	}
-	
-	private Item getItem(String type, String name, int effect, int cost) {
-		Item item = new Item(name, type, effect, cost);
-		return item;
-	}
-	
-	
+	}	
 	
 	private void printPlayers() {
-		for(Athlete player: players) {
+		for(Athlete player: playersForSale) {
 			System.out.println(player.getShortDescription());
 		}
 	}
 	
 	private void printItems() {
-		for(Item item: items) {
+		for(Item item: itemsForSale) {
 			System.out.println(item);
 		}
 	}
-	
-	public static void main (String[] args) {
-		MarketPlace market = new MarketPlace();
-		market.generateNewMarket(1);
-		market.enterMarket();
-		
-	}
+// Commented out - the OBject will be created by the MainGame	
+//	public static void main (String[] args) {
+//		MarketPlace market = new MarketPlace();
+//		market.generateNewMarket(1);
+//		market.enterMarket();
+//		
+//	}
 }
