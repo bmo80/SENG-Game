@@ -380,10 +380,14 @@ public class MainGame {
 	
 	public void gotoMarket() {
 		System.out.println("Welcome to the Market!\n");
-		MarketPlace market = new MarketPlace();
-		for(Athlete player: market.players) {
-			System.out.println(player.getShortDescription());
-		}
+		MarketPlace market = new MarketPlace(difficulty,teamList,benchList, inventory);
+		market.enterMarket();
+		
+		
+		// Shouldn't be needed??
+//		for(Athlete player: market.playersForSale) {
+//			System.out.println(player.getShortDescription());
+//		}
 	}
 	
 	
