@@ -2,9 +2,10 @@ package sengGame;
 
 public class Item extends Purchasable{
 	private String name;
-	//3 MAIN types: Stamina,Offence,Defence
-	//STA,ATK,DEF
-	// Special items ATK up but DEF down or other way around.  ALL stats up?
+	//4 MAIN types: Stamina,Offence,Defence,Health
+	//STA,ATK,DEF,HP
+	//HP will heal an injured player and reset their stamina
+	// Could have Special items: ATK up but DEF down or other way around.  ALL stats up?
 	private String type;
 	private int effect;
 	
