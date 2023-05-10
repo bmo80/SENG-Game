@@ -16,6 +16,7 @@ public class MarketPlace{
 	private ArrayList<Athlete> bench;
 	private ArrayList<Item> inventory;
 	private int money;
+	private int week;
 
 	MarketPlace(){
 		generateAthletes(NUMBER, "A");
@@ -25,7 +26,9 @@ public class MarketPlace{
 	
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
-	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench, ArrayList<Item> currentInventory, int currentMoney) {
+	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench,
+			ArrayList<Item> currentInventory, int currentMoney, int currentWeek) {
+		week = currentWeek;
 		difficulty = diff;
 		team = currentTeam;
 		bench = currentBench;
@@ -95,7 +98,7 @@ public class MarketPlace{
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
 	private Athlete getAthlete(String position) {
-		return new AthleteGenerator(position);
+		return new AthleteGenerator(position,week);
 	}
 	
 	//Generates one of each type of item

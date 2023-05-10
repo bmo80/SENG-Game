@@ -13,10 +13,12 @@ public class AthleteGenerator extends Athlete {
 	private int defence;
 	private int min;
 	private int max;
+	private int week;
 	
-	AthleteGenerator(String pos) {
+	AthleteGenerator(String pos, int currentWeek) {
 		super();
 		position = pos;
+		week = currentWeek;
 		try {
 			setName();
 		} catch (FileNotFoundException e) {
@@ -46,9 +48,10 @@ public class AthleteGenerator extends Athlete {
 		lastname = file.name;
 	}
 	
+	//Testing more balanced generation
 	private int getHigh() {
-		min = 7;
-		max = 10;
+		min = 2+week;
+		max = 5+week;
 		int random_high = (int)(Math.random()*(max-min+1)+min); 
 		return random_high;
 	}
@@ -60,14 +63,13 @@ public class AthleteGenerator extends Athlete {
 		return random_low;
 	}
 	
+	//Testing cleaner version
 	private void setAttack() {
-		int val;
 		if(position == "A") {
-			val = getHigh();
+			changeAttack(getHigh());
 		} else {
-			val = getLow();
+			changeAttack(getLow());
 		}
-		attack = val;
 	}
 	
 	private void setDefence() {

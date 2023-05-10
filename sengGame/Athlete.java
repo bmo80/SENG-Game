@@ -16,8 +16,8 @@ public class Athlete extends Purchasable {
 		//Reserved name
 		name = "Default Athlete";
 		stamina = 10; 
-		attack = 5;
-		defence = 5;
+		attack = 0;
+		defence = 0;
 		position = "D";
 		isInjured = false;
 		previousInjuries = 0;		

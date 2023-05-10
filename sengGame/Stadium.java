@@ -5,15 +5,17 @@ import java.util.Scanner;
 
 public class Stadium {
 
-	ArrayList<Athlete> players;
-	ArrayList<Athlete> team, bench = new ArrayList<Athlete>();
-	ArrayList<ArrayList<Athlete>>enemyTeams;
+	private ArrayList<Athlete> players;
+	private ArrayList<Athlete> team, bench = new ArrayList<Athlete>();
+	private ArrayList<ArrayList<Athlete>>enemyTeams;
+	private int week;
 	
 	//Constructor only runs on the first time stadium startup
 	//creates 3 teams of 6 players that the player can choose to play against
-	Stadium(ArrayList<Athlete> setTeam, ArrayList<Athlete> setBench) {
+	Stadium(ArrayList<Athlete> setTeam, ArrayList<Athlete> setBench, int currentWeek) {
 		team = setTeam;
 		bench = setBench;
+		week = currentWeek;
 		enemyTeams = new ArrayList<ArrayList<Athlete>>();
 		for(int i =0; i<3; i++) {
 			players = new ArrayList<Athlete>();
@@ -54,7 +56,7 @@ public class Stadium {
 	//Generates 3 random athletes of the given position using AthleteGenerator
 	public void generateAthletes(int size, String position) {
 		for(int i=0; i<size; i++) {
-			AthleteGenerator athlete = new AthleteGenerator(position);
+			AthleteGenerator athlete = new AthleteGenerator(position,week);
 			players.add(athlete);
 		}
 	}

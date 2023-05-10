@@ -253,7 +253,7 @@ public class MainGame {
 	public void gotoStadium() {
 		//Fill in random generation of teams (6 opponent Athletes per team)
 		// They will be in a 2D list.
-		Stadium stadium = new Stadium(teamList,benchList);
+		Stadium stadium = new Stadium(teamList,benchList,currentWeek);
 		//Forces player to play match
 		Match game = new Match(teamList,stadium.goToStadium(), difficulty);
 		if(game.verify()) {
@@ -280,7 +280,8 @@ public class MainGame {
 	
 	public void gotoMarket() {
 		System.out.println("Welcome to the Market!\n");
-		MarketPlace market = new MarketPlace(difficulty,teamList,benchList, inventory, money);
+		MarketPlace market = new MarketPlace(difficulty,teamList,benchList,
+				inventory, money, currentWeek);
 		market.enterMarket();
 		
 		
