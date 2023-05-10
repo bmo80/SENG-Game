@@ -19,7 +19,7 @@ public class Item extends Purchasable{
 	
 	public Item(String defName, String defType, int defEffect, int cost) {
 		//For now the sell price is the buy price - 10,000 * difficulty
-		super(cost*10,cost*8,String.format("%s is a %s item", defName,defType));
+		super(cost*10,cost*8,String.format("%s is for %s", defName,defType));
 		name = defName;
 		type = defType;
 		effect = defEffect;

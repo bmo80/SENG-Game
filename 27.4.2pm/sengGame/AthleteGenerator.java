@@ -9,7 +9,7 @@ public class AthleteGenerator extends Athlete {
 	private String lastname;
 	private String name;
 	private String position;
-	private int offence;
+	private int attack;
 	private int defence;
 	private int min;
 	private int max;
@@ -23,10 +23,10 @@ public class AthleteGenerator extends Athlete {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setOffence();
+		setAttack();
 		setDefence();
 		super.changeDefence(defence);
-		super.changeOffence(offence);
+		super.changeAttack(attack);
 		super.changeName(name);
 		super.changePosition(pos);
 	}
@@ -60,14 +60,14 @@ public class AthleteGenerator extends Athlete {
 		return random_low;
 	}
 	
-	private void setOffence() {
+	private void setAttack() {
 		int val;
 		if(position == "A") {
 			val = getHigh();
 		} else {
 			val = getLow();
 		}
-		offence = val;
+		attack = val;
 	}
 	
 	private void setDefence() {

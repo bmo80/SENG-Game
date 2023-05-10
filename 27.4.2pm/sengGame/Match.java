@@ -89,8 +89,8 @@ public class Match{
 				break;
 			}
 			System.out.println(String.format("%s is versing %s"
-					+ "",playerTeam.get(currentPlayerIndex).getShortDescription(),
-					opponents.get(currentOppIndex).getShortDescription()));
+					+ "",playerTeam.get(currentPlayerIndex),
+					opponents.get(currentOppIndex)));
 			if(opponents.get(currentOppIndex).getPositionStat() > playerTeam.get(currentPlayerIndex).getPositionStat()) {
 				//If opponent wins, they get a point. Both Athletes lose stamina and the Player athlete changes
 				System.out.println("Opponent won a point");

@@ -4,11 +4,21 @@ import java.util.ArrayList;
 
 public class TeamManager {
 	
-	ArrayList<Athlete> Team = new ArrayList<Athlete>();
+	private ArrayList<Athlete> teamList;
+	private ArrayList<Athlete> bench;
+	
+	TeamManager(ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench){
+		teamList = currentTeam;
+		bench = currentBench;
+	}
 	
 	//Getters
-	public ArrayList<Athlete> getTeam() {
-		return Team;
+	public ArrayList<Athlete> getteamList() {
+		return teamList;
+	}
+	
+	public ArrayList<Athlete> getBench(){
+		return bench;
 	}
 	
 	
@@ -19,13 +29,13 @@ public class TeamManager {
 				return athlete;
 			}
 		}
-		//If not on team, checks bench too
-		for(Athlete athlete:benchList) {
+		//If not on teamList, checks bench too
+		for(Athlete athlete:bench) {
 			if(athlete.getName().equals(stringAthlete)) {
 				return athlete;
 			}
 		}
-		//if not found calls exception - Athlete not on team or on bench
+		//if not found calls exception - Athlete not on teamList or on bench
 		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
 		Athlete ath = new Athlete();
 		return ath;
@@ -34,9 +44,9 @@ public class TeamManager {
 	
 	//Override ToString??
 	//Prints Athletes in collection by name
-	public void printTeam(ArrayList<Athlete> collection) {
+	public void printteamList(ArrayList<Athlete> collection) {
 		for(Athlete athlete:collection) {
-			System.out.println(athlete.shortDescription());
+			System.out.println(athlete);
 		}
 	}
 	
@@ -50,9 +60,11 @@ public class TeamManager {
 	}
 	
 	
+	
+	
 	public void addAthlete(Athlete chosenAthlete) {
 		if(teamList.size() >= 6){
-			// Call Exception - team full - overflow to bench?
+			// Call Exception - teamList full - overflow to bench?
 			benchAthlete(chosenAthlete);
 		}else {
 			teamList.add(chosenAthlete);
@@ -60,27 +72,27 @@ public class TeamManager {
 	}
 	
 	public void benchAthlete(Athlete chosenAthlete) {
-		if(benchList.size() >= 5){
+		if(bench.size() >= 5){
 			// Call exception - bench full
 		}
 		// not strictly necessary I believe
 //		else if(!teamList.contains(chosenAthlete)) {
-//			// Call exception - athlete not in team
+//			// Call exception - athlete not in teamList
 //		}
 		else if(chosenAthlete.getName().equals("Default Athlete")){
-			benchList.add(chosenAthlete);
+			bench.add(chosenAthlete);
 			// removes first instance - ENSURE unique Athletes!
 			teamList.remove(chosenAthlete);
 		}
 	}
 	
 	public void unbenchAthlete(Athlete chosenAthlete) {
-		if(!benchList.contains(chosenAthlete)) {
+		if(!bench.contains(chosenAthlete)) {
 			// Call exception - Athlete not on bench
 		}else {
 			// removes first instance - ENSURE unique Athletes!
-			benchList.remove(chosenAthlete);
-			// Could call team full exception...
+			bench.remove(chosenAthlete);
+			// Could call teamList full exception...
 			addAthlete(chosenAthlete);
 		}
 	}
@@ -88,12 +100,12 @@ public class TeamManager {
 	//Old methods
 	
 // 	public void addPlayer(Athlete player) {
-// 		Team.add(player);
+// 		teamList.add(player);
 // 	}
 	
 // 	public void removePlayer(Athlete player) {
-// 		if(Team.contains(player)) {
-// 			Team.remove(player);
+// 		if(teamList.contains(player)) {
+// 			teamList.remove(player);
 // 		} else {
 // 			System.out.println("Athlete not in team");
 // 		}
