@@ -1,4 +1,4 @@
-package broken;
+package sengGame;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,17 +12,25 @@ public class MarketPlace{
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private int difficulty;
 	//Added current Team and bench Team as vars
-	private ArrayList<Athlete> team;
-	private ArrayList<Athlete> bench;
-	private ArrayList<Item> inventory;
+	public ArrayList<Athlete> team;
+	public ArrayList<Athlete> bench;
+	public ArrayList<Item> inventory;
 
+	//method for testing
+	
+	MarketPlace() {
+		generateAthletes(NUMBER, "A");
+		generateAthletes(NUMBER, "D");
+		generateItems();
+		
+	}
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
-	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench, ArrayList<Item> currentInventory) {
+	MarketPlace(int diff, ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench, ArrayList<Item> currentInventory) {
 		difficulty = diff;
-		team = currentTeam;
-		bench = currentBench;
-		inventory = currentInventory;
+		team = new ArrayList<Athlete>();
+//		bench = currentBench;
+//		inventory = currentInventory;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
 		generateItems();
@@ -90,10 +98,10 @@ public class MarketPlace{
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
 	private Athlete getAthlete(String position) {
-		return new Athlete();
+
 		//Commented out for testing
-//		AthleteGenerator athlete = new AthleteGenerator(position);
-//		return athlete;
+		AthleteGenerator athlete = new AthleteGenerator(position);
+		return athlete;
 	}
 	
 	//Generates one of each type of item
@@ -118,10 +126,8 @@ public class MarketPlace{
 		}
 	}
 // Commented out - the OBject will be created by the MainGame	
-//	public static void main (String[] args) {
-//		MarketPlace market = new MarketPlace();
-//		market.generateNewMarket(1);
-//		market.enterMarket();
-//		
-//	}
+	public static void main (String[] args) {
+		MarketPlace market = new MarketPlace();
+		market.enterMarket();
+	}
 }

@@ -19,12 +19,12 @@ public class MainGame {
 		teamName = name;
 		seasonDuration = duration;
 		//Testing team
-		teamList = setTeam();
+		//teamList = setTeam();
 		difficulty = chosenDifficulty -1;
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		//test inventory
-		inventory = setInventory();
+		//inventory = setInventory();
 		money = 1000;
 	}
 	
@@ -44,12 +44,13 @@ public class MainGame {
 //		input.close();
 		
 		// Currently TeamList is set as a static team
-		teamList = setTeam();
+		//teamList = setTeam();
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		inventory = new ArrayList<Item>();
-		money = 0;
-		input.close();
+		money = 1000;
+		teamList = new ArrayList<Athlete>();
+		//input.close();
 	}
 	
 	//Override toString method
@@ -62,16 +63,16 @@ public class MainGame {
 	}
 	
 	// Method for setting default team - mainly for testing
-	public ArrayList<Athlete> setTeam(){
-		ArrayList<Athlete> team = new ArrayList<Athlete>();		
-		team.add(new Athlete("attack1",7,2,"A"));
-		team.add(new Athlete("defend1",2,6,"D"));
-		team.add(new Athlete("attack2",3,1,"A"));
-		team.add(new Athlete("defend2",1,4,"D"));
-		team.add(new Athlete("attack3",10,0,"A"));
-		team.add(new Athlete("defend3",1,9,"D"));
-		return team;
-	}
+//	public ArrayList<Athlete> setTeam(){
+//		ArrayList<Athlete> team = new ArrayList<Athlete>();		
+//		team.add(new Athlete("attack1",7,2,"A"));
+//		team.add(new Athlete("defend1",2,6,"D"));
+//		team.add(new Athlete("attack2",3,1,"A"));
+//		team.add(new Athlete("defend2",1,4,"D"));
+//		team.add(new Athlete("attack3",10,0,"A"));
+//		team.add(new Athlete("defend3",1,9,"D"));
+//		return team;
+//	}
 	
 	public ArrayList<Item> setInventory(){
 		ArrayList<Item> inventory = new ArrayList<Item>();
@@ -84,17 +85,20 @@ public class MainGame {
 	
 	
 	// getter methods - NOT ALL
-	public ArrayList<Athlete> getTeamList() {
-		return teamList;
-	}
+	
+	//Should be in Team manager class
+// 	public ArrayList<Athlete> getTeamList() {
+// 		return teamList;
+// 	}
 	
 	public String getTeamName() {
 		return teamName;
 	}
 	
-	public ArrayList<Athlete> getBenchList() {
-		return benchList;
-	}
+	// BenchList is now separte object - print via TeamManager class
+// 	public ArrayList<Athlete> getBenchList() {
+// 		return benchList;
+// 	}
 	
 	public int getDifficulty() {
 		return difficulty;
@@ -124,41 +128,44 @@ public class MainGame {
 		totalPoints += amount;
 	}
 	
-	public void addAthlete(Athlete chosenAthlete) {
-		if(teamList.size() >= 6){
-			// Call Exception - team full - overflow to bench?
-			benchAthlete(chosenAthlete);
-		}else {
-			teamList.add(chosenAthlete);
-		}
-	}
+	//Use via TeamManager class
+// 	public void addAthlete(Athlete chosenAthlete) {
+// 		if(teamList.size() >= 6){
+// 			// Call Exception - team full - overflow to bench?
+// 			benchAthlete(chosenAthlete);
+// 		}else {
+// 			teamList.add(chosenAthlete);
+// 		}
+// 	}
 	
-	public void benchAthlete(Athlete chosenAthlete) {
-		if(benchList.size() >= 5){
-			// Call exception - bench full
-		}
-		// not strictly necessary I believe
-//		else if(!teamList.contains(chosenAthlete)) {
-//			// Call exception - athlete not in team
-//		}
-		else if(chosenAthlete.getName().equals("Default Athlete")){
-			benchList.add(chosenAthlete);
-			// removes first instance - ENSURE unique Athletes!
-			teamList.remove(chosenAthlete);
-		}
-	}
+// 	public void benchAthlete(Athlete chosenAthlete) {
+// 		if(benchList.size() >= 5){
+// 			// Call exception - bench full
+// 		}
+// 		// not strictly necessary I believe
+// //		else if(!teamList.contains(chosenAthlete)) {
+// //			// Call exception - athlete not in team
+// //		}
+// 		else if(chosenAthlete.getName().equals("Default Athlete")){
+// 			benchList.add(chosenAthlete);
+// 			// removes first instance - ENSURE unique Athletes!
+// 			teamList.remove(chosenAthlete);
+// 		}
+// 	}
 	
-	public void unbenchAthlete(Athlete chosenAthlete) {
-		if(!benchList.contains(chosenAthlete)) {
-			// Call exception - Athlete not on bench
-		}else {
-			// removes first instance - ENSURE unique Athletes!
-			benchList.remove(chosenAthlete);
-			// Could call team full exception...
-			addAthlete(chosenAthlete);
-		}
-	}
+// 	public void unbenchAthlete(Athlete chosenAthlete) {
+// 		if(!benchList.contains(chosenAthlete)) {
+// 			// Call exception - Athlete not on bench
+// 		}else {
+// 			// removes first instance - ENSURE unique Athletes!
+// 			benchList.remove(chosenAthlete);
+// 			// Could call team full exception...
+// 			addAthlete(chosenAthlete);
+// 		}
+// 	}
 	
+	
+	//MarketPlace functions
 	public void useItem(Item chosenItem,Athlete chosenAthlete) {
 		if(chosenItem.getType() == "STA") {
 			chosenAthlete.changeStamina(chosenItem.getEffect());
@@ -191,12 +198,7 @@ public class MainGame {
 	
 	
 	//Print methods
-	//Prints Athletes in collection by name
-	public void printTeam(ArrayList<Athlete> collection) {
-		for(Athlete athlete:collection) {
-			System.out.println(athlete.getShortDescription());
-		}
-	}
+
 	
 	//Prints inventory
 	public void printInventory() {
@@ -221,33 +223,35 @@ public class MainGame {
 	}
 	
 	//Returns athlete object from given athlete name
-	public Athlete athleteFromString(String stringAthlete) {
-		for(Athlete athlete:teamList) {
-			//unique names!!! 
-			if(athlete.getName().equals(stringAthlete)) {
-				return athlete;
-			}
-		}
-		//If not on team, checks bench too
-		for(Athlete athlete:benchList) {
-			if(athlete.getName().equals(stringAthlete)) {
-				return athlete;
-			}
-		}
-		//if not found calls exception - Athlete not on team or on bench
-		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
-		Athlete ath = new Athlete();
-		return ath;
-	}
+	//Use via TeamManager Class
+// 	public Athlete athleteFromString(String stringAthlete) {
+// 		for(Athlete athlete:teamList) {
+// 			//unique names!!! 
+// 			if(athlete.getName().equals(stringAthlete)) {
+// 				return athlete;
+// 			}
+// 		}
+// 		//If not on team, checks bench too
+// 		for(Athlete athlete:benchList) {
+// 			if(athlete.getName().equals(stringAthlete)) {
+// 				return athlete;
+// 			}
+// 		}
+// 		//if not found calls exception - Athlete not on team or on bench
+// 		//returns default athlete for now WHICH CAUSES BENCH TO GROW FOREVER
+// 		Athlete ath = new Athlete();
+// 		return ath;
+// 	}
 	
-	public void resetStamina() {
-		for(Athlete athlete:teamList) {
-			athlete.changeStamina(10);
-		}
-		for(Athlete athlete:teamList) {
-			athlete.changeStamina(10);
-		}
-	}
+	//Within TeamManager
+// 	public void resetStamina() {
+// 		for(Athlete athlete:teamList) {
+// 			athlete.changeStamina(10);
+// 		}
+// 		for(Athlete athlete:teamList) {
+// 			athlete.changeStamina(10);
+// 		}
+// 	}
 	
 	public void trainAthlete() {
 		Scanner input = new Scanner(System.in);
@@ -347,7 +351,7 @@ public class MainGame {
 			useItem(itemFromString(itemChoice),athleteFromString(athleteChoice));
 		
 		}
-		input.close();
+		//input.close();
 	}
 	
 	public void gotoStadium() {
@@ -365,36 +369,36 @@ public class MainGame {
 	}
 	
 	//JUST FOR TESTING
-	public ArrayList<Athlete> makeOpponents(){
-		ArrayList<Athlete> team = new ArrayList<Athlete>();
-		team.add(new Athlete("OPPattack1",8,2,"A"));
-		team.add(new Athlete("OPPdefend1",2,7,"D"));
-		team.add(new Athlete("OPPattack2",1,1,"A"));
-		team.add(new Athlete("OPPdefend2",1,1,"D"));
-		team.add(new Athlete("OPPattack3",1,0,"A"));
-		team.add(new Athlete("OPPdefend3",1,1,"D"));
-		return team;
-	}
+//	public ArrayList<Athlete> makeOpponents(){
+//		ArrayList<Athlete> team = new ArrayList<Athlete>();
+//		team.add(new Athlete("OPPattack1",8,2,"A"));
+//		team.add(new Athlete("OPPdefend1",2,7,"D"));
+//		team.add(new Athlete("OPPattack2",1,1,"A"));
+//		team.add(new Athlete("OPPdefend2",1,1,"D"));
+//		team.add(new Athlete("OPPattack3",1,0,"A"));
+//		team.add(new Athlete("OPPdefend3",1,1,"D"));
+//		return team;
+//	}
 	
 	
 	
 	public void gotoMarket() {
 		System.out.println("Welcome to the Market!\n");
-		MarketPlace market = new MarketPlace(difficulty,teamList,benchList, inventory);
+		MarketPlace market = new MarketPlace(1, teamList, benchList, inventory);
+		System.out.println(teamList);
 		market.enterMarket();
+		for(Athlete athlete: market.team) {
+			teamList.add(athlete);
+		}
+		System.out.println(teamList);
 		
-		
-		// Shouldn't be needed??
-//		for(Athlete player: market.playersForSale) {
-//			System.out.println(player.getShortDescription());
-//		}
 	}
 	
 	
 	public void takeBye() {
 		currentWeek ++;
 		//does NOT reset injury/ health
-		resetStamina();
+		
 //		 train athlete - if chosen
 		trainAthlete();
 		// try for random events
@@ -435,9 +439,17 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame("Test Team",5,3);
+		MainGame run = new MainGame();
 		
-		run.gotoClub();
+		//run.printInventory();
+		//Setup market and Stadium
+		while(run.seasonDuration - run.currentWeek >= 0) {
+			System.out.println(run);
+			run.playGame();
+		}
+		
+//		MainGame game = new MainGame();
+//		game.gotoMarket();
 
 	}
 	
