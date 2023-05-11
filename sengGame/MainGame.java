@@ -316,13 +316,30 @@ public class MainGame {
 	
 	
 	
+	public void launchMainScreen() {
+		MainWindow mainWindow = new MainWindow(this);
+	}
+	
+	public void closeMainScreen(MainWindow mainWindow) {
+		mainWindow.closeWindow();
+	}
+	
+	
+	public void launchSetupScreen() {
+		SetupWindow setupWindow = new SetupWindow(this);
+	}
+	
+	public void closeSetupScreen(SetupWindow setupWindow) {
+		setupWindow.closeWindow();
+		launchMainScreen();
+	}
+	
 	
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
 		MainGame run = new MainGame("Test Team",5,2);
-		
-		//run.printInventory();
+		run.launchMainScreen();
 		//Setup market and Stadium
 		while(run.seasonDuration - run.currentWeek >= 0) {
 			System.out.println(run);
