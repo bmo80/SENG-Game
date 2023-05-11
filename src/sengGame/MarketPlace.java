@@ -2,16 +2,16 @@ package sengGame;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import athleteInfo.Athlete;
-import athleteInfo.AthleteGenerator;
-import athleteInfo.Item;
+import windows.MarketPlaceWindow;
+import athleteinfo.Item;
+import athleteinfo.Athlete;
+import athleteinfo.AthleteGenerator;
 
 public class MarketPlace{
 	
 	//Number constant to define amount of atk/def players
 	private int NUMBER = 3;
-	private ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
+	public ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
 	//3 MAIN types: Stamina,Offence,Defence
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private int difficulty;
@@ -19,7 +19,7 @@ public class MarketPlace{
 	private ArrayList<Athlete> team;
 	private ArrayList<Athlete> bench;
 	private ArrayList<Item> inventory;
-	private int money;
+	public int money;
 	private int week;
 
 	MarketPlace(){
@@ -30,7 +30,7 @@ public class MarketPlace{
 	
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
-	public MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench,
+	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench,
 			ArrayList<Item> currentInventory, int currentMoney, int currentWeek) {
 		week = currentWeek;
 		difficulty = diff;
@@ -43,7 +43,7 @@ public class MarketPlace{
 		generateItems();
 	}
 	//Entering the market to buy/sell things.
-	public void enterMarket() {
+	public int enterMarket() {
 		
 //		System.out.println("Welcome to the MarketPlace, here you can buy or sell items and players");
 //		System.out.println("Players and items reset once you have played your weekly game (E to exit)\n");
@@ -65,8 +65,16 @@ public class MarketPlace{
 					if(athlete.getName().equals(athleteName)) {
 						//Needs to be changed so that athlete can go to bench, 
 						//or team (by swapping a team player to bench)
-						team.add(athlete);
-						money -= athlete.getBuyPrice();
+						if((money - athlete.getBuyPrice()) >= 0) {
+							team.add(athlete);
+							money -= athlete.getBuyPrice();
+							System.out.println(money);
+						} else {
+							System.out.println(money);
+							System.out.println(athlete.getBuyPrice());
+							System.out.println("Insufficient funds");
+						}
+
 						break;
 					}
 				}
@@ -90,6 +98,7 @@ public class MarketPlace{
 				System.out.println("\nInvalid input...\n");
 			}	
 		}
+		return money;
 	}
 	
 	
@@ -131,5 +140,13 @@ public class MarketPlace{
 		MarketPlace market = new MarketPlace();
 		market.enterMarket();
 		
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+	
+	public int getWeek() {
+		return week;
 	}
 }
