@@ -22,7 +22,7 @@ public class fileReader {
 		Random rand = new Random();
 		int upperBound = 100;
 		int index = rand.nextInt(upperBound);
-		File file = new File("src/sengGame/"+filename);
+		File file = new File("src/athleteInfo/"+filename);
 		Scanner scanner = new Scanner(file);
 		int count = 0;
 		while(count < index) {
