@@ -300,7 +300,6 @@ public class MainGame {
 		System.out.println("Welcome to the Market!\n");
 		MarketPlace market = new MarketPlace(difficulty,teamList,benchList,
 				inventory, money, currentWeek);
-		market.enterMarket();
 		
 		
 		// Shouldn't be needed??

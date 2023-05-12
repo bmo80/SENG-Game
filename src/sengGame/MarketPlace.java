@@ -3,9 +3,9 @@ package sengGame;
 import java.util.ArrayList;
 import java.util.Scanner;
 import windows.MarketPlaceWindow;
-import athleteinfo.Item;
-import athleteinfo.Athlete;
-import athleteinfo.AthleteGenerator;
+import athleteInfo.Item;
+import athleteInfo.Athlete;
+import athleteInfo.AthleteGenerator;
 
 public class MarketPlace{
 	
@@ -26,6 +26,7 @@ public class MarketPlace{
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
 		generateItems();
+		MarketPlaceWindow window = new MarketPlaceWindow(this);
 	}
 	
 	//Use to generate new players and refresh items after new week
@@ -41,6 +42,7 @@ public class MarketPlace{
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
 		generateItems();
+		MarketPlaceWindow window = new MarketPlaceWindow(this);
 	}
 	//Entering the market to buy/sell things.
 	public int enterMarket() {
