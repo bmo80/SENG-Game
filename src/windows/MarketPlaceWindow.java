@@ -4,30 +4,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-<<<<<<< HEAD
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import sengGame.MarketPlace;
 
-public class MarketPlaceWindow {
 
-	private JFrame frmMarketplace;
-	private MarketPlace market;
-=======
-
-import sengGame.MarketPlace;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class MarketPlaceWindow{
 
 	private JFrame frmMarketplace;
-	private int money;
-	private int week;
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+	private MarketPlace market;
 	/**
 	 * Launch the application.
 	 */
@@ -35,11 +22,8 @@ public class MarketPlaceWindow{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-<<<<<<< HEAD
 					MarketPlaceWindow window = new MarketPlaceWindow();
-=======
-					MarketPlaceWindow window = new MarketPlaceWindow(10000, 3);
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+
 					window.frmMarketplace.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,14 +35,11 @@ public class MarketPlaceWindow{
 	/**
 	 * Create the application.
 	 */
-<<<<<<< HEAD
-	public MarketPlaceWindow(MarketPlace curmarket) {
-		market = curmarket;
-=======
-	public MarketPlaceWindow(int mMoney, int weekNum) {
-		money = mMoney;
-		week = weekNum;
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+
+
+
+	public MarketPlaceWindow(MarketPlace curMarket) {
+		market = curMarket;
 		initialize();
 		frmMarketplace.setVisible(true);
 	}
@@ -77,11 +58,7 @@ public class MarketPlaceWindow{
 		lblMoney.setBounds(12, 12, 70, 15);
 		frmMarketplace.getContentPane().add(lblMoney);
 		
-<<<<<<< HEAD
 		JLabel displayMoney = new JLabel(String.valueOf(market.getMoney()));
-=======
-		JLabel displayMoney = new JLabel(String.valueOf(money));
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
 		displayMoney.setBounds(72, 12, 70, 15);
 		frmMarketplace.getContentPane().add(displayMoney);
 		
@@ -90,11 +67,8 @@ public class MarketPlaceWindow{
 		lblWeek.setBounds(12, 28, 70, 15);
 		frmMarketplace.getContentPane().add(lblWeek);
 		
-<<<<<<< HEAD
 		JLabel weekNum = new JLabel(String.valueOf(market.getWeek())+"/5");
-=======
-		JLabel weekNum = new JLabel(String.valueOf(week)+"/5");
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+
 		weekNum.setBounds(72, 28, 70, 15);
 		frmMarketplace.getContentPane().add(weekNum);
 		
@@ -106,11 +80,8 @@ public class MarketPlaceWindow{
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMarketplace.dispose();
-<<<<<<< HEAD
 				BuyPlayerWindow window = new BuyPlayerWindow(market);
-=======
-				BuyPlayerWindow window = new BuyPlayerWindow();
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+
 			}
 		});
 		btnBuysellPlayers.setBounds(35, 94, 195, 70);
@@ -124,10 +95,7 @@ public class MarketPlaceWindow{
 		lblPlayersAndItems.setBounds(12, 205, 352, 15);
 		frmMarketplace.getContentPane().add(lblPlayersAndItems);
 	}
-<<<<<<< HEAD
 	
 
 }
-=======
-}
->>>>>>> 679adb5dc7dc3bf5b7b14b2d00a2b8c49143e07b
+
