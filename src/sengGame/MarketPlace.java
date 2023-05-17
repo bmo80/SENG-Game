@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import windows.MarketPlaceWindow;
 import athleteInfo.Item;
+import athleteInfo.TeamManager;
 import athleteInfo.Athlete;
 import athleteInfo.AthleteGenerator;
 
@@ -12,9 +13,9 @@ public class MarketPlace{
 	//Number constant to define amount of atk/def players
 	private int NUMBER = 3;
 	public ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
-	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
+	public ArrayList<Item> itemsForSale = new ArrayList<Item>();
+	//team consists of the teamList and benchList
 	private MainGame gameStats;
-
 	MarketPlace(){
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
@@ -24,12 +25,12 @@ public class MarketPlace{
 	
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
-	public MarketPlace(MainGame currentStats) {
-		gameStats = currentStats;
+	public MarketPlace(MainGame game) {
+		gameStats = game;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
 		generateItems();
-		MarketPlaceWindow window = new MarketPlaceWindow(this);
+		MarketPlaceWindow window = new MarketPlaceWindow(this, gameStats);
 	}
 	
 	
@@ -57,7 +58,7 @@ public class MarketPlace{
 						//Needs to be changed so that athlete can go to bench, 
 						//or team (by swapping a team player to bench)
 						if((gameStats.getMoney() - athlete.getBuyPrice()) >= 0) {
-							gameStats.getTeamList().add(athlete);
+							gameStats.getTeams().add(athlete);
 							gameStats.changeMoney(-athlete.getBuyPrice());
 							System.out.println(gameStats.getMoney());
 						} else {
@@ -102,7 +103,9 @@ public class MarketPlace{
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
 	public Athlete getAthlete(String position) {
-		return new AthleteGenerator(position,gameStats.getWeek());
+		Athlete athlete = new AthleteGenerator(position,gameStats.getWeek());
+		athlete.setBuyPrice(1000*athlete.getPositionStat());
+		return athlete;
 	}
 	
 	//Generates one of each type of item
@@ -112,6 +115,7 @@ public class MarketPlace{
 		itemsForSale.add(new Item("Stamina", "Stamina Training Kit", 5-gameStats.getDifficulty(), 1000));
 		itemsForSale.add(new Item("Attack", "Attack Training Kit", 3-gameStats.getDifficulty(), 1000));
 		itemsForSale.add(new Item("Defence", "Defence Training Kit", 3-gameStats.getDifficulty(), 1000));
+		itemsForSale.add(new Item("yea", "yea Training Kit", 3-gameStats.getDifficulty(), 1000));
 		
 	}	
 	
@@ -134,6 +138,8 @@ public class MarketPlace{
 	public int getWeek() {
 		return gameStats.getWeek();
 	}
+	
+	
 
 	//Testing
 //	public static void main (String[] args) {

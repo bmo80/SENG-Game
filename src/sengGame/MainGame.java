@@ -53,6 +53,8 @@ public class MainGame {
 	 */
 	private int totalPoints;
 	
+	private TeamManager teams;
+	
 	
 	
 	/*
@@ -90,14 +92,13 @@ public class MainGame {
 		seasonDuration = input.nextInt();  
 		System.out.print("Set difficulty (1-3): ");
 		difficulty = input.nextInt()-1;
-		
+		teamList = new ArrayList<Athlete>();
 		// Currently TeamList is set as a static team
-		teamList = setTeam();
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
-		TeamManager teams = new TeamManager(teamList,benchList);
+		teams = new TeamManager(teamList,benchList);
 		inventory = new ArrayList<Item>();
-		money = 0;
+		money = 100000;
 	}
 	
 	/*
@@ -165,8 +166,8 @@ public class MainGame {
 	 * Returns an array of athlete objects from active team
 	 * @return		active team ArrayList<Athlete>
 	 */
- 	public ArrayList<Athlete> getTeamList() {
- 		return teamList;
+ 	public TeamManager getTeams() {
+ 		return teams;
  	}
 	
  	/*
@@ -232,6 +233,13 @@ public class MainGame {
 			money = 0;
 		}
 		money += amount;
+	}
+	
+	public void deductMoney(int amount) {
+		if((money-amount)<0) {
+			System.out.println("Not enough money");
+		}
+		money -= amount;
 	}
 	
 	/*
@@ -410,7 +418,7 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame("Test Team",5,2);
+		MainGame run = new MainGame();
 //		System.out.println(run.getTeamsString());
 		run.launchMainScreen();
 		//Setup market and Stadium
