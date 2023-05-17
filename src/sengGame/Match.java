@@ -6,14 +6,16 @@ import athleteInfo.Athlete;
 
 public class Match{
 	
-	private ArrayList<Athlete> playerTeam;
+	private MainGame gameStats;
 	private ArrayList<Athlete> opponents;
-	private int difficulty;
+	private ArrayList<Athlete> playerTeam;
+	int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
 	
-	Match(ArrayList<Athlete> player, ArrayList<Athlete> opps, int diff){
-		playerTeam = player;
+	public Match(MainGame currentStats, ArrayList<Athlete> opps){
+		gameStats = currentStats;
 		opponents = opps;
-		difficulty = diff;
+		playerTeam = gameStats.getTeamList();
+		playMatch();
 	}
 	
 	public Boolean checkAllInjured() {
@@ -21,8 +23,7 @@ public class Match{
 			if(!athlete.getIsInjured()) {
 				return false;
 			}
-		}
-		return true;
+		}return true;
 	}
 	
 	public boolean verify() {
@@ -34,147 +35,39 @@ public class Match{
 			//Send - No healthy players error message
 			System.out.println("No healthy Athletes in team");
 			return false;
+		} else if((currentPlayerIndex >= 6) || (currentOppIndex >= 6)) {
+			endMatch();
+			return false;
 		}
 		return true;
 	}
 	
-//	Currently Depreciated and leaves Team comp up to the player
-//	VERY icky method - basically just a beta/skeleton version
-//	public void matchSort(ArrayList<Athlete> teamToSort) {
-//		//expects team with 6 members - 3 attack, 3 defense
-//		ArrayList<Athlete> atkTeam = new ArrayList<Athlete>();
-//		ArrayList<Athlete> defTeam = new ArrayList<Athlete>();
-//		for(Athlete athlete: teamToSort) {
-//			if(athlete.getPosition().equals("A")) {
-//				if((atkTeam.size()>0)&&(athlete.getOffence()>atkTeam.get(atkTeam.size()-1).getOffence())){
-//					atkTeam.add(0,athlete);
-//				}else {
-//					atkTeam.add(athlete);
-//				}
-//			}else if(athlete.getPosition().equals("D")) {
-//				if((defTeam.size()>0)&&(athlete.getDefence()>defTeam.get(defTeam.size()-1).getDefence())){
-//					defTeam.add(0,athlete);
-//				}else {
-//					defTeam.add(athlete);
-//				}
-//			}
-//		}
-//		atkTeam.addAll(defTeam);
-//		teamToSort= atkTeam;
-//	}
 	
+	public void verseAthletes(int playerIndex, int oppIndex) {
+		Athlete playerAthlete = playerTeam.get(playerIndex);
+		Athlete opponentAthlete = opponents.get(oppIndex);
+		if(playerAthlete.getIsInjured()) {
+			System.out.println(String.format("%s is injured, going to next player",playerTeam.get(playerIndex)));
+			currentPlayerIndex ++;
+		}else if(opponentAthlete.getIsInjured()){
+			currentOppIndex ++;		
+		}else if(playerAthlete.getPositionStat() > opponentAthlete.getPositionStat()) {
+			playerScore ++;
+			playerAthlete.changeStamina(-gameStats.getDifficulty()-1);
+			opponentAthlete.changeStamina(-gameStats.getDifficulty()-3);
+			currentOppIndex ++;
+		}else if(playerAthlete.getPositionStat() < opponentAthlete.getPositionStat()) {
+			oppsScore ++;
+			opponentAthlete.changeStamina(-gameStats.getDifficulty()-1);
+			playerAthlete.changeStamina(-gameStats.getDifficulty()-3);
+			currentPlayerIndex ++;
+		}else {
+			currentOppIndex ++;
+			currentPlayerIndex ++;
+		}
+	}
 	
-
-	
-	//Changed into Champion system
-	public int[] playMatch() {
-		//Defines local variables
-		int opsScore = 0;
-		int playerScore = 0;
-		int currentPlayerIndex = 0;
-		int currentOppIndex = 0;
-		boolean playing = true;
-		while(playing) {
-			//check if current player can play
-			while(playerTeam.get(currentPlayerIndex).getIsInjured()) {
-				currentPlayerIndex ++;
-				//In case Last athlete is injured
-				if(currentPlayerIndex == playerTeam.size()) {
-					//End match
-					playing = false;
-					System.out.println("All players are injured, can't contiue play");
-					break;
-				}
-			}
-			//used to break out of Main while loop
-			if(!playing) {
-				break;
-			}
-			System.out.println(String.format("%s is versing %s"
-					+ "",playerTeam.get(currentPlayerIndex),
-					opponents.get(currentOppIndex)));
-			if(opponents.get(currentOppIndex).getPositionStat() > playerTeam.get(currentPlayerIndex).getPositionStat()) {
-				//If opponent wins, they get a point. Both Athletes lose stamina and the Player athlete changes
-				System.out.println("Opponent won a point");
-				opsScore ++;
-				opponents.get(currentOppIndex).changeStamina(-difficulty-1);
-				playerTeam.get(currentPlayerIndex).changeStamina(-3-difficulty);
-				currentPlayerIndex ++;
-				//If that was the last player then match ends
-				if(currentPlayerIndex == playerTeam.size()) {
-					//End match
-					playing = false;
-					System.out.println("All Athletes finished, match over");
-					break;
-				}
-			}else if(opponents.get(currentOppIndex).getPositionStat() == playerTeam.get(currentPlayerIndex).getPositionStat()) {
-				//If there is a tie, Easy --> Player win, Regular --> Both lose, Hard --> Opponent win
-				System.out.println("Tie");
-				if(difficulty == 0) {
-					playerScore ++;
-					opponents.get(currentOppIndex).changeStamina(-difficulty-1);
-					playerTeam.get(currentPlayerIndex).changeStamina(difficulty-3);
-					currentOppIndex ++;
-					//If that was the last player then match ends
-					if(currentOppIndex == opponents.size()) {
-						//End match
-						playing = false;
-						System.out.println("All Opponents finished, match over");
-						break;
-					}
-				}else if(difficulty == 1) {
-					opponents.get(currentOppIndex).changeStamina(-difficulty-3);
-					playerTeam.get(currentPlayerIndex).changeStamina(-3-difficulty);
-					currentPlayerIndex ++;
-					currentOppIndex ++;
-					//If that was the last player then match ends
-					if((currentPlayerIndex == playerTeam.size()) || (currentOppIndex == opponents.size())) {
-						//End match
-						playing = false;
-						System.out.println("All Athletes or Opponents finished, match over");
-						break;
-					}
-				}else {
-					opsScore ++;
-					opponents.get(currentOppIndex).changeStamina(-difficulty-3);
-					playerTeam.get(currentPlayerIndex).changeStamina(-3-difficulty);
-					currentPlayerIndex ++;
-					//If that was the last player then match ends
-					if(currentPlayerIndex == playerTeam.size()) {
-						//End match
-						playing = false;
-						System.out.println("All Athletes finished, match over");
-						break;
-					}
-				}
-			}else {
-				//If player wins they get a point. Both Athletes lose stamina and the Opponent athlete changes
-				System.out.println("You won a point");
-				playerScore ++;
-				opponents.get(currentOppIndex).changeStamina(-difficulty-3);
-				playerTeam.get(currentPlayerIndex).changeStamina(-difficulty-1);
-				currentOppIndex ++;
-				//If that was the last player then match ends
-				if(currentOppIndex == opponents.size()) {
-					//End match
-					playing = false;
-					System.out.println("All Opponents finished, match over");
-					break;
-				}
-			}
-			//Check that opponent isn't injured
-			while(opponents.get(currentOppIndex).getIsInjured()) {
-				currentOppIndex ++;
-				//In case Last athlete is injured
-				if(currentOppIndex == opponents.size()) {
-					//End match
-					playing = false;
-					System.out.println("All Opponents injured, can't contiue play");
-					break;
-				}
-			}
-		}	
-		//Implementation of 4a.ii
+	public void endMatch() {
 		System.out.println("Match over, all athletes lose stamina");
 		for(Athlete athlete: playerTeam) {
 			athlete.changeStamina(-1);
@@ -183,25 +76,29 @@ public class Match{
 		if(checkAllInjured()) {
 			//Send message - All athletes were injured so default loss
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
-			int[] rewards = {0,0};
-			return rewards;
-		}else if(opsScore>playerScore) {
+		}else if(oppsScore>playerScore) {
 			//Send message - Opponents win
 			System.out.println("The opponents won the match");
-			int[] rewards = {0,0};
-			return rewards;
-		}else if(playerScore>opsScore){
+		}else if(playerScore>oppsScore){
 			//Send message - You won!
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
-			int[] rewards = {(3+difficulty),(2500*(3-difficulty))};
-			return rewards;
+			gameStats.changePoints(3+gameStats.getDifficulty());
+			gameStats.changeMoney(2500*(3-gameStats.getDifficulty()));
 		}else {
 			//Tie condition - Some rewards
 			//Send message 
 			System.out.println("The match was a tie. Here is a minor reward...");
-			int[] rewards = {(difficulty),(1000*(3-difficulty))};
-			return rewards;
+			gameStats.changePoints(gameStats.getDifficulty());
+			gameStats.changeMoney(1000*(3-gameStats.getDifficulty()));
 		}
+		
+	}
+	
+	public void playMatch() {
+		while(verify()) {
+			verseAthletes(currentPlayerIndex,currentOppIndex);
+
 		}
+	}
 }

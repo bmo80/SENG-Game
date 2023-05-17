@@ -12,15 +12,8 @@ public class MarketPlace{
 	//Number constant to define amount of atk/def players
 	private int NUMBER = 3;
 	public ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
-	//3 MAIN types: Stamina,Offence,Defence
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
-	private int difficulty;
-	//Added current Team and bench Team as vars
-	private ArrayList<Athlete> team;
-	private ArrayList<Athlete> bench;
-	private ArrayList<Item> inventory;
-	public int money;
-	private int week;
+	private MainGame gameStats;
 
 	MarketPlace(){
 		generateAthletes(NUMBER, "A");
@@ -31,19 +24,15 @@ public class MarketPlace{
 	
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
-	MarketPlace(int diff,ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench,
-			ArrayList<Item> currentInventory, int currentMoney, int currentWeek) {
-		week = currentWeek;
-		difficulty = diff;
-		team = currentTeam;
-		bench = currentBench;
-		inventory = currentInventory;
-		money = currentMoney;
+	public MarketPlace(MainGame currentStats) {
+		gameStats = currentStats;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
 		generateItems();
 		MarketPlaceWindow window = new MarketPlaceWindow(this);
 	}
+	
+	
 	//Entering the market to buy/sell things.
 	public int enterMarket() {
 		
@@ -67,12 +56,12 @@ public class MarketPlace{
 					if(athlete.getName().equals(athleteName)) {
 						//Needs to be changed so that athlete can go to bench, 
 						//or team (by swapping a team player to bench)
-						if((money - athlete.getBuyPrice()) >= 0) {
-							team.add(athlete);
-							money -= athlete.getBuyPrice();
-							System.out.println(money);
+						if((gameStats.getMoney() - athlete.getBuyPrice()) >= 0) {
+							gameStats.getTeamList().add(athlete);
+							gameStats.changeMoney(-athlete.getBuyPrice());
+							System.out.println(gameStats.getMoney());
 						} else {
-							System.out.println(money);
+							System.out.println(gameStats.getMoney());
 							System.out.println(athlete.getBuyPrice());
 							System.out.println("Insufficient funds");
 						}
@@ -89,8 +78,8 @@ public class MarketPlace{
 					if(item.getName().equals(itemName)) {
 						//Needs to be changed so that athlete can go to bench, 
 						//or team (by swapping a team player to bench)
-						inventory.add(item);
-						money -= item.getBuyPrice();
+						gameStats.getInventory().add(item);
+						gameStats.changeMoney(-item.getBuyPrice());
 						break;
 					}
 				}
@@ -100,7 +89,7 @@ public class MarketPlace{
 				System.out.println("\nInvalid input...\n");
 			}	
 		}
-		return money;
+		return gameStats.getMoney();
 	}
 	
 	
@@ -113,16 +102,16 @@ public class MarketPlace{
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
 	private Athlete getAthlete(String position) {
-		return new AthleteGenerator(position,week);
+		return new AthleteGenerator(position,gameStats.getWeek());
 	}
 	
 	//Generates one of each type of item
 	//Currently No randomness
 	private void generateItems() {
 		//Cleaned up generation and removed unnecessary getItem method
-		itemsForSale.add(new Item("Stamina", "Stamina Training Kit", 5-difficulty, 1000));
-		itemsForSale.add(new Item("Attack", "Attack Training Kit", 3-difficulty, 1000));
-		itemsForSale.add(new Item("Defence", "Defence Training Kit", 3-difficulty, 1000));
+		itemsForSale.add(new Item("Stamina", "Stamina Training Kit", 5-gameStats.getDifficulty(), 1000));
+		itemsForSale.add(new Item("Attack", "Attack Training Kit", 3-gameStats.getDifficulty(), 1000));
+		itemsForSale.add(new Item("Defence", "Defence Training Kit", 3-gameStats.getDifficulty(), 1000));
 		
 	}	
 	
@@ -138,17 +127,10 @@ public class MarketPlace{
 		}
 	}
 
-	public static void main (String[] args) {
-		MarketPlace market = new MarketPlace();
-		market.enterMarket();
-		
-	}
-	
-	public int getMoney() {
-		return money;
-	}
-	
-	public int getWeek() {
-		return week;
-	}
+	//Testing
+//	public static void main (String[] args) {
+//		MarketPlace market = new MarketPlace();
+//		market.enterMarket();
+//		
+//	}
 }

@@ -7,22 +7,62 @@ import athleteInfo.TeamManager;
 import windows.MainWindow;
 import windows.SetupWindow;
 
+
+/**
+ * Class that contains the game information and calls
+ * other game classes
+ * 
+ * @author Ben Moore + Blair Brydon
+ * @version 1.0 13/5/23
+ */
 public class MainGame {
-	// Properties
-	private String teamName;
+	/*
+	 * Name of player/ players team
+	 */
+	private String playerName;
+	/*
+	 * Player-chosen length of season in weeks 
+	 */
 	private int seasonDuration;
+	/*
+	 * Player's current active team (collection of Athlete objects)
+	 */
 	private ArrayList<Athlete> teamList;
-	//0,1 or 2
+	/*
+	 * Player-chosen difficulty 0/1/2 for easy/medium/hard
+	 */
 	private int difficulty;
+	/*
+	 * Current week - starting at 1
+	 */
 	private int currentWeek;
+	/*
+	 * Player's current bench team (collection of Athlete objects)
+	 */
 	private ArrayList<Athlete> benchList;
+	/*
+	 * Player's current collection of Item objects
+	 */
 	private ArrayList<Item> inventory;
+	/*
+	 * Player's current money balance (for buying Items and Athletes)
+	 */
 	private int money;
+	/*
+	 * Player's total points (earned by winning or tying matches)
+	 */
 	private int totalPoints;
 	
-	// Constructor method, mainly for testing
+	
+	
+	/*
+	 * Constructs Object with given values - used to speed up testing
+	 * @param name		Name of player
+	 * @param duration		Length of season in weeks
+	 * @param chosenDifficulty		difficulty of game
+	 */
 	public MainGame(String name, int duration, int chosenDifficulty) {
-		teamName = name;
+		playerName = name;
 		seasonDuration = duration;
 		//Testing team
 		teamList = setTeam();
@@ -36,13 +76,16 @@ public class MainGame {
 		money = 100000;
 	}
 	
-	// Setup Constructor method
+	/**
+	 * Constructs Object - gets input from user
+	 * 
+	 */
 	public MainGame() {
 		//Put checks in place for all
 		Scanner input = new Scanner(System.in);
 		System.out.print("Name your team (3-15 chars): ");  
 		// might break?
-		teamName = input.nextLine();  
+		playerName = input.nextLine();  
 		System.out.print("How long is the season (5-15 weeks): ");  
 		seasonDuration = input.nextInt();  
 		System.out.print("Set difficulty (1-3): ");
@@ -57,16 +100,22 @@ public class MainGame {
 		money = 0;
 	}
 	
-	//Override toString method
+	/*
+	 * Overrides toString method to display all Game stats/ info
+	 * @return		String with game info
+	 */
 	@Override
 	public String toString() {
 		//Note: the BenchList,TeamList and Inventory are printed with DIFFERENT methods - might change
 		return String.format("The %s team has a %s week season, they are currently on week"
 				+ " %s. The difficulty is %s/2 and they have $%s"
-				+ "",teamName,seasonDuration,currentWeek,difficulty,money);
+				+ "",playerName,seasonDuration,currentWeek,difficulty,money);
 	}
 	
-	// Method for setting default team - mainly for testing
+	/*
+	 *  Method for setting default team - mainly for testing
+	 *  @return 	Default team
+	 */
 	public ArrayList<Athlete> setTeam(){
 		ArrayList<Athlete> team = new ArrayList<Athlete>();		
 		team.add(new Athlete("attack1",7,2,"A"));
@@ -78,6 +127,10 @@ public class MainGame {
 		return team;
 	}
 	
+	/*
+	 *  Method for setting default inventory - mainly for testing
+	 *  @return		Default inventory
+	 */
 	public ArrayList<Item> setInventory(){
 		ArrayList<Item> inventory = new ArrayList<Item>();
 		inventory.add(new Item("Juice","Stamina",5,15));
@@ -88,120 +141,139 @@ public class MainGame {
 	}
 	
 	
-	// getter methods - NOT ALL
 	
+	
+// 		getter methods
+	
+	
+	/*
+	 *  Special method that turns the active and bench teams into a string list
+	 *  @return 	String[] list of Athlete names
+	 */
 	public String[] getTeamsString() {
 		String stringArray[] = new String[teamList.size()+benchList.size()];
 		for(int i=0;i<teamList.size();i++) {
 			stringArray[i] = teamList.get(i).getName();
 		}
-//		System.out.println(stringArray[7]);
 		for(int i=teamList.size();i<(teamList.size()+benchList.size());i++) {
 			stringArray[i] = benchList.get(i-teamList.size()).getName();
 		}
 		return stringArray;
 	}
 	
-	//Should be in Team manager class??
+	/*
+	 * Returns an array of athlete objects from active team
+	 * @return		active team ArrayList<Athlete>
+	 */
  	public ArrayList<Athlete> getTeamList() {
  		return teamList;
  	}
 	
-	public String getTeamName() {
-		return teamName;
+ 	/*
+ 	 * Returns player name
+ 	 * @return		player name
+ 	 */
+	public String getPlayerName() {
+		return playerName;
 	}
 	
-	// print via TeamManager class??
+	/*
+	 * Returns an array of athlete objects from bench team
+	 * @return		bench team ArrayList<Athlete>
+	 */
  	public ArrayList<Athlete> getBenchList() {
  		return benchList;
  	}
 	
+ 	/*
+ 	 * Returns game difficulty
+ 	 * @return		difficulty
+ 	 */
 	public int getDifficulty() {
 		return difficulty;
 	}
 	
+	/*
+	 * Returns Player money
+	 * @return		player money
+	 */
 	public int getMoney() {
 		return money;
 	}
 	
+	/*
+	 * Returns an array of item objects from inventory
+	 * @return		inventory ArrayList<Item>
+	 */
 	public ArrayList<Item> getInventory(){
 		return inventory;
 	}
 	
-	// setter methods - NOT ALL -- Could add text confirmation
-	//not necessary??
-	public void changeWeek() {
-		currentWeek ++;
-		//Generate NEW market and stadium
-		//Also run the Random event method which calls popup window if event happens
+	/*
+	 * Returns current week
+	 * @return		current week
+	 */
+	public int getWeek() {
+		return currentWeek;
 	}
 	
+	
+	
+// 		setter methods
+	
+	
+	/*
+	 * changes money and ensures it's not negative	
+	 * @param amount 	amount to change by
+	 */
 	public void changeMoney(int amount) {
+		if((money + amount)<0) {
+			System.out.println("Your balance can't be negative");
+			money = 0;
+		}
 		money += amount;
 	}
 	
+	/*
+	 * changes total points and ensures it's not negative	
+	 * @param amount 	amount to change by
+	 */
 	public void changePoints(int amount) {
+		if((totalPoints + amount) < 0) {
+			System.out.println("You can't have negative points");
+			totalPoints = 0;
+		}
 		totalPoints += amount;
 	}
 	
-	//Use via TeamManager class
-// 	public void addAthlete(Athlete chosenAthlete) {
-// 		if(teamList.size() >= 6){
-// 			// Call Exception - team full - overflow to bench?
-// 			benchAthlete(chosenAthlete);
-// 		}else {
-// 			teamList.add(chosenAthlete);
-// 		}
-// 	}
 	
 	
-	//MarketPlace functions
-//	public void useItem(Item chosenItem,Athlete chosenAthlete) {
-//		if(chosenItem.getType() == "STA") {
-//			chosenAthlete.changeStamina(chosenItem.getEffect());
-//		}
-//		if(chosenItem.getType() == "ATK") {
-//			chosenAthlete.changeOffence(chosenItem.getEffect());
-//		}
-//		if(chosenItem.getType() == "DEF") {
-//			chosenAthlete.changeDefence(chosenItem.getEffect());
-//		}
-//		inventory.remove(chosenItem);
-//	}
 	
-//	public void buyItem(Item item) {
-//		if(money-item.getBuyPrice()>0) {
-//			money = money - item.getBuyPrice();
-//			inventory.add(item);
-//		}
-//	}
-//	
-//	public void buyAthlete(Athlete athlete) {
-//		if(money-athlete.getBuyPrice()>0) {
-//			money = money - athlete.getBuyPrice();
-//			addAthlete(athlete);
-//			// check for space before removing money??
-//		}
-//	}
-	
-
+// 		Print methods
 	
 	
-	//Print methods
-	//Prints inventory
+	/*
+	 * Prints the toString() for every Item in inventory
+	 */
 	public void printInventory() {
 		for(Item ite:inventory) {
 			System.out.println(ite);
 		}
 	}
 	
+	/*
+	 * Prints the toString() for every Athlete in given team
+	 * @param team 		The team to be printed
+	 */
 	public void printTeam(ArrayList<Athlete> team) {
 		for(Athlete athlete: team) {
 			System.out.println(athlete);
 		}
 	}
 	
-	//Reused from Club class - could move to Team manager instead?
+	
+	
+	//JUST used for Bye method - Train Athlete
 	public Athlete athleteFromInput(String athleteChoice) {
 		while(true){
 //			System.out.print("\nCurrent Active Team...\n");
@@ -226,12 +298,15 @@ public class MainGame {
 	}
 	
 	
-	//Bye could be moved to own class (but for now its just a button
-	//so shouldn't be necessary)
+	/*
+	 * Bye method takes an athlete to train then changes current week,
+	 * Resets the Market, Stadium and athlete stamina. After training
+	 * the method then runs the random event generator
+	 * @param athleteName 		Athlete to be trained
+	 */
 	public void takeBye(String athleteName) {
 		currentWeek ++;
 		resetAthletes();
-//		 train athlete - if chosen
 		trainAthlete(athleteName);
 		// try for random events
 //		runRandomEvents();
@@ -239,7 +314,9 @@ public class MainGame {
 		//resetStadium();
 	}
 
-	
+	/*
+	 * Resets the stamina of all player athletes to 10.
+	 */
  	public void resetAthletes() {
  		for(Athlete athlete:teamList) {
  			athlete.changeStamina(10);
@@ -251,6 +328,10 @@ public class MainGame {
  		}
  	}
 	
+ 	/*
+ 	 * Takes athlete to train and increases their position stat 
+ 	 * depending on the difficulty. 
+ 	 */
 	public void trainAthlete(String athleteName) {
 //		Scanner input = new Scanner(System.in);
 //		System.out.print("Who will you train?");
@@ -263,26 +344,10 @@ public class MainGame {
 	}
 	
 	
-	// method for being 'at the club' - can swap out athletes and use items
-	public void gotoClub() {
-		Club club = new Club(teamList,benchList,inventory);		
-	}
-	
-	public void gotoStadium() {
-		//Fill in random generation of teams (6 opponent Athletes per team)
-		// They will be in a 2D list.
-		Stadium stadium = new Stadium(teamList,benchList,currentWeek);
-		//Forces player to play match
-		Match game = new Match(teamList,stadium.goToStadium(), difficulty);
-		if(game.verify()) {
-			int[] list;
-			list = game.playMatch();
-			changeMoney(list[1]);
-			changePoints(list[0]);
-		}
-	}
-	
-	//JUST FOR TESTING
+	/*
+	 *  Method for setting default opponents - mainly for testing
+	 *  @return 	Default opponent Team
+	 */
 	public ArrayList<Athlete> makeOpponents(){
 		ArrayList<Athlete> team = new ArrayList<Athlete>();
 		team.add(new Athlete("OPPattack1",8,2,"A"));
@@ -296,41 +361,31 @@ public class MainGame {
 	
 	
 	
-	public void gotoMarket() {
-		System.out.println("Welcome to the Market!\n");
-		MarketPlace market = new MarketPlace(difficulty,teamList,benchList,
-				inventory, money, currentWeek);
-		
-		
-		// Shouldn't be needed??
-//		for(Athlete player: market.playersForSale) {
-//			System.out.println(player.getShortDescription());
-//		}
-	}
-		
-	
-	//method that runs main game inputs
+	/*
+	 * main menu method - takes inputs and runs game classes
+	 */
 	public void playGame() {
 		System.out.println(String.format("Money: $%s"
 				+ "\nWeek: %s", money,currentWeek));
 		Scanner input = new Scanner(System.in);
 		System.out.print("Where to go? Club('C'), Market('M'), Stadium('S'), Bye('B')");
 		String choice = input.nextLine();
-		// All should run windows
+		
 		if(choice.toUpperCase().equals("C")) {
-			gotoClub();
+			Club club = new Club(this);
 		}else if(choice.toUpperCase().equals("S")) {
-			gotoStadium();
+			Stadium stadium = new Stadium(this);
 		}else if(choice.toUpperCase().equals("M")) {
-			gotoMarket();
+			MarketPlace market = new MarketPlace(this);
 		}else if(choice.toUpperCase().equals("B")) {
 //			takeBye();
 		}else {
-			//Make an error window pop up
 			System.out.println("Invalid input");
 		}
 	}
 	
+	
+	//Gui code
 	
 	
 	public void launchMainScreen() {
@@ -357,7 +412,7 @@ public class MainGame {
 		//Implement tests
 		MainGame run = new MainGame("Test Team",5,2);
 //		System.out.println(run.getTeamsString());
-		run.launchMainScreen();
+//		run.launchMainScreen();
 		//Setup market and Stadium
 		while(run.seasonDuration - run.currentWeek >= 0) {
 			System.out.println(run);
@@ -365,7 +420,7 @@ public class MainGame {
 		}
 		System.out.println(String.format("The %s team finished the %s week"
 				+ " season with $%s and %s points"
-				+ "", run.teamName,run.seasonDuration,run.money,run.totalPoints));
+				+ "", run.playerName,run.seasonDuration,run.money,run.totalPoints));
 //		MainGame game = new MainGame();
 //		game.gotoMarket();
 

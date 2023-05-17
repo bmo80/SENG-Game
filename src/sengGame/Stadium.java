@@ -8,29 +8,36 @@ import athleteInfo.AthleteGenerator;
 
 public class Stadium {
 
-	private ArrayList<Athlete> players;
-	private ArrayList<Athlete> team, bench = new ArrayList<Athlete>();
-	private ArrayList<ArrayList<Athlete>>enemyTeams;
-	private int week;
+	/*
+	 * stores all game variables from MainGame class
+	 */
+	private MainGame gameStats;
+	/*
+	 * Stores a list of opposing teams 
+	 */
+	private ArrayList<ArrayList<Athlete>> enemyTeams;
 	
-	//Constructor only runs on the first time stadium startup
-	//creates 3 teams of 6 players that the player can choose to play against
-	Stadium(ArrayList<Athlete> setTeam, ArrayList<Athlete> setBench, int currentWeek) {
-		team = setTeam;
-		bench = setBench;
-		week = currentWeek;
+	/*
+	 * Constructor method, generates enemy teams and runs main method
+	 * @param currentStats 		GameInfo
+	 */
+	public Stadium(MainGame currentStats) {
+		gameStats = currentStats;
 		enemyTeams = new ArrayList<ArrayList<Athlete>>();
 		for(int i =0; i<3; i++) {
-			players = new ArrayList<Athlete>();
-			generateAthletes(3, "A");
-			generateAthletes(3, "D");
+			ArrayList<Athlete> players = new ArrayList<Athlete>();
+			generateAthletes(3, "A", players);
+			generateAthletes(3, "D", players);
 			enemyTeams.add(players);
 		}
-		
-		
+		goToStadium();		
 	}
-	//Main Stadium method that runs everytime the player visits the stadium
-	public ArrayList<Athlete> goToStadium() {
+	
+	
+	/*
+	 * Main menu for Stadium class, awaits input from user
+	 */
+	public void goToStadium() {
 		System.out.println("Welcome to the stadium!\n"
 				+ "Please select which team you would like to play"
 				+ "\nfrom the list below\n");
@@ -38,32 +45,36 @@ public class Stadium {
 		String userInput ="";
 		printEnemyTeams();
 		while(!(userInput.toUpperCase().equals("E"))) {
+			System.out.println("Please select a number between 1 and 3 or 'E' to exit");
 			userInput = input.nextLine();
 			if(userInput.equals("1")) {
-				//TODO play match with team 1
-				return enemyTeams.get(0);
+				Match game = new Match(gameStats, enemyTeams.get(0));
 			} else if(userInput.equals("2")) {
-				//TODO play match with team 2
-				return enemyTeams.get(0);
+				Match game = new Match(gameStats, enemyTeams.get(1));
 			} else if(userInput.equals("3")) {
-				//TODO play match with team 3
-				return enemyTeams.get(0);
-			} else {
-				System.out.println("Invalid input. Please select a number between 1 and 3");
+				Match game = new Match(gameStats, enemyTeams.get(2));
+			} else if(!userInput.toUpperCase().equals("E")) {
+				System.out.println("Invalid input.\n");
 			}
 		}
-		//Just here for testing
-		return players;
 	}
 	
-	//Generates 3 random athletes of the given position using AthleteGenerator
-	public void generateAthletes(int size, String position) {
+	/*
+	 * method for generating enemy teams for opponents list
+	 * @param size 		size of team generated
+	 * @param position 		Which position each athlete will be
+	 * @param players 		list to be filled with athletes
+	 */
+	public void generateAthletes(int size, String position,ArrayList<Athlete> players) {
 		for(int i=0; i<size; i++) {
-			AthleteGenerator athlete = new AthleteGenerator(position,week);
+			AthleteGenerator athlete = new AthleteGenerator(position,gameStats.getWeek());
 			players.add(athlete);
 		}
 	}
 	
+	/*
+	 * represents each athlete in each enemy team
+	 */
 	public void printEnemyTeams() {
 		int count = 1;
 		for(ArrayList<Athlete> team: enemyTeams) {
