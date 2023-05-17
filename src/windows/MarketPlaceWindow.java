@@ -107,12 +107,20 @@ public class MarketPlaceWindow{
 		JLabel lblPlayersAndItems = new JLabel("Players and items reset weekly!");
 		lblPlayersAndItems.setBounds(12, 205, 352, 15);
 		frmMarketplace.getContentPane().add(lblPlayersAndItems);
+		
+		JButton btnMainMenu = new JButton("Main Menu");
+		btnMainMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmMarketplace.dispose();
+				MainWindow window = new MainWindow(gameStats);
+			}
+		});
+		btnMainMenu.setBounds(387, 232, 117, 25);
+		frmMarketplace.getContentPane().add(btnMainMenu);
 	}
 	
 	private void launchBuyItemWindow() {
 		BuyItemWindow window = new BuyItemWindow(market, gameStats);
 	}
-	
-
 }
 

@@ -86,6 +86,7 @@ public class MainWindow {
 		JButton btnMarket = new JButton("Market");
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmMainGame.dispose();
 				MarketPlace market = new MarketPlace(game);
 			}
 		});
