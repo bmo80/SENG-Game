@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
+import athleteInfo.TeamManager;
+import sengGame.MainGame;
 import sengGame.MarketPlace;
 
 import java.awt.event.ActionListener;
@@ -19,8 +21,10 @@ public class BuyPlayerWindow {
 
 	private JFrame frmPlayerTrading;
 	private MarketPlace market;
-	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, lblAthleteStam;
+	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, lblAthleteStam, lblPrice;
+	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
 	private int athleteSelected;
+	private MainGame gameStats;
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +44,8 @@ public class BuyPlayerWindow {
 	/**
 	 * Create the application.
 	 */
-	public BuyPlayerWindow(MarketPlace curmarket) {
+	public BuyPlayerWindow(MarketPlace curmarket, MainGame game) {
+		gameStats = game;
 		market = curmarket;
 		initialize();
 		frmPlayerTrading.setVisible(true);
@@ -101,77 +106,32 @@ public class BuyPlayerWindow {
 		lblStamina.setBounds(375, 215, 70, 15);
 		frmPlayerTrading.getContentPane().add(lblStamina);
 		
-		lblAthleteName = new JLabel("New label");
+		lblAthleteName = new JLabel();
 		lblAthleteName.setBounds(450, 115, 108, 15);
 		frmPlayerTrading.getContentPane().add(lblAthleteName);
 		
 		
-		lblAthletePos = new JLabel("New label");
+		lblAthletePos = new JLabel();
 		lblAthletePos.setBounds(450, 140, 108, 15);
 		frmPlayerTrading.getContentPane().add(lblAthletePos);
 		
-		lblAthleteAtt = new JLabel("New label");
+		lblAthleteAtt = new JLabel();
 		lblAthleteAtt.setBounds(450, 165, 108, 15);
 		frmPlayerTrading.getContentPane().add(lblAthleteAtt);
 		
-		lblAthleteDef = new JLabel("New label");
+		lblAthleteDef = new JLabel();
 		lblAthleteDef.setBounds(450, 190, 108, 15);
 		frmPlayerTrading.getContentPane().add(lblAthleteDef);
 		
-		lblAthleteStam = new JLabel("New label");
+		lblAthleteStam = new JLabel();
 		lblAthleteStam.setBounds(450, 215, 108, 15);
 		frmPlayerTrading.getContentPane().add(lblAthleteStam);
 		
-		JButton Athlete2 = new JButton(market.playersForSale.get(1).getName());
-		Athlete2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(2);
-				setAthleteSelected(2);
-			}
-		});
-		Athlete2.setBounds(195, 106, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete2);
+		lblPrice = new JLabel("Price: ");
+		lblPrice.setBounds(375, 240, 160, 15);
+		frmPlayerTrading.getContentPane().add(lblPrice);
 		
-		JButton Athlete3 = new JButton(market.playersForSale.get(2).getName());
-		Athlete3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(3);
-				setAthleteSelected(3);
-			}
-		});
-		Athlete3.setBounds(22, 169, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete3);
 		
-		JButton Athlete4 = new JButton(market.playersForSale.get(3).getName());
-		Athlete4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(4);
-				setAthleteSelected(4);
-			}
-		});
-		Athlete4.setBounds(195, 169, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete4);
-		
-		JButton Athlete5 = new JButton(market.playersForSale.get(4).getName());
-		Athlete5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(5);
-				setAthleteSelected(5);
-			}
-		});
-		Athlete5.setBounds(22, 236, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete5);
-		
-		JButton Athlete6 = new JButton(market.playersForSale.get(5).getName());
-		Athlete6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(6);
-				setAthleteSelected(6);
-			}
-		});
-		Athlete6.setBounds(195, 236, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete6);
-
 		
 		JLabel lblPlayerStats = new JLabel("Player Stats");
 		lblPlayerStats.setBounds(385, 86, 95, 15);
@@ -181,17 +141,7 @@ public class BuyPlayerWindow {
 		lblName.setBounds(375, 115, 70, 15);
 		frmPlayerTrading.getContentPane().add(lblName);
 		
-		JButton Athlete1 = new JButton(market.playersForSale.get(0).getName());
-		Athlete1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playerStatDisplay(1);
-				setAthleteSelected(1);
-			}
-		});
-		Athlete1.setBounds(22, 106, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete1);
-
-
+		setAthleteButtons();
 		
 		JLabel lblTeamSlotsAvailable = new JLabel("Team Slots Available:");
 		lblTeamSlotsAvailable.setBounds(12, 313, 173, 15);
@@ -205,20 +155,28 @@ public class BuyPlayerWindow {
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmPlayerTrading.dispose();
-				MarketPlaceWindow window = new MarketPlaceWindow(market);
+				MarketPlaceWindow window = new MarketPlaceWindow(market, gameStats);
 			}
 		});
 		btnDone.setBounds(369, 327, 117, 25);
 		frmPlayerTrading.getContentPane().add(btnDone);
 		
-		JButton btnPurchase = new JButton("Purchase");
+		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Purchased Athlete number "+athleteSelected);
+				gameStats.getTeams().addAthlete(market.playersForSale.get(athleteSelected-1));
+				System.out.println(gameStats.getTeams().getteamList());
+				gameStats.deductMoney(market.playersForSale.get(athleteSelected-1).getBuyPrice());
+				displayMoney.setText(Integer.toString(gameStats.getMoney()));
+				updateButton(athleteSelected);
+				market.playersForSale.get(athleteSelected-1).setName("Purchased");
 			}
 		});
 		btnPurchase.setBounds(369, 290, 134, 25);
 		frmPlayerTrading.getContentPane().add(btnPurchase);
+		
+		
 		
 	}
 	
@@ -232,6 +190,156 @@ public class BuyPlayerWindow {
 		lblAthleteAtt.setText(Integer.toString(market.playersForSale.get(number-1).getAttack()));
 		lblAthleteDef.setText(Integer.toString(market.playersForSale.get(number-1).getDefence()));
 		lblAthleteStam.setText(Integer.toString(market.playersForSale.get(number-1).getStamina()));
+		lblPrice.setText(String.format("Price: %s", market.playersForSale.get(number-1).getBuyPrice()));
+	}
+	
+	private void updateButton(int index) {
+		switch (index) {
+			case 1:
+				Athlete1.setText("Purchased");
+				Athlete1.setEnabled(false);
+				break;
+			case 2:
+				Athlete2.setText("Purchased");
+				Athlete2.setEnabled(false);
+				break;
+			case 3:
+				Athlete3.setText("Purchased");
+				Athlete3.setEnabled(false);
+				break;
+			case 4:
+				Athlete4.setText("Purchased");
+				Athlete4.setEnabled(false);
+				break;
+			case 5:
+				Athlete5.setText("Purchased");
+				Athlete5.setEnabled(false);
+				break;
+			case 6:
+				Athlete6.setText("Purchased");
+				Athlete6.setEnabled(false);
+				break;
+		}
+	}
+	
+	private void setAthleteButtons() {
+		
+		setButtonName(1);
+		Athlete1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(1);
+				setAthleteSelected(1);
+			}
+		});
+		Athlete1.setBounds(22, 106, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete1);
+		
+		setButtonName(2);
+		Athlete2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(2);
+				setAthleteSelected(2);
+			}
+		});
+		Athlete2.setBounds(195, 106, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete2);
+		
+		setButtonName(3);
+		Athlete3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(3);
+				setAthleteSelected(3);
+			}
+		});
+		Athlete3.setBounds(22, 169, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete3);
+		
+		setButtonName(4);
+		Athlete4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(4);
+				setAthleteSelected(4);
+			}
+		});
+		Athlete4.setBounds(195, 169, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete4);
+		
+		setButtonName(5);
+		Athlete5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(5);
+				setAthleteSelected(5);
+			}
+		});
+		Athlete5.setBounds(22, 236, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete5);
+		
+		setButtonName(6);
+		Athlete6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerStatDisplay(6);
+				setAthleteSelected(6);
+			}
+		});
+		Athlete6.setBounds(195, 236, 160, 39);
+		frmPlayerTrading.getContentPane().add(Athlete6);
+
+	}
+	
+	private void setButtonName(int index) {
+		
+		switch (index) {
+			case 1:
+				Athlete1 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete1.setText("Purchased");
+					Athlete1.setEnabled(false);
+				} else {
+					Athlete1.setText(market.playersForSale.get(index-1).getName());
+				}
+			case 2:
+				Athlete2 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete2.setText("Purchased");
+					Athlete2.setEnabled(false);
+				} else {
+					Athlete2.setText(market.playersForSale.get(index-1).getName());
+				}
+			case 3:
+				Athlete3 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete3.setText("Purchased");
+					Athlete3.setEnabled(false);
+				} else {
+					Athlete3.setText(market.playersForSale.get(index-1).getName());
+				}
+			case 4:
+				Athlete4 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete4.setText("Purchased");
+					Athlete4.setEnabled(false);
+				} else {
+					Athlete4.setText(market.playersForSale.get(index-1).getName());
+				}
+			case 5:
+				Athlete5 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete5.setText("Purchased");
+					Athlete5.setEnabled(false);
+				} else {
+					Athlete5.setText(market.playersForSale.get(index-1).getName());
+				}
+			case 6:
+				Athlete6 = new JButton();
+				if(market.playersForSale.get(index-1).getName().equals("Purchased")) {
+					Athlete6.setText("Purchased");
+					Athlete6.setEnabled(false);
+				} else {
+					Athlete6.setText(market.playersForSale.get(index-1).getName());
+				}
+			
+		}
+		
 	}
 	
 	private void setAthleteSelected(int num) {

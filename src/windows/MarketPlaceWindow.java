@@ -4,9 +4,14 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import athleteInfo.TeamManager;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import sengGame.MainGame;
 import sengGame.MarketPlace;
 
 
@@ -15,7 +20,7 @@ public class MarketPlaceWindow{
 
 	private JFrame frmMarketplace;
 	private MarketPlace market;
-	
+	private MainGame gameStats;
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +44,8 @@ public class MarketPlaceWindow{
 
 
 
-	public MarketPlaceWindow(MarketPlace curMarket) {
+	public MarketPlaceWindow(MarketPlace curMarket, MainGame game) {
+		gameStats = game;
 		market = curMarket;
 		initialize();
 		frmMarketplace.setVisible(true);
@@ -81,7 +87,7 @@ public class MarketPlaceWindow{
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMarketplace.dispose();
-				BuyPlayerWindow window = new BuyPlayerWindow(market);
+				BuyPlayerWindow window = new BuyPlayerWindow(market, gameStats);
 
 			}
 		});
@@ -89,12 +95,22 @@ public class MarketPlaceWindow{
 		frmMarketplace.getContentPane().add(btnBuysellPlayers);
 		
 		JButton btnBuyAndSell = new JButton("Buy and Sell Items");
+		btnBuyAndSell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmMarketplace.dispose();
+				launchBuyItemWindow();
+			}
+		});
 		btnBuyAndSell.setBounds(265, 94, 195, 70);
 		frmMarketplace.getContentPane().add(btnBuyAndSell);
 		
 		JLabel lblPlayersAndItems = new JLabel("Players and items reset weekly!");
 		lblPlayersAndItems.setBounds(12, 205, 352, 15);
 		frmMarketplace.getContentPane().add(lblPlayersAndItems);
+	}
+	
+	private void launchBuyItemWindow() {
+		BuyItemWindow window = new BuyItemWindow(market, gameStats);
 	}
 	
 

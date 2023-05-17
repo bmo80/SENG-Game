@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import athleteInfo.Athlete;
+import athleteInfo.TeamManager;
 import sengGame.Club;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
@@ -22,7 +23,6 @@ public class MainWindow {
 
 	private JFrame frmMainGame;
 	private MainGame game;
-
 	/**
 	 * Launch the application.
 	 */
