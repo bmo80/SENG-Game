@@ -210,6 +210,7 @@ public class MainGame {
 		return inventory;
 	}
 	
+
 	/*
 	 * Returns current week
 	 * @return		current week
