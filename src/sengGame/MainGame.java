@@ -412,7 +412,7 @@ public class MainGame {
 		//Implement tests
 		MainGame run = new MainGame("Test Team",5,2);
 //		System.out.println(run.getTeamsString());
-//		run.launchMainScreen();
+		run.launchMainScreen();
 		//Setup market and Stadium
 		while(run.seasonDuration - run.currentWeek >= 0) {
 			System.out.println(run);

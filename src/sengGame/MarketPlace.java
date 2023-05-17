@@ -94,20 +94,20 @@ public class MarketPlace{
 	
 	
 	//Creates "number" amount of players in a given position
-	private void generateAthletes(int size, String position) {
+	public void generateAthletes(int size, String position) {
 		for(int i=0; i<size; i++) {
 			playersForSale.add(getAthlete(position));
 		}
 	}
 	
 	//Uses AthleteGenerator Class to generate a randomly made athlete
-	private Athlete getAthlete(String position) {
+	public Athlete getAthlete(String position) {
 		return new AthleteGenerator(position,gameStats.getWeek());
 	}
 	
 	//Generates one of each type of item
 	//Currently No randomness
-	private void generateItems() {
+	public void generateItems() {
 		//Cleaned up generation and removed unnecessary getItem method
 		itemsForSale.add(new Item("Stamina", "Stamina Training Kit", 5-gameStats.getDifficulty(), 1000));
 		itemsForSale.add(new Item("Attack", "Attack Training Kit", 3-gameStats.getDifficulty(), 1000));
@@ -115,16 +115,24 @@ public class MarketPlace{
 		
 	}	
 	
-	private void printPlayers() {
+	public void printPlayers() {
 		for(Athlete player: playersForSale) {
 			System.out.println(player);
 		}
 	}
 	
-	private void printItems() {
+	public void printItems() {
 		for(Item item: itemsForSale) {
 			System.out.println(item);
 		}
+	}
+	
+	public int getMoney() {
+		return gameStats.getMoney();
+	}
+	
+	public int getWeek() {
+		return gameStats.getWeek();
 	}
 
 	//Testing
