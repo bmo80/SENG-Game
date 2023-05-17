@@ -45,6 +45,12 @@ public class Item extends Purchasable{
 		return effect;
 	}
 	
+	//Setters
+	
+	public void setName(String newName) {
+		name = newName;
+	}
+	
 	//Main method for testing
 	public static void main(String[] args) {
 		Item ite = new Item();
