@@ -86,6 +86,9 @@ public class Athlete extends Purchasable {
 		return defence;
 	}
 	
+	public void setName(String newName) {
+		name = newName;
+	}
 	
 	
 	// Setter methods - add changeName/ nickname later

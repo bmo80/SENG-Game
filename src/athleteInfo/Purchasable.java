@@ -30,4 +30,8 @@ public class Purchasable {
 	public String getDescription() {
 		return description;
 	}
+	
+	public void setBuyPrice(int price) {
+		buyPrice = price;
+	}
 }
