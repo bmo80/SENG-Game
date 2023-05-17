@@ -5,30 +5,35 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import sengGame.MarketPlace;
+
 public class SellPlayerWindow {
 
 	private JFrame frmManageTeam;
+	private MarketPlace market;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SellPlayerWindow window = new SellPlayerWindow();
-					window.frmManageTeam.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					SellPlayerWindow window = new SellPlayerWindow();
+//					window.frmManageTeam.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public SellPlayerWindow() {
+	public SellPlayerWindow(MarketPlace currentMarket) {
+		market = currentMarket;
 		initialize();
+		frmManageTeam.setVisible(true);
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class SellPlayerWindow {
 		lblMoney.setBounds(12, 12, 70, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
-		JLabel displayMoney = new JLabel(String.valueOf(money));
+		JLabel displayMoney = new JLabel(String.valueOf(market.getMoney()));
 		displayMoney.setBounds(72, 12, 70, 15);
 		frmManageTeam.getContentPane().add(displayMoney);
 		
@@ -54,7 +59,7 @@ public class SellPlayerWindow {
 		lblWeek.setBounds(12, 28, 70, 15);
 		frmManageTeam.getContentPane().add(lblWeek);
 		
-		JLabel weekNum = new JLabel(String.valueOf(week)+"/5");
+		JLabel weekNum = new JLabel(String.valueOf(market.getWeek())+"/5");
 		weekNum.setBounds(72, 28, 70, 15);
 		frmManageTeam.getContentPane().add(weekNum);
 	}

@@ -6,7 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import athleteInfo.Athlete;
+import sengGame.Club;
 import sengGame.MainGame;
+import sengGame.MarketPlace;
+import sengGame.Stadium;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -74,7 +77,7 @@ public class MainWindow {
 		JButton btnClub = new JButton("Club");
 		btnClub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.gotoClub();
+				Club club = new Club(game);
 			}
 		});
 		btnClub.setBounds(12, 52, 117, 77);
@@ -83,7 +86,7 @@ public class MainWindow {
 		JButton btnMarket = new JButton("Market");
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.gotoMarket();
+				MarketPlace market = new MarketPlace(game);
 			}
 		});
 		btnMarket.setBounds(162, 52, 117, 77);
@@ -92,7 +95,7 @@ public class MainWindow {
 		JButton btnStadium = new JButton("Stadium");
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.gotoMarket();
+				Stadium stadium = new Stadium(game);
 			}
 		});
 		btnStadium.setBounds(305, 52, 117, 77);
