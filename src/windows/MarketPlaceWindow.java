@@ -20,35 +20,18 @@ public class MarketPlaceWindow{
 
 	private JFrame frmMarketplace;
 	private MarketPlace market;
-	private MainGame gameStats;
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MarketPlaceWindow window = new MarketPlaceWindow();
-//
-//					window.frmMarketplace.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	private JFrame mainMenu;
 
-	/**
-	 * Create the application.
-	 */
-
-
-
-	public MarketPlaceWindow(MarketPlace curMarket, MainGame game) {
-		gameStats = game;
-		market = curMarket;
+	public MarketPlaceWindow(MarketPlace currentMarket, JFrame window) {
+		mainMenu = window;
+		market = currentMarket;
 		initialize();
 		frmMarketplace.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		mainMenu.setVisible(true);
+		frmMarketplace.dispose();
 	}
 
 	/**
@@ -61,23 +44,15 @@ public class MarketPlaceWindow{
 		frmMarketplace.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMarketplace.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel("Money:");
+		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getMoney()));
 		lblMoney.setBounds(12, 12, 70, 15);
 		frmMarketplace.getContentPane().add(lblMoney);
 		
-		JLabel displayMoney = new JLabel(String.valueOf(market.getMoney()));
-		displayMoney.setBounds(72, 12, 70, 15);
-		frmMarketplace.getContentPane().add(displayMoney);
-		
-		
-		JLabel lblWeek = new JLabel("Week:");
+		JLabel lblWeek = new JLabel(String.format("Week: %s/%s"
+				,market.getWeek(), market.getGameStats().getDuration()));
 		lblWeek.setBounds(12, 28, 70, 15);
 		frmMarketplace.getContentPane().add(lblWeek);
 		
-		JLabel weekNum = new JLabel(String.valueOf(market.getWeek())+"/5");
-
-		weekNum.setBounds(72, 28, 70, 15);
-		frmMarketplace.getContentPane().add(weekNum);
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the Marketplace!");
 		lblWelcomeToThe.setBounds(154, 28, 232, 15);
@@ -86,9 +61,8 @@ public class MarketPlaceWindow{
 		JButton btnBuysellPlayers = new JButton("Buy and Sell Players");
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BuyPlayerWindow window = new BuyPlayerWindow(market, mainMenu);
 				frmMarketplace.dispose();
-				BuyPlayerWindow window = new BuyPlayerWindow(market, gameStats);
-
 			}
 		});
 		btnBuysellPlayers.setBounds(35, 94, 195, 70);
@@ -97,8 +71,8 @@ public class MarketPlaceWindow{
 		JButton btnBuyAndSell = new JButton("Buy and Sell Items");
 		btnBuyAndSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BuyItemWindow window = new BuyItemWindow(market, mainMenu);
 				frmMarketplace.dispose();
-				launchBuyItemWindow();
 			}
 		});
 		btnBuyAndSell.setBounds(265, 94, 195, 70);
@@ -111,16 +85,11 @@ public class MarketPlaceWindow{
 		JButton btnMainMenu = new JButton("Main Menu");
 		btnMainMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmMarketplace.dispose();
-				MainWindow window = new MainWindow(gameStats);
+				closeWindow();
 			}
 		});
 		btnMainMenu.setBounds(387, 232, 117, 25);
 		frmMarketplace.getContentPane().add(btnMainMenu);
 	}
 	
-	private void launchBuyItemWindow() {
-		BuyItemWindow window = new BuyItemWindow(market, gameStats);
-	}
 }
-

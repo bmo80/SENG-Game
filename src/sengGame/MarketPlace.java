@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import windows.MarketPlaceWindow;
 import athleteInfo.Item;
-import athleteInfo.TeamManager;
 import athleteInfo.Athlete;
+import athleteInfo.TeamManager;
 import athleteInfo.AthleteGenerator;
 
 public class MarketPlace{
 	
 	//Number constant to define amount of atk/def players
 	private int NUMBER = 3;
-	public ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
-	public ArrayList<Item> itemsForSale = new ArrayList<Item>();
-	//team consists of the teamList and benchList
+	private ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
+	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private MainGame gameStats;
-	MarketPlace(){
-		generateAthletes(NUMBER, "A");
-		generateAthletes(NUMBER, "D");
-		generateItems();
-		MarketPlaceWindow window = new MarketPlaceWindow(this);
-	}
+
+//	MarketPlace(){
+//		generateAthletes(NUMBER, "A");
+//		generateAthletes(NUMBER, "D");
+//		generateItems();
+//		MarketPlaceWindow window = new MarketPlaceWindow(this);
+//	}
 	
 	//Use to generate new players and refresh items after new week
 	//Changed from method into constructor
@@ -29,8 +29,7 @@ public class MarketPlace{
 		gameStats = game;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
-		generateItems();
-		MarketPlaceWindow window = new MarketPlaceWindow(this, gameStats);
+//		generateItems();
 	}
 	
 	
@@ -58,7 +57,7 @@ public class MarketPlace{
 						//Needs to be changed so that athlete can go to bench, 
 						//or team (by swapping a team player to bench)
 						if((gameStats.getMoney() - athlete.getBuyPrice()) >= 0) {
-							gameStats.getTeams().add(athlete);
+							gameStats.getTeams().getTeamList().add(athlete);
 							gameStats.changeMoney(-athlete.getBuyPrice());
 							System.out.println(gameStats.getMoney());
 						} else {
@@ -108,6 +107,18 @@ public class MarketPlace{
 		return athlete;
 	}
 	
+	public ArrayList<Item> getItemsForSale(){
+		return itemsForSale;
+	}
+	
+	public ArrayList<Athlete> getPlayersForSale(){
+		return playersForSale;
+	}
+	
+	public MainGame getGameStats() {
+		return gameStats;
+	}
+	
 	//Generates one of each type of item
 	//Currently No randomness
 	public void generateItems() {
@@ -138,8 +149,6 @@ public class MarketPlace{
 	public int getWeek() {
 		return gameStats.getWeek();
 	}
-	
-	
 
 	//Testing
 //	public static void main (String[] args) {

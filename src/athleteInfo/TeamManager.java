@@ -1,6 +1,7 @@
 package athleteInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TeamManager {
 	
@@ -13,7 +14,7 @@ public class TeamManager {
 	}
 	
 	//Getters
-	public ArrayList<Athlete> getteamList() {
+	public ArrayList<Athlete> getTeamList() {
 		return teamList;
 	}
 	
@@ -42,9 +43,21 @@ public class TeamManager {
 	}
 	
 	
-	//Override ToString??
+	//Override toString??
+	@Override
+	public String toString() {
+		String s = "";
+		for(Athlete athlete:teamList) {
+			s += athlete.toString();
+		}
+		for(Athlete athlete:bench) {
+			s += athlete.toString();
+		}
+		return s;
+	}
+	
 	//Prints Athletes in collection by name
-	public void printteamList(ArrayList<Athlete> collection) {
+	public void printTeamList(ArrayList<Athlete> collection) {
 		for(Athlete athlete:collection) {
 			System.out.println(athlete);
 		}
@@ -56,6 +69,31 @@ public class TeamManager {
 		}
 		for(Athlete athlete:teamList) {
 			athlete.changeStamina(10);
+		}
+	}
+	
+	
+	public void swap(Athlete athlete1, Athlete athlete2) {
+		if(teamList.contains(athlete1)) {
+			if(teamList.contains(athlete2)) {
+//				both top
+				int ath2Index = teamList.indexOf(athlete2);
+				teamList.set(teamList.indexOf(athlete1), athlete2);
+				teamList.set(ath2Index, athlete1);
+				
+			}else {
+				int ath2Index = bench.indexOf(athlete2);
+				teamList.set(teamList.indexOf(athlete1), athlete2);
+				bench.set(ath2Index, athlete1);
+			}
+		}else if(teamList.contains(athlete2)) {
+			int ath2Index = teamList.indexOf(athlete2);
+			bench.set(bench.indexOf(athlete1), athlete2);
+			teamList.set(ath2Index, athlete2);
+		}else {
+			int ath2Index = bench.indexOf(athlete2);
+			bench.set(bench.indexOf(athlete1), athlete2);
+			bench.set(ath2Index, athlete1);
 		}
 	}
 	

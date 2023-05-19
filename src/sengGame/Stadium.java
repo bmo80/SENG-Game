@@ -30,7 +30,7 @@ public class Stadium {
 			generateAthletes(3, "D", players);
 			enemyTeams.add(players);
 		}
-		goToStadium();		
+//		goToStadium();
 	}
 	
 	

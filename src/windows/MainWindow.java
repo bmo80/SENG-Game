@@ -23,27 +23,16 @@ public class MainWindow {
 
 	private JFrame frmMainGame;
 	private MainGame game;
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainWindow window = new MainWindow();
-//					window.frmMainGame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	private MarketPlace market;
+	private Stadium stadium;
 
 	/**
 	 * Create the application.
 	 */
 	public MainWindow(MainGame getGame) {
 		game = getGame;
+		market = new MarketPlace(game);
+		stadium = new Stadium(game);
 		initialize();
 		frmMainGame.setVisible(true);		
 	}
@@ -56,6 +45,10 @@ public class MainWindow {
 		game.closeMainScreen(this);
 	}
 	
+	public void showWindow() {
+		frmMainGame.setVisible(true);
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -66,28 +59,33 @@ public class MainWindow {
 		frmMainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMainGame.getContentPane().setLayout(null);
 		
-		JLabel MoneyLbl = new JLabel("Money: ");
-		MoneyLbl.setBounds(12, 8, 70, 15);
+		JLabel MoneyLbl = new JLabel(String.format("Money: $%s", game.getMoney()));
+		MoneyLbl.setBounds(12, 8, 426, 15);
 		frmMainGame.getContentPane().add(MoneyLbl);
 		
-		JLabel WeekLbl = new JLabel("Week: ");
-		WeekLbl.setBounds(12, 25, 70, 15);
+		JLabel WeekLbl = new JLabel(String.format("Week: %s", game.getWeek()));
+		WeekLbl.setBounds(12, 25, 91, 15);
 		frmMainGame.getContentPane().add(WeekLbl);
+		
+		
 		
 		JButton btnClub = new JButton("Club");
 		btnClub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Club club = new Club(game);
+				frmMainGame.setVisible(false);
+				ClubWindow club = new ClubWindow(game, frmMainGame);
 			}
 		});
 		btnClub.setBounds(12, 52, 117, 77);
 		frmMainGame.getContentPane().add(btnClub);
 		
+		
+		
 		JButton btnMarket = new JButton("Market");
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmMainGame.dispose();
-				MarketPlace market = new MarketPlace(game);
+				frmMainGame.setVisible(false);
+				MarketPlaceWindow window = new MarketPlaceWindow(market, frmMainGame);
 			}
 		});
 		btnMarket.setBounds(162, 52, 117, 77);
@@ -96,33 +94,36 @@ public class MainWindow {
 		JButton btnStadium = new JButton("Stadium");
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Stadium stadium = new Stadium(game);
+				frmMainGame.setVisible(false);
+//				Stadium stadium = new Stadium(game, frmMainGame);
 			}
 		});
 		btnStadium.setBounds(305, 52, 117, 77);
 		frmMainGame.getContentPane().add(btnStadium);
 		
-		JButton btnBye = new JButton("Bye");
+		
+		
+		JButton btnBye = new JButton("Take bye week");
 		btnBye.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showConfirmDialog(frmMainGame, 
 						"This will advance to the next week.\nDo you want to continue?",
 						"Bye Warning",JOptionPane.YES_NO_OPTION);
 				if(choice == JOptionPane.YES_OPTION) {
+					frmMainGame.dispose();
 					String[] choices = game.getTeamsString();
 					String selection = (String) JOptionPane.showInputDialog(
 							frmMainGame,"Who do you want to train?",
 							"Weekly training", JOptionPane.PLAIN_MESSAGE,
 							null, choices, null);
-					game.takeBye(selection);
 					//Run special window (over top) showing what happened
 					//e.g. week advanced, athletes/Market/stadium reset
 					//ALSO inform random events
-					//ByeWindow();
-				}
+					ByeWindow byeWindow = new ByeWindow(game,selection);
+;				}
 			}
 		});
-		btnBye.setBounds(162, 196, 117, 25);
+		btnBye.setBounds(147, 196, 148, 25);
 		frmMainGame.getContentPane().add(btnBye);
 	}
 }

@@ -56,7 +56,6 @@ public class MainGame {
 	private TeamManager teams;
 	
 	
-	
 	/*
 	 * Constructs Object with given values - used to speed up testing
 	 * @param name		Name of player
@@ -72,7 +71,7 @@ public class MainGame {
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		benchList.add(new Athlete("bench1",5,5,"A"));
-		TeamManager teams = new TeamManager(teamList,benchList);
+		teams = new TeamManager(teamList,benchList);
 		//test inventory
 		inventory = setInventory();
 		money = 100000;
@@ -93,7 +92,6 @@ public class MainGame {
 		System.out.print("Set difficulty (1-3): ");
 		difficulty = input.nextInt()-1;
 		teamList = new ArrayList<Athlete>();
-		// Currently TeamList is set as a static team
 		currentWeek = 1;
 		benchList = new ArrayList<Athlete>();
 		teams = new TeamManager(teamList,benchList);
@@ -210,7 +208,6 @@ public class MainGame {
 		return inventory;
 	}
 	
-
 	/*
 	 * Returns current week
 	 * @return		current week
@@ -219,6 +216,9 @@ public class MainGame {
 		return currentWeek;
 	}
 	
+	public int getDuration() {
+		return seasonDuration;
+	}
 	
 	
 // 		setter methods
@@ -234,13 +234,6 @@ public class MainGame {
 			money = 0;
 		}
 		money += amount;
-	}
-	
-	public void deductMoney(int amount) {
-		if((money-amount)<0) {
-			System.out.println("Not enough money");
-		}
-		money -= amount;
 	}
 	
 	/*
@@ -313,10 +306,11 @@ public class MainGame {
 	 * the method then runs the random event generator
 	 * @param athleteName 		Athlete to be trained
 	 */
-	public void takeBye(String athleteName) {
+	public Athlete takeBye(String athleteName) {
 		currentWeek ++;
 		resetAthletes();
 		trainAthlete(athleteName);
+		return athleteFromInput(athleteName);
 		// try for random events
 //		runRandomEvents();
 		//resetMarket();
@@ -329,10 +323,12 @@ public class MainGame {
  	public void resetAthletes() {
  		for(Athlete athlete:teamList) {
  			athlete.changeStamina(10);
+ 			//REMOVE l8r
  			athlete.changeIsInjured(false);
  		}
  		for(Athlete athlete:teamList) {
  			athlete.changeStamina(10);
+ 			//REMOVE l8r
  			athlete.changeIsInjured(false);
  		}
  	}
@@ -400,7 +396,7 @@ public class MainGame {
 	public void launchMainScreen() {
 		MainWindow mainWindow = new MainWindow(this);
 	}
-	
+		
 	public void closeMainScreen(MainWindow mainWindow) {
 		mainWindow.closeWindow();
 	}
@@ -419,8 +415,7 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame();
-//		System.out.println(run.getTeamsString());
+		MainGame run = new MainGame("Test Team",5,2);
 		run.launchMainScreen();
 		//Setup market and Stadium
 		while(run.seasonDuration - run.currentWeek >= 0) {

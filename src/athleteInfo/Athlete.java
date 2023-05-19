@@ -14,8 +14,8 @@ public class Athlete extends Purchasable {
 	public Athlete(){
 		super();
 		//Reserved name
-		name = "Default Athlete";
-		stamina = 10; 
+		name = "NULL";
+		stamina = 0; 
 		attack = 0;
 		defence = 0;
 		position = "D";
@@ -39,7 +39,7 @@ public class Athlete extends Purchasable {
 	//Over
 	@Override
 	public String toString() {
-		return String.format("%s: ATK(%s) DEF(%s) POS(%s) STA(%s)) "+
+		return String.format("%s ATK(%s) DEF(%s) POS(%s) STA(%s)) "+
 				(isInjured?"Injured":""),name, attack, defence, position, stamina);
 	}
 	
@@ -86,12 +86,13 @@ public class Athlete extends Purchasable {
 		return defence;
 	}
 	
+	
+	
+	// Setter methods - add changeName/ nickname later
 	public void setName(String newName) {
 		name = newName;
 	}
 	
-	
-	// Setter methods - add changeName/ nickname later
 	public void changeStamina(int change) {
 		stamina = verifyChange(stamina, change);
 		if(stamina == 0) {

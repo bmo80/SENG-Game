@@ -46,7 +46,6 @@ public class Item extends Purchasable{
 	}
 	
 	//Setters
-	
 	public void setName(String newName) {
 		name = newName;
 	}

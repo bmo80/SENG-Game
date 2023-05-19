@@ -59,7 +59,7 @@ public class Club {
 	 * @return 		First Item in inventory that matches given name
 	 */
 	public Athlete athleteFromString(String athleteName) {
-		for(Athlete athlete: gameStats.getTeamList()) {
+		for(Athlete athlete: gameStats.getTeams().getTeamList()) {
 			if(athlete.getName().equals(athleteName)) {
 				return athlete;
 			}
@@ -96,7 +96,7 @@ public class Club {
 		if(athleteChoice.toUpperCase().equals("E")) {
 			return "E";
 		}
-		for(Athlete athlete: gameStats.getTeamList()) {
+		for(Athlete athlete: gameStats.getTeams().getTeamList()) {
 			if(athlete.getName().equals(athleteChoice)) {
 				return athlete.getName();
 			}
@@ -139,7 +139,7 @@ public class Club {
 		String athleteChoice = "";
 		while(!(athleteChoice.toUpperCase().equals("E"))) {
 			System.out.print("\nCurrent Active Team...\n");
-			printTeam(gameStats.getTeamList());
+			printTeam(gameStats.getTeams().getTeamList());
 			System.out.print("\nCurrent Bench Team...\n");
 			printTeam(gameStats.getBenchList());
 			athleteChoice = teamInput();
@@ -159,14 +159,14 @@ public class Club {
 	 */
 	public void Swap(Athlete athleteOne, Athlete athleteTwo) {
 		//Currently does NOT take index into account
-		if(gameStats.getTeamList().contains(athleteOne) && gameStats.getBenchList().contains(athleteTwo)) {
-			gameStats.getTeamList().remove(athleteOne);
-			gameStats.getTeamList().add(athleteTwo);
+		if(gameStats.getTeams().getTeamList().contains(athleteOne) && gameStats.getBenchList().contains(athleteTwo)) {
+			gameStats.getTeams().getTeamList().remove(athleteOne);
+			gameStats.getTeams().getTeamList().add(athleteTwo);
 			gameStats.getBenchList().remove(athleteTwo);
 			gameStats.getBenchList().add(athleteOne);
-		}else if(gameStats.getBenchList().contains(athleteOne) && gameStats.getTeamList().contains(athleteTwo)){
-			gameStats.getTeamList().remove(athleteTwo);
-			gameStats.getTeamList().add(athleteOne);
+		}else if(gameStats.getBenchList().contains(athleteOne) && gameStats.getTeams().getTeamList().contains(athleteTwo)){
+			gameStats.getTeams().getTeamList().remove(athleteTwo);
+			gameStats.getTeams().getTeamList().add(athleteOne);
 			gameStats.getBenchList().remove(athleteOne);
 			gameStats.getBenchList().add(athleteTwo);
 		}else {
@@ -211,7 +211,7 @@ public class Club {
 		System.out.print(String.format("\nEnter the name of an athlete to use %s"
 				+ " on them or 'E' to return",itemChoice));
 		System.out.print("\nCurrent Active Team...\n");
-		printTeam(gameStats.getTeamList());
+		printTeam(gameStats.getTeams().getTeamList());
 		System.out.print("\nCurrent Bench Team...\n");
 		printTeam(gameStats.getBenchList());
 		String athleteChoice = "";

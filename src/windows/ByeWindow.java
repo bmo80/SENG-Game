@@ -3,41 +3,89 @@ package windows;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import athleteInfo.Athlete;
+import sengGame.MainGame;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ByeWindow {
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ByeWindow window = new ByeWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JFrame frmByeWindow;
+	private MainGame game;
+	private Athlete trainedAthlete;
 
 	/**
 	 * Create the application.
 	 */
-	public ByeWindow() {
+	public ByeWindow(MainGame currentGame,String athleteName) {
+		game = currentGame;
+		trainedAthlete = game.takeBye(athleteName);
+		//Add random event
 		initialize();
+		frmByeWindow.setVisible(true);
+		
+	}
+	
+	public void closeWindow() {
+		game.launchMainScreen();
+		frmByeWindow.dispose();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
+		frmByeWindow = new JFrame();
+		frmByeWindow.setTitle("Bye Window");
+		frmByeWindow.setBounds(100, 100, 450, 300);
+		frmByeWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmByeWindow.getContentPane().setLayout(null);
+		
+		JLabel lblAfterTakingA = new JLabel("After taking a bye week, the following happened:");
+		lblAfterTakingA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAfterTakingA.setBounds(12, 23, 416, 15);
+		frmByeWindow.getContentPane().add(lblAfterTakingA);
+		
+		JLabel athleteLabel = new JLabel(String.format("%s gained %s %s",
+				trainedAthlete.getName(), Integer.toString(4-game.getDifficulty()),
+				trainedAthlete.getPosition()));
+		athleteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		athleteLabel.setBounds(12, 56, 416, 15);
+		frmByeWindow.getContentPane().add(athleteLabel);
 
+		JLabel lblMarketAndStadium = new JLabel("Market and Stadium have been reset");
+		lblMarketAndStadium.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMarketAndStadium.setBounds(12, 88, 416, 15);
+		frmByeWindow.getContentPane().add(lblMarketAndStadium);
+		
+		JLabel lblAllAthletesHave = new JLabel("All athletes have full stamina");
+		lblAllAthletesHave.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAllAthletesHave.setBounds(12, 120, 416, 15);
+		frmByeWindow.getContentPane().add(lblAllAthletesHave);
+		
+		JLabel lblRandomEvent = new JLabel("Special Event:");
+		lblRandomEvent.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRandomEvent.setBounds(12, 149, 416, 15);
+		frmByeWindow.getContentPane().add(lblRandomEvent);
+		
+		//To be added
+		JLabel randomEventLabel = new JLabel("Random Event");
+		randomEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		randomEventLabel.setBounds(12, 169, 416, 51);
+		frmByeWindow.getContentPane().add(randomEventLabel);
+		
+		JButton continueButton = new JButton("Continue");
+		continueButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				closeWindow();
+			}
+		});
+		continueButton.setBounds(165, 232, 117, 25);
+		frmByeWindow.getContentPane().add(continueButton);
+	}
 }

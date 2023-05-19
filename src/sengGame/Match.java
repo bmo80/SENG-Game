@@ -14,7 +14,7 @@ public class Match{
 	public Match(MainGame currentStats, ArrayList<Athlete> opps){
 		gameStats = currentStats;
 		opponents = opps;
-		playerTeam = gameStats.getTeamList();
+		playerTeam = gameStats.getTeams().getTeamList();
 		playMatch();
 	}
 	
