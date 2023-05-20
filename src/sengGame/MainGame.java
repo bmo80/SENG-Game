@@ -298,7 +298,7 @@ public class MainGame {
 		if(choice.toUpperCase().equals("C")) {
 			Club club = new Club(this);
 		}else if(choice.toUpperCase().equals("S")) {
-			Stadium stadium = new Stadium(this);
+//			Stadium stadium = new Stadium(this);
 		}else if(choice.toUpperCase().equals("M")) {
 			MarketPlace market = new MarketPlace(this);
 		}else if(choice.toUpperCase().equals("B")) {
@@ -308,6 +308,14 @@ public class MainGame {
 		}
 	}
 	
+	
+	
+	public void checkGameEnd(MarketPlace market) {
+		if(teams.getFreeSlots() - market.getPlayerCount() >= 6) {
+			//NOT ENOUGH PLAYERS END GAME
+			System.out.println("GAME OVER, NOT ENOUGH PLAYERS");
+		}
+	}
 	
 	//Gui code
 	
@@ -334,16 +342,16 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame();
+		MainGame run = new MainGame("a",2,2);
 		run.launchMainScreen();
 		//Setup market and Stadium
 //		while(run.seasonDuration - run.currentWeek >= 0) {
 //			System.out.println(run);
 //			run.playGame();
 //		}
-		System.out.println(String.format("The %s team finished the %s week"
-				+ " season with $%s and %s points"
-				+ "", run.playerName,run.seasonDuration,run.money,run.totalPoints));
+//		System.out.println(String.format("The %s team finished the %s week"
+//				+ " season with $%s and %s points"
+//				+ "", run.playerName,run.seasonDuration,run.money,run.totalPoints));
 //		MainGame game = new MainGame();
 //		game.gotoMarket();
 	

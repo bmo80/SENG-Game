@@ -32,7 +32,7 @@ public class MainWindow {
 	public MainWindow(MainGame getGame) {
 		game = getGame;
 		market = new MarketPlace(game);
-		stadium = new Stadium(game, frmMainGame);
+		stadium = new Stadium(game);
 		initialize();
 		frmMainGame.setVisible(true);		
 	}
@@ -96,7 +96,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
 				System.out.println("hello");
-				StadiumWindow window = new StadiumWindow(game, stadium);
+				StadiumWindow window = new StadiumWindow(stadium, frmMainGame);
 			}
 		});
 		btnStadium.setBounds(305, 52, 117, 77);

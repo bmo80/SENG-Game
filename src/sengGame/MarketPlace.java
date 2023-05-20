@@ -116,6 +116,16 @@ public class MarketPlace{
 		return playersForSale;
 	}
 	
+	public int getPlayerCount() {
+		int i = 0;
+		for(Athlete athlete: playersForSale) {
+			if(!athlete.getName().equals("Purchased")) {
+				i ++;
+			}
+		}
+		return i;
+	}
+	
 	public MainGame getGameStats() {
 		return gameStats;
 	}

@@ -17,35 +17,17 @@ import java.awt.event.ActionEvent;
 
 public class StadiumWindow {
 
-	private JFrame frmStadium;
+	private JFrame frmStadium, mainMenu;
 	JButton btnTeam1, btnTeam2, btnTeam3;
 	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
 	private int buttonSelected;
-	private MainGame mainGame;
 	private Stadium stadium;
-	private JFrame mainWindow;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StadiumWindow window = new StadiumWindow();
-					window.frmStadium.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
-	public StadiumWindow(MainGame currentGame, Stadium curStadium) {
+	public StadiumWindow(Stadium curStadium, JFrame mainGame) {
+		mainMenu = mainGame;
 		stadium = curStadium;
-		mainGame = currentGame;
 		initialize();
 		frmStadium.setVisible(true);
 	}

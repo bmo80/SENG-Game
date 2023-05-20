@@ -244,6 +244,7 @@ public class SellPlayerWindow {
 					market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
 					lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
 					setButtons();
+					market.getGameStats().checkGameEnd(market);
 				}
 			}
 		});

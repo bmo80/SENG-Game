@@ -15,7 +15,6 @@ public class Stadium {
 	 * stores all game variables from MainGame class
 	 */
 	private MainGame gameStats;
-	private JFrame mainWindow;
 	/*
 	 * Stores a list of opposing teams 
 	 */
@@ -25,8 +24,7 @@ public class Stadium {
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats 		GameInfo
 	 */
-	public Stadium(MainGame currentStats, JFrame mainGame) {
-		mainWindow = mainGame;
+	public Stadium(MainGame currentStats) {
 		gameStats = currentStats;
 		enemyTeams = new ArrayList<ArrayList<Athlete>>();
 		for(int i =0; i<3; i++) {
