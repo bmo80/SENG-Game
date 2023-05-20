@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import athleteInfo.Athlete;
 import sengGame.MainGame;
@@ -22,6 +23,7 @@ public class StadiumWindow {
 	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
 	private int buttonSelected;
 	private Stadium stadium;
+	private ArrayList<Athlete> teamChosen;
 	/**
 	 * Create the application.
 	 */
@@ -119,6 +121,15 @@ public class StadiumWindow {
 		startLabels();
 		
 		JButton btnChoose = new JButton("Choose");
+		btnChoose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				teamChosen = stadium.getEnemyTeams().get(buttonSelected-1);
+				System.out.println(String.format("Team chosen: %s", buttonSelected));
+				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
+						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				//TODO setup to play a game vs PLAYER team if yes is chosen
+			}
+		});
 		btnChoose.setBounds(351, 280, 89, 23);
 		frmStadium.getContentPane().add(btnChoose);
 		
