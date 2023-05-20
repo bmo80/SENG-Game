@@ -64,7 +64,7 @@ public class Club {
 				return athlete;
 			}
 		}
-		for(Athlete athlete: gameStats.getBenchList()) {
+		for(Athlete athlete: gameStats.getTeams().getBench()) {
 			if(athlete.getName().equals(athleteName)) {
 				return athlete;
 			}
@@ -101,7 +101,7 @@ public class Club {
 				return athlete.getName();
 			}
 		}
-		for(Athlete athlete: gameStats.getBenchList()) {
+		for(Athlete athlete: gameStats.getTeams().getBench()) {
 			if(athlete.getName().equals(athleteChoice)) {
 				return athlete.getName();
 			}
@@ -141,7 +141,7 @@ public class Club {
 			System.out.print("\nCurrent Active Team...\n");
 			printTeam(gameStats.getTeams().getTeamList());
 			System.out.print("\nCurrent Bench Team...\n");
-			printTeam(gameStats.getBenchList());
+			printTeam(gameStats.getTeams().getBench());
 			athleteChoice = teamInput();
 			if(athleteChoice.equals("ERROR")) {
 				System.out.println("input was not an athlete or 'E'");
@@ -159,16 +159,16 @@ public class Club {
 	 */
 	public void Swap(Athlete athleteOne, Athlete athleteTwo) {
 		//Currently does NOT take index into account
-		if(gameStats.getTeams().getTeamList().contains(athleteOne) && gameStats.getBenchList().contains(athleteTwo)) {
+		if(gameStats.getTeams().getTeamList().contains(athleteOne) && gameStats.getTeams().getBench().contains(athleteTwo)) {
 			gameStats.getTeams().getTeamList().remove(athleteOne);
 			gameStats.getTeams().getTeamList().add(athleteTwo);
-			gameStats.getBenchList().remove(athleteTwo);
-			gameStats.getBenchList().add(athleteOne);
-		}else if(gameStats.getBenchList().contains(athleteOne) && gameStats.getTeams().getTeamList().contains(athleteTwo)){
+			gameStats.getTeams().getBench().remove(athleteTwo);
+			gameStats.getTeams().getBench().add(athleteOne);
+		}else if(gameStats.getTeams().getBench().contains(athleteOne) && gameStats.getTeams().getTeamList().contains(athleteTwo)){
 			gameStats.getTeams().getTeamList().remove(athleteTwo);
 			gameStats.getTeams().getTeamList().add(athleteOne);
-			gameStats.getBenchList().remove(athleteOne);
-			gameStats.getBenchList().add(athleteTwo);
+			gameStats.getTeams().getBench().remove(athleteOne);
+			gameStats.getTeams().getBench().add(athleteTwo);
 		}else {
 			//Must be in same section so Index swap would go here
 		}
@@ -213,7 +213,7 @@ public class Club {
 		System.out.print("\nCurrent Active Team...\n");
 		printTeam(gameStats.getTeams().getTeamList());
 		System.out.print("\nCurrent Bench Team...\n");
-		printTeam(gameStats.getBenchList());
+		printTeam(gameStats.getTeams().getBench());
 		String athleteChoice = "";
 		while(!(athleteChoice.toUpperCase().equals("E"))) {
 			athleteChoice = teamInput();

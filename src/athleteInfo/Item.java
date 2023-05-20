@@ -12,7 +12,7 @@ public class Item extends Purchasable{
 	//Constructors
 	public Item() {
 		super();
-		name = "Default item";
+		name = "NULL";
 		type = "Stamina";
 		effect = 10;
 	}
@@ -23,12 +23,6 @@ public class Item extends Purchasable{
 		name = defName;
 		type = defType;
 		effect = defEffect;
-	}
-	
-	// override toString
-	@Override
-	public String toString() {
-		return String.format("%s changes %s by %s",name,type,effect);
 	}
 	
 	
@@ -50,9 +44,4 @@ public class Item extends Purchasable{
 		name = newName;
 	}
 	
-	//Main method for testing
-	public static void main(String[] args) {
-		Item ite = new Item();
-		System.out.println(ite);
-	}
 }

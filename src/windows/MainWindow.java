@@ -111,7 +111,7 @@ public class MainWindow {
 						"Bye Warning",JOptionPane.YES_NO_OPTION);
 				if(choice == JOptionPane.YES_OPTION) {
 					frmMainGame.dispose();
-					String[] choices = game.getTeamsString();
+					String[] choices = game.getTeams().getTeamsString();
 					String selection = (String) JOptionPane.showInputDialog(
 							frmMainGame,"Who do you want to train?",
 							"Weekly training", JOptionPane.PLAIN_MESSAGE,

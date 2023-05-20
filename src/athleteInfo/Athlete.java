@@ -43,12 +43,12 @@ public class Athlete extends Purchasable {
 				(isInjured?"Injured":""),name, attack, defence, position, stamina);
 	}
 	
-	public String getLongDescription() {
-		return String.format("%s has an attack stat of %s, a Defence stat of %s"
-				+ " and is in position %s.\nThey have %s stamina, %s"
-				+ " previous injuries and are currently" + (isInjured?"":" not") + " injured"
-				+ "",name, attack, defence, position, stamina, previousInjuries);
-	}
+//	public String getLongDescription() {
+//		return String.format("%s has an attack stat of %s, a Defence stat of %s"
+//				+ " and is in position %s.\nThey have %s stamina, %s"
+//				+ " previous injuries and are currently" + (isInjured?"":" not") + " injured"
+//				+ "",name, attack, defence, position, stamina, previousInjuries);
+//	}
 	
 	// getter methods
 	public String getName() {
@@ -85,11 +85,8 @@ public class Athlete extends Purchasable {
 		}
 		return defence;
 	}
-	
-	
-	
-	// Setter methods - add changeName/ nickname later
-	public void setName(String newName) {
+
+	public void changeName(String newName) {
 		name = newName;
 	}
 	
@@ -109,6 +106,14 @@ public class Athlete extends Purchasable {
 		defence = verifyChange(defence, change);
 	}
 	
+	public void changePositionStat(int amount) {
+		if(position.equals("A")){
+			changeAttack(amount);
+		}
+		else {
+			changeDefence(amount);
+		}
+	}
 	
 	public int verifyChange(int stat, int change) {
 		if(stat + change >= 10) {
@@ -158,9 +163,7 @@ public class Athlete extends Purchasable {
 		isInjured = injury;
 	}
 	
-	public void changeName(String newName) {
-		name = newName;
-	}
+	
 	
 	
 }

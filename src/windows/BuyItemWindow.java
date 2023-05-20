@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 
 public class BuyItemWindow {
 
-	private JFrame frame;
+	private JFrame frmItemTrading;
 	private MarketPlace market;
 	private JFrame mainMenu;
 	private JLabel lblPrice, lblName, lblType, lblEffect,lblMoney, lblWeek,lblBuyItems;
@@ -27,77 +27,84 @@ public class BuyItemWindow {
 		mainMenu = givenWindow;
 		market = currentMarket;
 		initialize();
-		frame.setVisible(true);
+		frmItemTrading.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 504, 342);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmItemTrading = new JFrame();
+		frmItemTrading.setTitle("Item Trading");
+		frmItemTrading.setBounds(100, 100, 504, 342);
+		frmItemTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmItemTrading.getContentPane().setLayout(null);
 		
 		lblMoney = new JLabel(String.format("Money: %s",
 				Integer.toString(market.getGameStats().getMoney())));
 		lblMoney.setBounds(12, 12, 128, 15);
-		frame.getContentPane().add(lblMoney);
+		frmItemTrading.getContentPane().add(lblMoney);
 	
 		
 		lblWeek = new JLabel(String.format("Week: %s",
 				Integer.toString(market.getGameStats().getWeek())));
 		lblWeek.setBounds(12, 28, 128, 15);
-		frame.getContentPane().add(lblWeek);
+		frmItemTrading.getContentPane().add(lblWeek);
 		
 		lblBuyItems = new JLabel("Item Store");
 		lblBuyItems.setBounds(164, 28, 88, 15);
-		frame.getContentPane().add(lblBuyItems);
+		frmItemTrading.getContentPane().add(lblBuyItems);
 		
 		JButton btnViewInventory = new JButton("View Inventory");
+		btnViewInventory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmItemTrading.dispose();
+				SellItemWindow window = new SellItemWindow(market, mainMenu);
+			}
+		});
 		btnViewInventory.setBounds(343, 7, 139, 25);
-		frame.getContentPane().add(btnViewInventory);
+		frmItemTrading.getContentPane().add(btnViewInventory);
 		
 		
 		lblName = new JLabel("Name:");
 		lblName.setBounds(295, 100, 133, 15);
-		frame.getContentPane().add(lblName);
+		frmItemTrading.getContentPane().add(lblName);
 		
 		lblType = new JLabel("Type:");
 		lblType.setBounds(295, 125, 199, 15);
-		frame.getContentPane().add(lblType);
+		frmItemTrading.getContentPane().add(lblType);
 		
 		lblEffect = new JLabel("Effect:");
 		lblEffect.setBounds(295, 150, 133, 15);
-		frame.getContentPane().add(lblEffect);
+		frmItemTrading.getContentPane().add(lblEffect);
 		
 		lblPrice = new JLabel("Price:");
 		lblPrice.setBounds(295, 175, 133, 15);
-		frame.getContentPane().add(lblPrice);
+		frmItemTrading.getContentPane().add(lblPrice);
 
 		setItemButtons();
 		
 		JLabel lblinventorySlots = new JLabel(String.format("Inventory Slots Available:"
 				+ " %s/5", 5-market.getGameStats().getInventory().size()));
 		lblinventorySlots.setBounds(12, 251, 207, 15);
-		frame.getContentPane().add(lblinventorySlots);
+		frmItemTrading.getContentPane().add(lblinventorySlots);
 		
 		
 		
 		JLabel lblItemInformation = new JLabel("Item Information");
 		lblItemInformation.setBounds(342, 70, 123, 15);
-		frame.getContentPane().add(lblItemInformation);
+		frmItemTrading.getContentPane().add(lblItemInformation);
 
 		
 		btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MarketPlaceWindow window = new MarketPlaceWindow(market, mainMenu);
-				frame.dispose();
+				frmItemTrading.dispose();
 			}
 		});
 		btnDone.setBounds(365, 275, 117, 25);
-		frame.getContentPane().add(btnDone);
+		frmItemTrading.getContentPane().add(btnDone);
 		
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
@@ -112,7 +119,7 @@ public class BuyItemWindow {
 			}
 		});
 		btnPurchase.setBounds(365, 231, 117, 25);
-		frame.getContentPane().add(btnPurchase);
+		frmItemTrading.getContentPane().add(btnPurchase);
 	
 	}
 	
@@ -140,7 +147,7 @@ public class BuyItemWindow {
 			}
 		});
 		btnItem1.setBounds(12, 97, 117, 43);
-		frame.getContentPane().add(btnItem1);
+		frmItemTrading.getContentPane().add(btnItem1);
 		
 		setButtonName(2);
 		btnItem2.addActionListener(new ActionListener() {
@@ -150,7 +157,7 @@ public class BuyItemWindow {
 			}
 		});
 		btnItem2.setBounds(148, 97, 117, 43);
-		frame.getContentPane().add(btnItem2);
+		frmItemTrading.getContentPane().add(btnItem2);
 		
 		setButtonName(3);
 		btnItem3.addActionListener(new ActionListener() {
@@ -160,7 +167,7 @@ public class BuyItemWindow {
 			}
 		});
 		btnItem3.setBounds(12, 161, 117, 43);
-		frame.getContentPane().add(btnItem3);
+		frmItemTrading.getContentPane().add(btnItem3);
 		
 		setButtonName(4);
 		btnItem4.addActionListener(new ActionListener() {
@@ -170,7 +177,7 @@ public class BuyItemWindow {
 			}
 		});
 		btnItem4.setBounds(148, 161, 117, 43);
-		frame.getContentPane().add(btnItem4);
+		frmItemTrading.getContentPane().add(btnItem4);
 	}
 	
 	/*

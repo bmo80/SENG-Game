@@ -49,25 +49,22 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlayerTrading.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel("Money:");
-		lblMoney.setBounds(12, 12, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblMoney);
+		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getMoney()));
+		lblMoney.setBounds(12, 12, 194, 15);
+		frmPlayerTrading.getContentPane().add(lblMoney);	
 		
-		JLabel displayMoney = new JLabel(Integer.toString(market.getMoney()));
-
-		displayMoney.setBounds(72, 12, 70, 15);
-		frmPlayerTrading.getContentPane().add(displayMoney);
-		
-		
-		JLabel lblWeek = new JLabel("Week:");
-		lblWeek.setBounds(12, 28, 70, 15);
+		JLabel lblWeek = new JLabel(String.format("Week: %s/%s",
+				market.getWeek(),market.getGameStats().getDuration()));
+		lblWeek.setBounds(12, 28, 172, 15);
 		frmPlayerTrading.getContentPane().add(lblWeek);
 		
-		JLabel weekNum = new JLabel();
-		weekNum.setBounds(72, 28, 70, 15);
-		frmPlayerTrading.getContentPane().add(weekNum);
-		
 		JButton btnViewMyTeam = new JButton("View my Team");
+		btnViewMyTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmPlayerTrading.dispose();
+				SellTeamWindow window = new SellTeamWindow(market, mainMenu);
+			}
+		});
 		btnViewMyTeam.setBounds(369, 7, 134, 25);
 		frmPlayerTrading.getContentPane().add(btnViewMyTeam);
 		
@@ -153,7 +150,7 @@ public class BuyPlayerWindow {
 			public void actionPerformed(ActionEvent e) {	
 				market.getGameStats().getTeams().addAthlete(market.getPlayersForSale().get(athleteSelected-1));
 				market.getGameStats().changeMoney(-market.getPlayersForSale().get(athleteSelected-1).getBuyPrice());
-				displayMoney.setText(Integer.toString(market.getGameStats().getMoney()));
+				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
 				updateButton(athleteSelected);
 				updateTeamSlots();
 				Athlete athlete = new Athlete("Purchased",1,1,"A");

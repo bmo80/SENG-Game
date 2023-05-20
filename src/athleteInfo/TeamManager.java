@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class TeamManager {
 	
 	private ArrayList<Athlete> teamList;
+	//5 reserves
 	private ArrayList<Athlete> bench;
 	
 	public TeamManager(ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench){
@@ -22,6 +23,27 @@ public class TeamManager {
 		return bench;
 	}
 	
+	public Athlete getMostInjured() {
+		int currentHighest = 0;
+		Athlete currentAthlete = teamList.get(0);
+		for(Athlete athlete: teamList) {
+			if(athlete.getPreviousInjuries()>currentHighest) {
+				currentHighest = 0;
+				currentAthlete = athlete;
+			}
+		}
+		for(Athlete athlete: bench) {
+			if(athlete.getPreviousInjuries()>currentHighest) {
+				currentHighest = 0;
+				currentAthlete = athlete;
+			}
+		}
+		return currentAthlete;
+	}
+	
+	public int getFreeSlots() {
+		return 11-(teamList.size()+bench.size());		
+	}
 	
 	public Athlete athleteFromString(String stringAthlete) {
 		for(Athlete athlete:teamList) {
@@ -97,8 +119,28 @@ public class TeamManager {
 		}
 	}
 	
+	public void resetAthletes() {
+ 		for(Athlete athlete:teamList) {
+ 			athlete.changeStamina(10);
+ 		}
+ 		for(Athlete athlete:bench) {
+ 			athlete.changeStamina(10);
+ 		}
+ 	}	
 	
+
+	public String[] getTeamsString() {
+		String stringArray[] = new String[teamList.size()+bench.size()];
+		for(int i=0;i<teamList.size();i++) {
+			stringArray[i] = teamList.get(i).getName();
+		}
+		for(int i=teamList.size();i<(teamList.size()+bench.size());i++) {
+			stringArray[i] = bench.get(i-teamList.size()).getName();
+		}
+		return stringArray;
+	}
 	
+		
 	
 	public void addAthlete(Athlete chosenAthlete) {
 		if(teamList.size() >= 6){
@@ -109,31 +151,34 @@ public class TeamManager {
 		}
 	}
 	
+	public void removeAthlete(Athlete chosenAthlete) {
+		if(teamList.contains(chosenAthlete)) {
+			teamList.remove(chosenAthlete);
+		}
+		else {
+			bench.remove(chosenAthlete);
+		}
+	}
+	
 	public void benchAthlete(Athlete chosenAthlete) {
 		if(bench.size() >= 5){
 			// Call exception - bench full
 		}
-		// not strictly necessary I believe
-//		else if(!teamList.contains(chosenAthlete)) {
-//			// Call exception - athlete not in teamList
-//		}
-		else if(chosenAthlete.getName().equals("Default Athlete")){
+		else {
 			bench.add(chosenAthlete);
-			// removes first instance - ENSURE unique Athletes!
-			teamList.remove(chosenAthlete);
 		}
 	}
-	
-	public void unbenchAthlete(Athlete chosenAthlete) {
-		if(!bench.contains(chosenAthlete)) {
-			// Call exception - Athlete not on bench
-		}else {
-			// removes first instance - ENSURE unique Athletes!
-			bench.remove(chosenAthlete);
-			// Could call teamList full exception...
-			addAthlete(chosenAthlete);
-		}
-	}
+//	
+//	public void unbenchAthlete(Athlete chosenAthlete) {
+//		if(!bench.contains(chosenAthlete)) {
+//			// Call exception - Athlete not on bench
+//		}else {
+//			// removes first instance - ENSURE unique Athletes!
+//			bench.remove(chosenAthlete);
+//			// Could call teamList full exception...
+//			addAthlete(chosenAthlete);
+//		}
+//	}
 	
 	//Old methods
 	

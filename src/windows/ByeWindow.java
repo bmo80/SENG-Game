@@ -18,13 +18,15 @@ public class ByeWindow {
 	private JFrame frmByeWindow;
 	private MainGame game;
 	private Athlete trainedAthlete;
+	private String eventInfo;
 
 	/**
 	 * Create the application.
 	 */
 	public ByeWindow(MainGame currentGame,String athleteName) {
 		game = currentGame;
-		trainedAthlete = game.takeBye(athleteName);
+		trainedAthlete = game.getTeams().athleteFromString(athleteName);
+		eventInfo = game.takeBye(athleteName);
 		//Add random event
 		initialize();
 		frmByeWindow.setVisible(true);
@@ -74,7 +76,7 @@ public class ByeWindow {
 		frmByeWindow.getContentPane().add(lblRandomEvent);
 		
 		//To be added
-		JLabel randomEventLabel = new JLabel("Random Event");
+		JLabel randomEventLabel = new JLabel(eventInfo);
 		randomEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		randomEventLabel.setBounds(12, 169, 416, 51);
 		frmByeWindow.getContentPane().add(randomEventLabel);

@@ -25,10 +25,6 @@ public class MainGame {
 	 */
 	private int seasonDuration;
 	/*
-	 * Player's current active team (collection of Athlete objects)
-	 */
-	private ArrayList<Athlete> teamList;
-	/*
 	 * Player-chosen difficulty 0/1/2 for easy/medium/hard
 	 */
 	private int difficulty;
@@ -36,10 +32,6 @@ public class MainGame {
 	 * Current week - starting at 1
 	 */
 	private int currentWeek;
-	/*
-	 * Player's current bench team (collection of Athlete objects)
-	 */
-	private ArrayList<Athlete> benchList;
 	/*
 	 * Player's current collection of Item objects
 	 */
@@ -52,7 +44,9 @@ public class MainGame {
 	 * Player's total points (earned by winning or tying matches)
 	 */
 	private int totalPoints;
-	
+	/*
+	 * Contains both the active and bench teams
+	 */
 	private TeamManager teams;
 	
 	
@@ -66,12 +60,11 @@ public class MainGame {
 		playerName = name;
 		seasonDuration = duration;
 		//Testing team
-		teamList = setTeam();
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
-		benchList = new ArrayList<Athlete>();
+		ArrayList<Athlete> benchList = new ArrayList<Athlete>();
 		benchList.add(new Athlete("bench1",5,5,"A"));
-		teams = new TeamManager(teamList,benchList);
+		teams = new TeamManager(setTeam(),benchList);
 		//test inventory
 		inventory = setInventory();
 		money = 100000;
@@ -91,13 +84,16 @@ public class MainGame {
 		seasonDuration = input.nextInt();  
 		System.out.print("Set difficulty (1-3): ");
 		difficulty = input.nextInt()-1;
-		teamList = new ArrayList<Athlete>();
+		ArrayList<Athlete> teamList = new ArrayList<Athlete>();
 		currentWeek = 1;
-		benchList = new ArrayList<Athlete>();
+		ArrayList<Athlete> benchList = new ArrayList<Athlete>();
 		teams = new TeamManager(teamList,benchList);
 		inventory = new ArrayList<Item>();
 		money = 100000;
 	}
+	
+	
+	
 	
 	/*
 	 * Overrides toString method to display all Game stats/ info
@@ -110,6 +106,10 @@ public class MainGame {
 				+ " %s. The difficulty is %s/2 and they have $%s"
 				+ "",playerName,seasonDuration,currentWeek,difficulty,money);
 	}
+	
+	
+	
+	
 	
 	/*
 	 *  Method for setting default team - mainly for testing
@@ -142,24 +142,6 @@ public class MainGame {
 	
 	
 	
-// 		getter methods
-	
-	
-	/*
-	 *  Special method that turns the active and bench teams into a string list
-	 *  @return 	String[] list of Athlete names
-	 */
-	public String[] getTeamsString() {
-		String stringArray[] = new String[teamList.size()+benchList.size()];
-		for(int i=0;i<teamList.size();i++) {
-			stringArray[i] = teamList.get(i).getName();
-		}
-		for(int i=teamList.size();i<(teamList.size()+benchList.size());i++) {
-			stringArray[i] = benchList.get(i-teamList.size()).getName();
-		}
-		return stringArray;
-	}
-	
 	/*
 	 * Returns an array of athlete objects from active team
 	 * @return		active team ArrayList<Athlete>
@@ -175,14 +157,6 @@ public class MainGame {
 	public String getPlayerName() {
 		return playerName;
 	}
-	
-	/*
-	 * Returns an array of athlete objects from bench team
-	 * @return		bench team ArrayList<Athlete>
-	 */
- 	public ArrayList<Athlete> getBenchList() {
- 		return benchList;
- 	}
 	
  	/*
  	 * Returns game difficulty
@@ -221,9 +195,6 @@ public class MainGame {
 	}
 	
 	
-// 		setter methods
-	
-	
 	/*
 	 * changes money and ensures it's not negative	
 	 * @param amount 	amount to change by
@@ -247,56 +218,19 @@ public class MainGame {
 		}
 		totalPoints += amount;
 	}
+
 	
-	
-	
-	
-// 		Print methods
-	
-	
-	/*
-	 * Prints the toString() for every Item in inventory
-	 */
-	public void printInventory() {
-		for(Item ite:inventory) {
-			System.out.println(ite);
+	public void addItem(Item item) {
+		if(inventory.size()>10) {
+			//NO!
+		}
+		else {
+			inventory.add(item);
 		}
 	}
 	
-	/*
-	 * Prints the toString() for every Athlete in given team
-	 * @param team 		The team to be printed
-	 */
-	public void printTeam(ArrayList<Athlete> team) {
-		for(Athlete athlete: team) {
-			System.out.println(athlete);
-		}
-	}
-	
-	
-	
-	//JUST used for Bye method - Train Athlete
-	public Athlete athleteFromInput(String athleteChoice) {
-		while(true){
-//			System.out.print("\nCurrent Active Team...\n");
-//			printTeam(teamList);
-//			System.out.print("\nCurrent Bench Team...\n");
-//			printTeam(benchList);
-//			System.out.print("\nEnter the name of an athlete to select them:");
-//			Scanner input = new Scanner(System.in);
-//			String athleteChoice = input.nextLine();
-			for(Athlete athlete: teamList) {
-				if(athlete.getName().equals(athleteChoice)) {
-					return athlete;
-				}
-			}
-			for(Athlete athlete: benchList) {
-				if(athlete.getName().equals(athleteChoice)) {
-					return athlete;
-				}
-			}
-			System.out.println(String.format("%s is not an athlete", athleteChoice));
-		}
+	public void removeItem(Item item) {
+		inventory.remove(item);
 	}
 	
 	
@@ -306,32 +240,17 @@ public class MainGame {
 	 * the method then runs the random event generator
 	 * @param athleteName 		Athlete to be trained
 	 */
-	public Athlete takeBye(String athleteName) {
+	public String takeBye(String athleteName) {
 		currentWeek ++;
-		resetAthletes();
+		teams.resetAthletes();
 		trainAthlete(athleteName);
-		return athleteFromInput(athleteName);
-		// try for random events
-//		runRandomEvents();
-		//resetMarket();
-		//resetStadium();
+		return RandomEvent.runEvent(this);
 	}
 
 	/*
 	 * Resets the stamina of all player athletes to 10.
 	 */
- 	public void resetAthletes() {
- 		for(Athlete athlete:teamList) {
- 			athlete.changeStamina(10);
- 			//REMOVE l8r
- 			athlete.changeIsInjured(false);
- 		}
- 		for(Athlete athlete:teamList) {
- 			athlete.changeStamina(10);
- 			//REMOVE l8r
- 			athlete.changeIsInjured(false);
- 		}
- 	}
+ 	
 	
  	/*
  	 * Takes athlete to train and increases their position stat 
@@ -340,7 +259,7 @@ public class MainGame {
 	public void trainAthlete(String athleteName) {
 //		Scanner input = new Scanner(System.in);
 //		System.out.print("Who will you train?");
-		Athlete athlete = athleteFromInput(athleteName);
+		Athlete athlete = teams.athleteFromString(athleteName);
 		if(athlete.getPosition().equals("A")){
 			athlete.changeAttack(4-difficulty);
 		} else {
