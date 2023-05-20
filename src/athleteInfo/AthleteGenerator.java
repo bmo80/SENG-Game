@@ -58,7 +58,7 @@ public class AthleteGenerator extends Athlete {
 	
 	private int getLow() {
 		min = 0;
-		max = 4;
+		max = 2;
 		int random_low = (int)(Math.random()*(max-min+1)+min); 
 		return random_low;
 	}

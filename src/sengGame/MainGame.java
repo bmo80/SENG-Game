@@ -334,19 +334,19 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame("Test Team",5,2);
+		MainGame run = new MainGame();
 		run.launchMainScreen();
 		//Setup market and Stadium
-		while(run.seasonDuration - run.currentWeek >= 0) {
-			System.out.println(run);
-			run.playGame();
-		}
+//		while(run.seasonDuration - run.currentWeek >= 0) {
+//			System.out.println(run);
+//			run.playGame();
+//		}
 		System.out.println(String.format("The %s team finished the %s week"
 				+ " season with $%s and %s points"
 				+ "", run.playerName,run.seasonDuration,run.money,run.totalPoints));
 //		MainGame game = new MainGame();
 //		game.gotoMarket();
-
+	
 	}
 	
 }

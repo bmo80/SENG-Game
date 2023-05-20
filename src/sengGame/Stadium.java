@@ -3,8 +3,11 @@ package sengGame;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import athleteInfo.Athlete;
 import athleteInfo.AthleteGenerator;
+import windows.StadiumWindow;
 
 public class Stadium {
 
@@ -12,6 +15,7 @@ public class Stadium {
 	 * stores all game variables from MainGame class
 	 */
 	private MainGame gameStats;
+	private JFrame mainWindow;
 	/*
 	 * Stores a list of opposing teams 
 	 */
@@ -21,16 +25,16 @@ public class Stadium {
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats 		GameInfo
 	 */
-	public Stadium(MainGame currentStats) {
+	public Stadium(MainGame currentStats, JFrame mainGame) {
+		mainWindow = mainGame;
 		gameStats = currentStats;
 		enemyTeams = new ArrayList<ArrayList<Athlete>>();
 		for(int i =0; i<3; i++) {
 			ArrayList<Athlete> players = new ArrayList<Athlete>();
 			generateAthletes(3, "A", players);
 			generateAthletes(3, "D", players);
-			enemyTeams.add(players);
+			enemyTeams.add(players);	
 		}
-//		goToStadium();
 	}
 	
 	
@@ -87,6 +91,9 @@ public class Stadium {
 		}
 	}
 	
+	public ArrayList<ArrayList<Athlete>> getEnemyTeams() {
+		return enemyTeams;
+	}
 	
 	//main method for in class testing
 //	public static void main(String[] args) {

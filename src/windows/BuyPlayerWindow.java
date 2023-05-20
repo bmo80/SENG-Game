@@ -62,7 +62,7 @@ public class BuyPlayerWindow {
 		btnViewMyTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmPlayerTrading.dispose();
-				SellTeamWindow window = new SellTeamWindow(market, mainMenu);
+				SellPlayerWindow window = new SellPlayerWindow(market, mainMenu);
 			}
 		});
 		btnViewMyTeam.setBounds(369, 7, 134, 25);
@@ -124,16 +124,15 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.getContentPane().add(lblName);
 		
 		setAthleteButtons();
-		
-		lblTeamSlotsAvailable = new JLabel(String.format("Team Slots Available:"
-				+ " %s/5", 5- market.getGameStats().getTeams().getTeamList().size()));
+
+		lblTeamSlotsAvailable = new JLabel();
 		lblTeamSlotsAvailable.setBounds(12, 313, 227, 15);
 		frmPlayerTrading.getContentPane().add(lblTeamSlotsAvailable);
 		
-		lblBenchSlotsAvailable = new JLabel(String.format("Bench Slots available:"
-				+ " %s/3", 3 - market.getGameStats().getTeams().getBench().size()));
+		lblBenchSlotsAvailable = new JLabel();
 		lblBenchSlotsAvailable.setBounds(12, 337, 227, 15);
 		frmPlayerTrading.getContentPane().add(lblBenchSlotsAvailable);
+		updateTeamSlots();
 		
 		JButton btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
@@ -327,8 +326,9 @@ public class BuyPlayerWindow {
 	}
 	
 	private void updateTeamSlots() {
-		lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/5", 5- market.getGameStats().getTeams().getTeamList().size()));
-		lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/3", 3 - market.getGameStats().getTeams().getBench().size()));
+			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - market.getGameStats().getTeams().getBench().size()));
+			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- market.getGameStats().getTeams().getTeamList().size()));
+		
 	}
 	
 	private void setAthleteSelected(int num) {

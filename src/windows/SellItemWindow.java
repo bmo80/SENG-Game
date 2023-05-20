@@ -3,6 +3,8 @@ package windows;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,7 +22,7 @@ public class SellItemWindow {
 	private Item itemSelected;
 	private MainGame game;
 	private MarketPlace market;
-	
+	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
 
 	/**
 	 * Create the application.
@@ -89,7 +91,7 @@ public class SellItemWindow {
 		
 		
 		
-		JButton Item1 = new JButton("Item 1");
+		Item1 = new JButton("Item 1");
 		Item1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(0);
@@ -98,7 +100,7 @@ public class SellItemWindow {
 		Item1.setBounds(22, 50, 160, 39);
 		frmSellItems.getContentPane().add(Item1);
 		
-		JButton Item2 = new JButton("Item 2");
+		 Item2 = new JButton("Item 2");
 		Item2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(1);
@@ -107,7 +109,7 @@ public class SellItemWindow {
 		Item2.setBounds(195, 50, 160, 39);
 		frmSellItems.getContentPane().add(Item2);
 		
-		JButton Item3 = new JButton("Item 3");
+		Item3 = new JButton("Item 3");
 		Item3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(2);
@@ -116,7 +118,7 @@ public class SellItemWindow {
 		Item3.setBounds(22, 100, 160, 39);
 		frmSellItems.getContentPane().add(Item3);
 		
-		JButton Item4 = new JButton("Item 4");
+		Item4 = new JButton("Item 4");
 		Item4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(3);
@@ -125,7 +127,7 @@ public class SellItemWindow {
 		Item4.setBounds(195, 100, 160, 39);
 		frmSellItems.getContentPane().add(Item4);
 		
-		JButton Item5 = new JButton("Item 5");
+		Item5 = new JButton("Item 5");
 		Item5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(4);
@@ -134,7 +136,7 @@ public class SellItemWindow {
 		Item5.setBounds(22, 150, 160, 39);
 		frmSellItems.getContentPane().add(Item5);
 		
-		JButton Item6 = new JButton("Item 6");
+		Item6 = new JButton("Item 6");
 		Item6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(5);
@@ -143,7 +145,7 @@ public class SellItemWindow {
 		Item6.setBounds(195, 150, 160, 39);
 		frmSellItems.getContentPane().add(Item6);
 		
-		JButton Item7 = new JButton("Item 7");
+		Item7 = new JButton("Item 7");
 		Item7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(6);
@@ -152,7 +154,7 @@ public class SellItemWindow {
 		Item7.setBounds(23, 200, 160, 39);
 		frmSellItems.getContentPane().add(Item7);
 		
-		JButton Item8 = new JButton("Item 8");
+		Item8 = new JButton("Item 8");
 		Item8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(7);
@@ -161,7 +163,7 @@ public class SellItemWindow {
 		Item8.setBounds(195, 200, 160, 39);
 		frmSellItems.getContentPane().add(Item8);
 				
-		JButton Item9 = new JButton("Item 9");
+		Item9 = new JButton("Item 9");
 		Item9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(8);
@@ -170,7 +172,7 @@ public class SellItemWindow {
 		Item9.setBounds(23, 250, 160, 39);
 		frmSellItems.getContentPane().add(Item9);
 		
-		JButton Item10 = new JButton("Item 10");
+		Item10 = new JButton("Item 10");
 		Item10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setItemSelected(9);
@@ -179,7 +181,7 @@ public class SellItemWindow {
 		Item10.setBounds(195, 250, 160, 39);
 		frmSellItems.getContentPane().add(Item10);
 		
-		
+		setButtonNames();
 		
 		JButton btnDone = new JButton("Go Back");
 		btnDone.addActionListener(new ActionListener() {
@@ -215,6 +217,15 @@ public class SellItemWindow {
 		
 	}
 	
+	private void setButton(JButton btn, int index) {
+		if(market.getGameStats().getInventory().size() >= index) {
+			btn.setText(market.getGameStats().getInventory().get(index-1).getName());
+		} else {
+			btn.setText("Empty");
+			btn.setEnabled(false);
+		}
+		
+	}
 	private void setItemSelected(int itemIndex) {
 		if(itemIndex<game.getInventory().size()) {
 			itemSelected = game.getInventory().get(itemIndex);
@@ -232,5 +243,14 @@ public class SellItemWindow {
 		lblItemEffect.setText(String.format("Effect: %s",
 				itemSelected.getEffect()));
 	}
-
+	
+	private void setButtonNames() {
+		ArrayList<JButton> list = new ArrayList<JButton>();
+		int index = 1;
+		Collections.addAll(list, Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10);
+		for(JButton btn: list) {
+			setButton(btn, index);
+			index++;
+		}
+	}
 }

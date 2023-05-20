@@ -22,7 +22,6 @@ public class TeamWindow {
 	private JLabel lblAthleteName, lblAthletePos, lblAthleteAtt,
 	lblAthleteDef, lblAthleteStam, lblInjured, lblPreviousInjuries;
 	private JFrame mainMenu;
-
 	/**
 	 * Create the application.
 	 */
@@ -113,7 +112,7 @@ public class TeamWindow {
 		JButton Athlete1 = new JButton("Athlete 1");
 		Athlete1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTeamAthlete(0);
+				setTeamAthlete(0);				
 			}
 		});
 		Athlete1.setBounds(23, 77, 160, 39);
@@ -224,6 +223,7 @@ public class TeamWindow {
 					//MESSAGE
 				}else {
 					game.getTeams().swap(previousAthlete, athleteSelected);
+					
 				}
 			}
 		});
@@ -283,4 +283,6 @@ public class TeamWindow {
 		lblPreviousInjuries.setText(String.format("Previous Injures: %s",
 				athleteSelected.getPreviousInjuries()));
 	}
+	
+	
 }

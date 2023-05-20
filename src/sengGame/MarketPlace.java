@@ -29,7 +29,7 @@ public class MarketPlace{
 		gameStats = game;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
-//		generateItems();
+		generateItems();
 	}
 	
 	
@@ -104,6 +104,7 @@ public class MarketPlace{
 	public Athlete getAthlete(String position) {
 		Athlete athlete = new AthleteGenerator(position,gameStats.getWeek());
 		athlete.setBuyPrice(1000*athlete.getPositionStat());
+		athlete.setSellPrice(500*athlete.getPositionStat());
 		return athlete;
 	}
 	

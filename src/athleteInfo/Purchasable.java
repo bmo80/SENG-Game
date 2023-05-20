@@ -31,7 +31,12 @@ public class Purchasable {
 		return description;
 	}
 	
+	// setters
 	public void setBuyPrice(int price) {
 		buyPrice = price;
+	}
+	
+	public void setSellPrice(int price) {
+		sellPrice = price;
 	}
 }
