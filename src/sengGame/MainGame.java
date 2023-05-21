@@ -5,6 +5,7 @@ import athleteInfo.Athlete;
 import athleteInfo.Item;
 import athleteInfo.TeamManager;
 import windows.MainWindow;
+import windows.SetupBuyPlayerWindow;
 import windows.SetupWindow;
 
 
@@ -59,15 +60,20 @@ public class MainGame {
 	public MainGame(String name, int duration, int chosenDifficulty) {
 		playerName = name;
 		seasonDuration = duration;
-		//Testing team
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
-		ArrayList<Athlete> benchList = new ArrayList<Athlete>();
-		benchList.add(new Athlete("bench1",5,5,"A"));
-		teams = new TeamManager(setTeam(),benchList);
-		//test inventory
-		inventory = setInventory();
-		money = 100000;
+		money = 35000 + (10000*(4-difficulty));
+	}
+	
+	public MainGame(String name, int duration, int chosenDifficulty,
+			TeamManager givenTeams) {
+		playerName = name;
+		seasonDuration = duration;
+		difficulty = chosenDifficulty;
+		currentWeek = 1;
+		teams = givenTeams;
+		inventory = new ArrayList<Item>();
+		money = 10000*(3-difficulty);
 	}
 	
 	/**
@@ -328,12 +334,7 @@ public class MainGame {
 		mainWindow.closeWindow();
 	}
 	
-	
-	public void launchSetupScreen() {
-		SetupWindow setupWindow = new SetupWindow(this);
-	}
-	
-	public void closeSetupScreen(SetupWindow setupWindow) {
+	public void closeSetupScreen(SetupBuyPlayerWindow setupWindow) {
 		setupWindow.closeWindow();
 		launchMainScreen();
 	}
@@ -342,8 +343,10 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		MainGame run = new MainGame("a",2,2);
-		run.launchMainScreen();
+		SetupWindow setupWindow = new SetupWindow();
+//		MainGame run = new MainGame("a",2,2);
+//		run.launchSetupScreen();
+//		run.launchMainScreen();
 		//Setup market and Stadium
 //		while(run.seasonDuration - run.currentWeek >= 0) {
 //			System.out.println(run);

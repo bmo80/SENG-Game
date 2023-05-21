@@ -1,164 +1,173 @@
 package windows;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import athleteInfo.Athlete;
 import athleteInfo.TeamManager;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+public class SetupBuyPlayerWindow {
 
-
-public class BuyPlayerWindow {
-
-	private JFrame frmPlayerTrading;
+	private JFrame frmMakeTeam;
 	private MarketPlace market;
 	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, 
 	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
 	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
 	private int athleteSelected;
-	private JFrame mainMenu;
+	private String playerName;
+	private int duration, difficulty, money;
+	private TeamManager teams;
 
 	/**
 	 * Create the application.
 	 */
-	public BuyPlayerWindow(MarketPlace curmarket, JFrame givenWindow) {
-		mainMenu = givenWindow;
-		market = curmarket;
+	public SetupBuyPlayerWindow(String name, int length, int diff) {
+		playerName = name;
+		duration = length;
+		difficulty = diff;
+		market = new MarketPlace(new MainGame(playerName,duration, difficulty));
+		teams = new TeamManager(new ArrayList<Athlete>(), new ArrayList<Athlete>());
+		money = market.getMoney();
 		initialize();
-		frmPlayerTrading.setVisible(true);
+		frmMakeTeam.setVisible(true);
+	}
+
+	public void closeWindow() {
+		frmMakeTeam.dispose();
+	}
+
+	public void finishedWindow(MainGame game) {
+		game.closeSetupScreen(this);
 	}
 	
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmPlayerTrading = new JFrame();
-		frmPlayerTrading.setTitle("Player Trading");
-		frmPlayerTrading.setBounds(100, 100, 580, 437);
+		frmMakeTeam = new JFrame();
+		frmMakeTeam.setTitle("Make Team");
+		frmMakeTeam.setTitle("Player Trading");
+		frmMakeTeam.setBounds(100, 100, 580, 580);
 
-		frmPlayerTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmPlayerTrading.getContentPane().setLayout(null);
+		frmMakeTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMakeTeam.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: %s",money));
 		lblMoney.setBounds(12, 12, 194, 15);
-		frmPlayerTrading.getContentPane().add(lblMoney);	
-		
-		JLabel lblWeek = new JLabel(String.format("Week: %s/%s",
-				market.getWeek(),market.getGameStats().getDuration()));
-		lblWeek.setBounds(12, 28, 172, 15);
-		frmPlayerTrading.getContentPane().add(lblWeek);
-		
-		JButton btnViewMyTeam = new JButton("View my Team");
-		btnViewMyTeam.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmPlayerTrading.dispose();
-				SellPlayerWindow window = new SellPlayerWindow(market, mainMenu);
-			}
-		});
-		btnViewMyTeam.setBounds(369, 7, 134, 25);
-		frmPlayerTrading.getContentPane().add(btnViewMyTeam);
+		frmMakeTeam.getContentPane().add(lblMoney);
 		
 		JLabel lblPlayerTrading = new JLabel("Player Trading");
 		lblPlayerTrading.setBounds(196, 28, 122, 39);
-		frmPlayerTrading.getContentPane().add(lblPlayerTrading);
+		frmMakeTeam.getContentPane().add(lblPlayerTrading);
 		
 		JLabel lblPosition = new JLabel("Position:");
 		lblPosition.setBounds(375, 140, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblPosition);
+		frmMakeTeam.getContentPane().add(lblPosition);
 		
 		JLabel lblAttack = new JLabel("Attack:");
 		lblAttack.setBounds(375, 165, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblAttack);
+		frmMakeTeam.getContentPane().add(lblAttack);
 		
 		JLabel lblDefense = new JLabel("Defense:");
 		lblDefense.setBounds(375, 190, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblDefense);
+		frmMakeTeam.getContentPane().add(lblDefense);
 		
 		JLabel lblStamina = new JLabel("Stamina:");
 		lblStamina.setBounds(375, 215, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblStamina);
+		frmMakeTeam.getContentPane().add(lblStamina);
 		
 		lblAthleteName = new JLabel();
 		lblAthleteName.setBounds(450, 115, 108, 15);
-		frmPlayerTrading.getContentPane().add(lblAthleteName);
+		frmMakeTeam.getContentPane().add(lblAthleteName);
 		
 		
 		lblAthletePos = new JLabel();
 		lblAthletePos.setBounds(450, 140, 108, 15);
-		frmPlayerTrading.getContentPane().add(lblAthletePos);
+		frmMakeTeam.getContentPane().add(lblAthletePos);
 		
 		lblAthleteAtt = new JLabel();
 		lblAthleteAtt.setBounds(450, 165, 108, 15);
-		frmPlayerTrading.getContentPane().add(lblAthleteAtt);
+		frmMakeTeam.getContentPane().add(lblAthleteAtt);
 		
 		lblAthleteDef = new JLabel();
 		lblAthleteDef.setBounds(450, 190, 108, 15);
-		frmPlayerTrading.getContentPane().add(lblAthleteDef);
+		frmMakeTeam.getContentPane().add(lblAthleteDef);
 		
 		lblAthleteStam = new JLabel();
 		lblAthleteStam.setBounds(450, 215, 108, 15);
-		frmPlayerTrading.getContentPane().add(lblAthleteStam);
+		frmMakeTeam.getContentPane().add(lblAthleteStam);
 		
 		lblPrice = new JLabel("Price: ");
 		lblPrice.setBounds(375, 240, 160, 15);
-		frmPlayerTrading.getContentPane().add(lblPrice);
+		frmMakeTeam.getContentPane().add(lblPrice);
 		
 		
 		
 		JLabel lblPlayerStats = new JLabel("Player Stats");
 		lblPlayerStats.setBounds(385, 86, 95, 15);
-		frmPlayerTrading.getContentPane().add(lblPlayerStats);
+		frmMakeTeam.getContentPane().add(lblPlayerStats);
 		
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(375, 115, 70, 15);
-		frmPlayerTrading.getContentPane().add(lblName);
+		frmMakeTeam.getContentPane().add(lblName);
 		
 		setAthleteButtons();
 
 		lblTeamSlotsAvailable = new JLabel();
-		lblTeamSlotsAvailable.setBounds(12, 313, 227, 15);
-		frmPlayerTrading.getContentPane().add(lblTeamSlotsAvailable);
+		lblTeamSlotsAvailable.setBounds(12, 498, 227, 15);
+		frmMakeTeam.getContentPane().add(lblTeamSlotsAvailable);
 		
 		lblBenchSlotsAvailable = new JLabel();
-		lblBenchSlotsAvailable.setBounds(12, 337, 227, 15);
-		frmPlayerTrading.getContentPane().add(lblBenchSlotsAvailable);
+		lblBenchSlotsAvailable.setBounds(12, 525, 227, 15);
+		frmMakeTeam.getContentPane().add(lblBenchSlotsAvailable);
 		updateTeamSlots();
 		
 		JButton btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MarketPlaceWindow window = new MarketPlaceWindow(market, mainMenu);
-				frmPlayerTrading.dispose();
+				if(teams.getTeamList().size() < 6) {
+					JOptionPane.showMessageDialog(frmMakeTeam, String.format(
+							"Your team must have at least 6 athletes."
+							+ "\nCurrently you only have %s"
+							,teams.getTeamList().size()));
+				}
+				else {
+					finishedWindow(new MainGame(playerName, duration, difficulty,
+							teams));
+				}
 			}
 		});
-		btnDone.setBounds(369, 327, 117, 25);
-		frmPlayerTrading.getContentPane().add(btnDone);
+		btnDone.setBounds(418, 515, 117, 25);
+		frmMakeTeam.getContentPane().add(btnDone);
 		
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				market.getGameStats().getTeams().addAthlete(market.getPlayersForSale().get(athleteSelected-1));
-				market.getGameStats().changeMoney(-market.getPlayersForSale().get(athleteSelected-1).getBuyPrice());
-				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
-				updateButton(athleteSelected);
-				updateTeamSlots();
-				Athlete athlete = new Athlete("Purchased",1,1,"A");
-				market.getPlayersForSale().set(athleteSelected-1, athlete);
+			public void actionPerformed(ActionEvent e) {
+				if(money - market.getPlayersForSale().get(athleteSelected-1).getBuyPrice() < 0) {
+					//BANNED
+				}
+				else {
+					teams.addAthlete(market.getPlayersForSale().get(athleteSelected-1));
+					money -= market.getPlayersForSale().get(athleteSelected-1).getBuyPrice();
+					lblMoney.setText(String.format("Money: %s",money));
+					updateButton(athleteSelected);
+					updateTeamSlots();
+					Athlete athlete = new Athlete("Purchased",1,1,"A");
+					market.getPlayersForSale().set(athleteSelected-1, athlete);
+				}
 			}
 		});
-		btnPurchase.setBounds(369, 290, 134, 25);
-		frmPlayerTrading.getContentPane().add(btnPurchase);
+		btnPurchase.setBounds(385, 281, 134, 25);
+		frmMakeTeam.getContentPane().add(btnPurchase);
 		
 		
 		
@@ -216,7 +225,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete1.setBounds(22, 106, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete1);
+		frmMakeTeam.getContentPane().add(Athlete1);
 		
 		setButtonName(2);
 		Athlete2.addActionListener(new ActionListener() {
@@ -226,7 +235,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete2.setBounds(195, 106, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete2);
+		frmMakeTeam.getContentPane().add(Athlete2);
 		
 		setButtonName(3);
 		Athlete3.addActionListener(new ActionListener() {
@@ -236,7 +245,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete3.setBounds(22, 169, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete3);
+		frmMakeTeam.getContentPane().add(Athlete3);
 		
 		setButtonName(4);
 		Athlete4.addActionListener(new ActionListener() {
@@ -246,7 +255,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete4.setBounds(195, 169, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete4);
+		frmMakeTeam.getContentPane().add(Athlete4);
 		
 		setButtonName(5);
 		Athlete5.addActionListener(new ActionListener() {
@@ -256,7 +265,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete5.setBounds(22, 236, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete5);
+		frmMakeTeam.getContentPane().add(Athlete5);
 		
 		setButtonName(6);
 		Athlete6.addActionListener(new ActionListener() {
@@ -266,7 +275,7 @@ public class BuyPlayerWindow {
 			}
 		});
 		Athlete6.setBounds(195, 236, 160, 39);
-		frmPlayerTrading.getContentPane().add(Athlete6);
+		frmMakeTeam.getContentPane().add(Athlete6);
 
 	}
 	
@@ -327,12 +336,13 @@ public class BuyPlayerWindow {
 	}
 	
 	private void updateTeamSlots() {
-			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - market.getGameStats().getTeams().getBench().size()));
-			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- market.getGameStats().getTeams().getTeamList().size()));
+			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - teams.getBench().size()));
+			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- teams.getTeamList().size()));
 		
 	}
 	
 	private void setAthleteSelected(int num) {
 		athleteSelected = num;
 	}
+
 }
