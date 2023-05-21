@@ -21,7 +21,7 @@ public class Stadium {
 	 */
 	public ArrayList<ArrayList<Athlete>> enemyTeams;
 	public Match match;
-	public int selectedTeam;
+	public ArrayList<Athlete> selectedTeam;
 	/*
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats 		GameInfo
@@ -35,7 +35,7 @@ public class Stadium {
 			generateAthletes(3, "D", players);
 			enemyTeams.add(players);	
 		}
-		match = new Match(this, gameStats);
+		
 	}
 	
 	/*

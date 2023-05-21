@@ -22,7 +22,6 @@ public class Match{
 		stadium = currentStadium;
 		Collections.addAll(athleteScores, 0, 0, 0, 0, 0, 0);
 		playerTeam = gameStats.getTeams().getTeamList();
-		opponents = stadium.enemyTeams.get(stadium.selectedTeam);
 //		playMatch();
 	}
 	
@@ -79,6 +78,7 @@ public class Match{
 	
 	public void verseAthletes(int playerIndex, int oppIndex) {
 		Athlete playerAthlete = playerTeam.get(playerIndex);
+		System.out.println(opponents.size());
 		Athlete opponentAthlete = opponents.get(oppIndex);
 		if(playerAthlete.getIsInjured()) {
 			System.out.println(String.format("%s is injured, going to next player",playerTeam.get(playerIndex)));
@@ -118,15 +118,14 @@ public class Match{
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
 		}
 		else if(oppsScore>playerScore) {
-			gameStats.losses += 1;
+			
 			//Send message - Opponents win
-			System.out.println(oppsScore);
-			System.out.println(playerScore);
+			System.out.println(String.format("you: %s, opps: %s", playerScore, oppsScore));
 			System.out.println("The opponents won the match");
 		}
 		else if(playerScore>oppsScore){
 			//Send message - You won!
-			gameStats.wins += 1;
+			System.out.println(String.format("you: %s, opps: %s", playerScore, oppsScore));
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
 			gameStats.changePoints(3+gameStats.getDifficulty());

@@ -93,10 +93,10 @@ public class MarketPlace{
 	
 	public void createSetUp() {
 		for(int i=0; i<5; i++) {
-			setupPlayers.add(getAthlete("A"));
+			setupPlayers.add(new AthleteGenerator("A", gameStats.getWeek()));
 		}
 		for(int i=0; i<5; i++) {
-			setupPlayers.add(getAthlete("D"));
+			setupPlayers.add(new AthleteGenerator("D", gameStats.getWeek()));
 		}
 	}
 
