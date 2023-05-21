@@ -28,9 +28,8 @@ public class MatchWindow {
 	 * Create the application.
 	 */
 
-	public MatchWindow(Stadium curStadium, Match currentMatch, JFrame curStadiumWindow) {
-		match = currentMatch;
-		stadium = curStadium;
+	public MatchWindow(Match curMatch, JFrame curStadiumWindow) {
+		match = curMatch;
 		frmStadium = curStadiumWindow;
 		frmStadium.setVisible(false);
 		match.playMatch();

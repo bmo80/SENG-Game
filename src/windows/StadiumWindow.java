@@ -25,13 +25,14 @@ public class StadiumWindow {
 	private int buttonSelected;
 	private Stadium stadium;
 	private ArrayList<Athlete> teamChosen;
-	Match match;
+	MainGame gameStats;
 	/**
 	 * Create the application.
 	 */
-	public StadiumWindow(Stadium curStadium, JFrame mainGame) {
+	public StadiumWindow(Stadium curStadium, JFrame mainGame, MainGame curGame) {
 		mainMenu = mainGame;
 		stadium = curStadium;
+		gameStats = curGame;
 		initialize();
 		frmStadium.setVisible(true);
 	}
@@ -133,12 +134,15 @@ public class StadiumWindow {
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
-					stadium.selectedTeam = buttonSelected-1;
+//					stadium.selectedTeam = teamChosen;
+					Match match = new Match(stadium, gameStats);
+					match.opponents = teamChosen;
+					System.out.println(stadium.enemyTeams.get(buttonSelected-1).get(0));
 					ArrayList<Athlete> blankTeam = new ArrayList<Athlete>();
 					Athlete athlete = new Athlete("Match played",1,1,"A");
 					blankTeam.add(athlete);
 					stadium.enemyTeams.set(buttonSelected-1, blankTeam);
-					MatchWindow window = new MatchWindow(stadium, stadium.match, frmStadium);
+					MatchWindow window = new MatchWindow(match, frmStadium);
 					setButtons();
 
 					

@@ -49,7 +49,7 @@ public class SellPlayerWindow {
 		lblMoney.setBounds(12, 12, 70, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
-		JLabel displayMoney = new JLabel(String.valueOf(market.getMoney()));
+		JLabel displayMoney = new JLabel(String.valueOf(market.getGameStats().getMoney()));
 		displayMoney.setBounds(72, 12, 70, 15);
 		frmManageTeam.getContentPane().add(displayMoney);
 		
@@ -58,7 +58,7 @@ public class SellPlayerWindow {
 		lblWeek.setBounds(12, 28, 70, 15);
 		frmManageTeam.getContentPane().add(lblWeek);
 		
-		JLabel weekNum = new JLabel(String.valueOf(market.getWeek())+"/5");
+		JLabel weekNum = new JLabel(String.valueOf(market.getGameStats().getWeek())+"/5");
 		weekNum.setBounds(72, 28, 70, 15);
 		frmManageTeam.getContentPane().add(weekNum);
 		

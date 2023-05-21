@@ -104,8 +104,7 @@ public class MainWindow {
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				System.out.println("hello");
-				StadiumWindow window = new StadiumWindow(stadium, frmMainGame);
+				StadiumWindow window = new StadiumWindow(stadium, frmMainGame, game);
 			}
 		});
 		btnStadium.setBounds(12, 288, 148, 77);
