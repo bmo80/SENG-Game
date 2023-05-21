@@ -15,12 +15,12 @@ public class Stadium {
 	 * stores all game variables from MainGame class
 	 */
 	private MainGame gameStats;
+	
 	/*
 	 * Stores a list of opposing teams 
 	 */
-	public ArrayList<ArrayList<Athlete>> enemyTeams;
-	public Match match;
-	public int selectedTeam;
+	private ArrayList<ArrayList<Athlete>> enemyTeams;
+		
 	/*
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats 		GameInfo
@@ -33,33 +33,6 @@ public class Stadium {
 			generateAthletes(3, "A", players);
 			generateAthletes(3, "D", players);
 			enemyTeams.add(players);	
-		}
-		match = new Match(this, gameStats);
-	}
-	
-	
-	/*
-	 * Main menu for Stadium class, awaits input from user
-	 */
-	public void goToStadium() {
-		System.out.println("Welcome to the stadium!\n"
-				+ "Please select which team you would like to play"
-				+ "\nfrom the list below\n");
-		Scanner input = new Scanner(System.in);
-		String userInput ="";
-		printEnemyTeams();
-		while(!(userInput.toUpperCase().equals("E"))) {
-			System.out.println("Please select a number between 1 and 3 or 'E' to exit");
-			userInput = input.nextLine();
-			if(userInput.equals("1")) {
-				Match game = new Match(gameStats, enemyTeams.get(0));
-			} else if(userInput.equals("2")) {
-				Match game = new Match(gameStats, enemyTeams.get(1));
-			} else if(userInput.equals("3")) {
-				Match game = new Match(gameStats, enemyTeams.get(2));
-			} else if(!userInput.toUpperCase().equals("E")) {
-				System.out.println("Invalid input.\n");
-			}
 		}
 	}
 	
@@ -76,31 +49,12 @@ public class Stadium {
 		}
 	}
 	
-	/*
-	 * represents each athlete in each enemy team
-	 */
-	public void printEnemyTeams() {
-		int count = 1;
-		for(ArrayList<Athlete> team: enemyTeams) {
-			System.out.println("Team "+count);
-			for(Athlete player: team) {
-				System.out.println(player);
-			}
-			System.out.println();
-			count++;
-		}
-	}
-	
 	public ArrayList<ArrayList<Athlete>> getEnemyTeams() {
 		return enemyTeams;
 	}
 	
-	//main method for in class testing
-//	public static void main(String[] args) {
-//	
-//		Stadium stadium = new Stadium();
-//		stadium.goToStadium();
-//	}
-	
+	public MainGame getGameStats() {
+		return gameStats;
+	}
 	
 }

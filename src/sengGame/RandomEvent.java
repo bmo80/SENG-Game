@@ -6,20 +6,29 @@ import athleteInfo.Athlete;
 import athleteInfo.AthleteGenerator;
 
 public class RandomEvent {
+	private MainGame game;
 	
 	/*
-	 * Generates a random number between 0 and 99
-	 * then changes it based on difficulty and athlete info
-	 * then runs the appropriate method
-	 */
-	public static String runEvent(MainGame gameInfo) {
-		MainGame game = gameInfo;
+	*Generates a random number between 0 and 99
+	*/
+	public RandomEvent(MainGame givenGame) {
+		game = givenGame;
+	}
+	
+	public String generateEvent() {
 		int generatedNumber = new Random().nextInt(100);
 		generatedNumber += 5*game.getDifficulty();
+		return runEvent(generatedNumber);
+	}
+	
+	/*
+	 * takes a given random number and
+	 * changes it based on difficulty and athlete info
+	 * then runs the appropriate method
+	 */
+	public String runEvent(int generatedNumber) {
 		Athlete mostInjured = game.getTeams().getMostInjured();
-		
-		generatedNumber = 81;
-		
+				
 		if(generatedNumber>85) {
 			return statIncrease(game);
 		}
@@ -36,18 +45,18 @@ public class RandomEvent {
 		return "Nothing special happened this week";
 	}
 	
-	public static String statIncrease(MainGame game) {
+	public String statIncrease(MainGame game) {
 		int athIndex = new Random().nextInt(game.getTeams().getTeamList().size());
 		game.getTeams().getTeamList().get(athIndex).changePositionStat(1+game.getDifficulty());
 		return String.format("%s Trained extra hard and increased their stats",
 				game.getTeams().getTeamList().get(athIndex).getName());
 	}
 	
-	public static void athleteQuits(Athlete leavingAthlete, MainGame game) {
+	public void athleteQuits(Athlete leavingAthlete, MainGame game) {
 		game.getTeams().removeAthlete(leavingAthlete);
 	}
 	
-	public static String athleteJoins(MainGame game) {
+	public String athleteJoins(MainGame game) {
 		if(game.getTeams().getFreeSlots()>0) {
 			game.getTeams().addAthlete(new AthleteGenerator("A",game.getWeek()));
 			return "You had positions open so a new athlete decided to join!";

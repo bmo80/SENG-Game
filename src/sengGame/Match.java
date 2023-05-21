@@ -11,19 +11,40 @@ import athleteInfo.TeamManager;
 public class Match{
 	
 	private MainGame gameStats;
-	public ArrayList<Athlete> opponents;
-	public ArrayList<Athlete> playerTeam;
-	public int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
-	private Stadium stadium;
-	public ArrayList<Integer> athleteScores = new ArrayList<Integer>();
+	private ArrayList<Athlete> opponents;
+	private ArrayList<Athlete> playerTeam;
+	private int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
+	private ArrayList<Integer> athleteScores = new ArrayList<Integer>();
 	
-	public Match(Stadium currentStadium, MainGame currentGame){
+	public Match(MainGame currentGame, ArrayList<Athlete> opps){
 		gameStats = currentGame;
-		stadium = currentStadium;
 		Collections.addAll(athleteScores, 0, 0, 0, 0, 0, 0);
 		playerTeam = gameStats.getTeams().getTeamList();
-		opponents = stadium.enemyTeams.get(stadium.selectedTeam);
-//		playMatch();
+		opponents = opps;
+	}
+	
+	public ArrayList<Athlete> getPlayerTeam(){
+		return playerTeam;
+	}
+	
+	public int getPlayerIndex() {
+		return currentPlayerIndex;
+	}
+	
+	public int getOpponentIndex() {
+		return currentOppIndex;
+	}
+	
+	public int getPlayerScore() {
+		return playerScore;
+	}
+	
+	public int getOppsScore() {
+		return oppsScore;
+	}
+	
+	public MainGame getGameStats() {
+		return gameStats;
 	}
 	
 	public Boolean checkAllInjured() {
@@ -39,11 +60,14 @@ public class Match{
 			//Send - Not enough players error message
 			System.out.println("Team not full, need more players");
 			return false;
-		} else if(checkAllInjured()) {
+		}
+		else if(checkAllInjured()) {
 			//Send - No healthy players error message
 			System.out.println("No healthy Athletes in team");
+			endMatch();
 			return false;
-		} else if((currentPlayerIndex >= 6) || (currentOppIndex >= 6)) {
+		}
+		else if((currentPlayerIndex >= 6) || (currentOppIndex >= 6)) {
 			endMatch();
 			return false;
 		}
@@ -57,21 +81,25 @@ public class Match{
 		if(playerAthlete.getIsInjured()) {
 			System.out.println(String.format("%s is injured, going to next player",playerTeam.get(playerIndex)));
 			currentPlayerIndex ++;
-		}else if(opponentAthlete.getIsInjured()){
+		}
+		else if(opponentAthlete.getIsInjured()){
 			currentOppIndex ++;		
-		}else if(playerAthlete.getPositionStat() > opponentAthlete.getPositionStat()) {
+		}
+		else if(playerAthlete.getPositionStat() > opponentAthlete.getPositionStat()) {
 			playerScore ++;
 			playerAthlete.changeStamina(-gameStats.getDifficulty()-1);
 			int newScore = athleteScores.get(playerIndex) + 1;
 			athleteScores.set(playerIndex, newScore);
 			opponentAthlete.changeStamina(-gameStats.getDifficulty()-3);
 			currentOppIndex ++;
-		}else if(playerAthlete.getPositionStat() < opponentAthlete.getPositionStat()) {
+		}
+		else if(playerAthlete.getPositionStat() < opponentAthlete.getPositionStat()) {
 			oppsScore ++;
 			opponentAthlete.changeStamina(-gameStats.getDifficulty()-1);
 			playerAthlete.changeStamina(-gameStats.getDifficulty()-3);
 			currentPlayerIndex ++;
-		}else {
+		}
+		else {
 			currentOppIndex ++;
 			currentPlayerIndex ++;
 		}
@@ -86,18 +114,21 @@ public class Match{
 		if(checkAllInjured()) {
 			//Send message - All athletes were injured so default loss
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
-		}else if(oppsScore>playerScore) {
+		}
+		else if(oppsScore>playerScore) {
 			//Send message - Opponents win
 			System.out.println(oppsScore);
 			System.out.println(playerScore);
 			System.out.println("The opponents won the match");
-		}else if(playerScore>oppsScore){
+		}
+		else if(playerScore>oppsScore){
 			//Send message - You won!
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
 			gameStats.changePoints(3+gameStats.getDifficulty());
 			gameStats.changeMoney(2500*(3-gameStats.getDifficulty()));
-		}else {
+		}
+		else {
 			//Tie condition - Some rewards
 			//Send message 
 			System.out.println("The match was a tie. Here is a minor reward...");

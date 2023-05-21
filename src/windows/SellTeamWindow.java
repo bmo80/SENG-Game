@@ -60,11 +60,11 @@ public class SellTeamWindow {
 		frmTeamTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTeamTrading.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %S",market.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: %S",market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 257, 15);
 		frmTeamTrading.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel(String.format("Week: %s",market.getWeek()));
+		JLabel lblWeek = new JLabel(String.format("Week: %s",market.getGameStats().getWeek()));
 		lblWeek.setBounds(12, 28, 95, 15);
 		frmTeamTrading.getContentPane().add(lblWeek);
 		

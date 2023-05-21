@@ -7,7 +7,6 @@ import javax.swing.JTextField;
 
 import athleteInfo.Athlete;
 import athleteInfo.TeamManager;
-import sengGame.Club;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 import sengGame.Match;

@@ -44,12 +44,12 @@ public class MarketPlaceWindow{
 		frmMarketplace.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMarketplace.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 232, 15);
 		frmMarketplace.getContentPane().add(lblMoney);
 		
 		JLabel lblWeek = new JLabel(String.format("Week: %s/%s"
-				,market.getWeek(), market.getGameStats().getDuration()));
+				,market.getGameStats().getWeek(), market.getGameStats().getDuration()));
 		lblWeek.setBounds(12, 28, 203, 15);
 		frmMarketplace.getContentPane().add(lblWeek);
 		

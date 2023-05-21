@@ -50,12 +50,12 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlayerTrading.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 194, 15);
 		frmPlayerTrading.getContentPane().add(lblMoney);	
 		
 		JLabel lblWeek = new JLabel(String.format("Week: %s/%s",
-				market.getWeek(),market.getGameStats().getDuration()));
+				market.getGameStats().getWeek(),market.getGameStats().getDuration()));
 		lblWeek.setBounds(12, 28, 172, 15);
 		frmPlayerTrading.getContentPane().add(lblWeek);
 		

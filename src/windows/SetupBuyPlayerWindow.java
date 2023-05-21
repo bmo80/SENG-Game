@@ -36,7 +36,7 @@ public class SetupBuyPlayerWindow {
 		difficulty = diff;
 		market = new MarketPlace(new MainGame(playerName,duration, difficulty));
 		teams = new TeamManager(new ArrayList<Athlete>(), new ArrayList<Athlete>());
-		money = market.getMoney();
+		money = market.getGameStats().getMoney();
 		initialize();
 		frmMakeTeam.setVisible(true);
 	}

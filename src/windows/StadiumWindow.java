@@ -130,8 +130,8 @@ public class StadiumWindow {
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
-					stadium.selectedTeam = buttonSelected-1;
-					MatchWindow window = new MatchWindow(stadium, stadium.match);
+					MatchWindow window = new MatchWindow(stadium.getGameStats(), 
+							teamChosen);
 					
 				} 
 				

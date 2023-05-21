@@ -62,7 +62,7 @@ public class MainGame {
 		seasonDuration = duration;
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
-		money = 35000 + (10000*(4-difficulty));
+		money = 35000 + (5000*(4-difficulty));
 	}
 	
 	public MainGame(String name, int duration, int chosenDifficulty,
@@ -72,81 +72,10 @@ public class MainGame {
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
 		teams = givenTeams;
+		totalPoints = 0;
 		inventory = new ArrayList<Item>();
 		money = 10000*(3-difficulty);
 	}
-	
-	/**
-	 * Constructs Object - gets input from user
-	 * 
-	 */
-	public MainGame() {
-		//Put checks in place for all
-		Scanner input = new Scanner(System.in);
-		System.out.print("Name your team (3-15 chars): ");  
-		// might break?
-		playerName = input.nextLine();  
-		System.out.print("How long is the season (5-15 weeks): ");  
-		seasonDuration = input.nextInt();  
-		System.out.print("Set difficulty (1-3): ");
-		difficulty = input.nextInt()-1;
-		ArrayList<Athlete> teamList = new ArrayList<Athlete>();
-		currentWeek = 1;
-		ArrayList<Athlete> benchList = new ArrayList<Athlete>();
-		teams = new TeamManager(teamList,benchList);
-		inventory = new ArrayList<Item>();
-		money = 100000;
-	}
-	
-	
-	
-	
-	/*
-	 * Overrides toString method to display all Game stats/ info
-	 * @return		String with game info
-	 */
-	@Override
-	public String toString() {
-		//Note: the BenchList,TeamList and Inventory are printed with DIFFERENT methods - might change
-		return String.format("The %s team has a %s week season, they are currently on week"
-				+ " %s. The difficulty is %s/2 and they have $%s"
-				+ "",playerName,seasonDuration,currentWeek,difficulty,money);
-	}
-	
-	
-	
-	
-	
-	/*
-	 *  Method for setting default team - mainly for testing
-	 *  @return 	Default team
-	 */
-	public ArrayList<Athlete> setTeam(){
-		ArrayList<Athlete> team = new ArrayList<Athlete>();		
-		team.add(new Athlete("attack1",7,2,"A"));
-		team.add(new Athlete("defend1",2,6,"D"));
-		team.add(new Athlete("attack2",3,1,"A"));
-		team.add(new Athlete("defend2",1,4,"D"));
-		team.add(new Athlete("attack3",10,0,"A"));
-		team.add(new Athlete("defend3",1,9,"D"));
-		return team;
-	}
-	
-	/*
-	 *  Method for setting default inventory - mainly for testing
-	 *  @return		Default inventory
-	 */
-	public ArrayList<Item> setInventory(){
-		ArrayList<Item> inventory = new ArrayList<Item>();
-		inventory.add(new Item("Juice","Stamina",5,15));
-		inventory.add(new Item("Speed","Attack",1,25));
-		inventory.add(new Item("Grippers","Defence",1,25));
-		inventory.add(new Item("Bandages","HP",20,20));
-		return inventory;
-	}
-	
-	
-	
 	
 	/*
 	 * Returns an array of athlete objects from active team
@@ -199,6 +128,10 @@ public class MainGame {
 	public int getDuration() {
 		return seasonDuration;
 	}
+
+	public int getPoints() {
+		return totalPoints;
+	}
 	
 	
 	/*
@@ -208,9 +141,10 @@ public class MainGame {
 	public void changeMoney(int amount) {
 		if((money + amount)<0) {
 			System.out.println("Your balance can't be negative");
-			money = 0;
 		}
-		money += amount;
+		else {
+			money += amount;
+		}
 	}
 	
 	/*
@@ -222,13 +156,15 @@ public class MainGame {
 			System.out.println("You can't have negative points");
 			totalPoints = 0;
 		}
-		totalPoints += amount;
+		else{
+			totalPoints += amount;
+		}
 	}
 
 	
 	public void addItem(Item item) {
 		if(inventory.size()>10) {
-			//NO!
+			System.out.println("Inventory Full");
 		}
 		else {
 			inventory.add(item);
@@ -236,7 +172,12 @@ public class MainGame {
 	}
 	
 	public void removeItem(Item item) {
-		inventory.remove(item);
+		if(!inventory.contains(item)) {
+			System.out.println("Item not in inventory");
+		}
+		else {
+			inventory.remove(item);
+		}
 	}
 	
 	
@@ -250,21 +191,15 @@ public class MainGame {
 		currentWeek ++;
 		teams.resetAthletes();
 		trainAthlete(athleteName);
-		return RandomEvent.runEvent(this);
+		RandomEvent event = new RandomEvent(this);
+		return event.generateEvent();
 	}
 
-	/*
-	 * Resets the stamina of all player athletes to 10.
-	 */
- 	
-	
  	/*
  	 * Takes athlete to train and increases their position stat 
  	 * depending on the difficulty. 
  	 */
 	public void trainAthlete(String athleteName) {
-//		Scanner input = new Scanner(System.in);
-//		System.out.print("Who will you train?");
 		Athlete athlete = teams.athleteFromString(athleteName);
 		if(athlete.getPosition().equals("A")){
 			athlete.changeAttack(4-difficulty);
@@ -274,52 +209,14 @@ public class MainGame {
 	}
 	
 	
-	/*
-	 *  Method for setting default opponents - mainly for testing
-	 *  @return 	Default opponent Team
-	 */
-	public ArrayList<Athlete> makeOpponents(){
-		ArrayList<Athlete> team = new ArrayList<Athlete>();
-		team.add(new Athlete("OPPattack1",8,2,"A"));
-		team.add(new Athlete("OPPdefend1",2,7,"D"));
-		team.add(new Athlete("OPPattack2",1,1,"A"));
-		team.add(new Athlete("OPPdefend2",1,1,"D"));
-		team.add(new Athlete("OPPattack3",1,0,"A"));
-		team.add(new Athlete("OPPdefend3",1,1,"D"));
-		return team;
-	}
-	
-	
-	
-	/*
-	 * main menu method - takes inputs and runs game classes
-	 */
-	public void playGame() {
-		System.out.println(String.format("Money: $%s"
-				+ "\nWeek: %s", money,currentWeek));
-		Scanner input = new Scanner(System.in);
-		System.out.print("Where to go? Club('C'), Market('M'), Stadium('S'), Bye('B')");
-		String choice = input.nextLine();
-		
-		if(choice.toUpperCase().equals("C")) {
-			Club club = new Club(this);
-		}else if(choice.toUpperCase().equals("S")) {
-//			Stadium stadium = new Stadium(this);
-		}else if(choice.toUpperCase().equals("M")) {
-			MarketPlace market = new MarketPlace(this);
-		}else if(choice.toUpperCase().equals("B")) {
-//			takeBye();
-		}else {
-			System.out.println("Invalid input");
-		}
-	}
-	
-	
-	
+
 	public void checkGameEnd(MarketPlace market) {
 		if(teams.getFreeSlots() - market.getPlayerCount() >= 6) {
 			//NOT ENOUGH PLAYERS END GAME
 			System.out.println("GAME OVER, NOT ENOUGH PLAYERS");
+		}else if(currentWeek > seasonDuration) {
+			//WEEKS OVER
+			System.out.println("GAME OVER, SEASON ENDED");
 		}
 	}
 	
@@ -343,21 +240,7 @@ public class MainGame {
 	//main method for testing and running game
 	public static void main(String[] args) {
 		//Implement tests
-		SetupWindow setupWindow = new SetupWindow();
-//		MainGame run = new MainGame("a",2,2);
-//		run.launchSetupScreen();
-//		run.launchMainScreen();
-		//Setup market and Stadium
-//		while(run.seasonDuration - run.currentWeek >= 0) {
-//			System.out.println(run);
-//			run.playGame();
-//		}
-//		System.out.println(String.format("The %s team finished the %s week"
-//				+ " season with $%s and %s points"
-//				+ "", run.playerName,run.seasonDuration,run.money,run.totalPoints));
-//		MainGame game = new MainGame();
-//		game.gotoMarket();
-	
+		SetupWindow setupWindow = new SetupWindow();	
 	}
 	
 }
