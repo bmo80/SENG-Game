@@ -10,7 +10,9 @@ public class Athlete extends Purchasable {
 	private boolean isInjured;
 	private int previousInjuries;
 	
-	// Constructors
+	/**
+	 * Default Constructor for the Athlete Class
+	 */
 	public Athlete(){
 		super();
 		//Reserved name
@@ -22,7 +24,13 @@ public class Athlete extends Purchasable {
 		isInjured = false;
 		previousInjuries = 0;		
 	}
-	
+	/**
+	 * Overloaded Constructor for Athlete Class, allows for creation of a custom athlete.
+	 * @param setName The name of the Athlete
+	 * @param setAttack The Attack value of the Athlete
+	 * @param setDefence The Defence value of the Athlete
+	 * @param setPosition The position the athlete will play in
+	 */
 	public Athlete(String setName, int setAttack, int setDefence, String setPosition) {
 		super(150,100,setName);
 		name = setName;
@@ -36,11 +44,14 @@ public class Athlete extends Purchasable {
 		previousInjuries = 0;		
 	}
 	
-	//Over
+	
 	@Override
+	/**
+	 * Overrides the system.out to print Athletes
+	 */
 	public String toString() {
-		return String.format("%s ATK(%s) DEF(%s) POS(%s) STA(%s)) "+
-				(isInjured?"Injured":""),name, attack, defence, position, stamina);
+		return String.format("%s: ATK(%s) DEF(%s) POS(%s)) "+
+				(isInjured?"Injured":""),name, attack, defence, position);
 	}
 	
 //	public String getLongDescription() {
@@ -50,35 +61,66 @@ public class Athlete extends Purchasable {
 //				+ "",name, attack, defence, position, stamina, previousInjuries);
 //	}
 	
-	// getter methods
+	/**
+	 * Gets the Athletes name
+	 * @return the athletes name
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Gets the value of the Athletes stamina
+	 * @return the Athletes stamina value
+	 */
 	public int getStamina() {
 		return stamina;
 	}
 	
+	/**
+	 * Gets the value of the Athletes attack
+	 * @return the Athletes attack value
+	 */
 	public int getAttack() {
 		return attack;
 	}
 	
+	/**
+	 * Gets the value of the Athletes Defence
+	 * @return the Athletes defence value
+	 */
 	public int getDefence() {
 		return defence;
 	}
 	
+	/**
+	 * Gets the position the Athlete plays
+	 * @return the position the Athlete plays
+	 */
 	public String getPosition() {
 		return position;
 	}
 	
+	/**
+	 * Gets the Athletes injured value
+	 * @return boolean of if the Athlete is injured
+	 */
 	public boolean getIsInjured() {
 		return isInjured;
 	}
 	
+	/**
+	 * Gets the number of previous injuries
+	 * @return
+	 */
 	public int getPreviousInjuries() {
 		return previousInjuries;
 	}
 	
+	/**
+	 * Gets the Athletes respective position value
+	 * @return The Athletes position value
+	 */
 	public int getPositionStat() {
 		if(position.equals("A")){
 			return attack;
@@ -86,10 +128,18 @@ public class Athlete extends Purchasable {
 		return defence;
 	}
 
+	/**
+	 * Change the Athletes name to a custom one
+	 * @param newName The new name for the Athlete
+	 */
 	public void changeName(String newName) {
 		name = newName;
 	}
 	
+	/**
+	 * 
+	 * @param change
+	 */
 	public void changeStamina(int change) {
 		stamina = verifyChange(stamina, change);
 		if(stamina == 0) {

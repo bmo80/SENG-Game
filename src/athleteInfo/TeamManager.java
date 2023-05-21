@@ -12,18 +12,27 @@ public class TeamManager {
 		teamList = currentTeam;
 		bench = currentBench;
 	}
-
-
+	
+	/**
+	 * Gets the current active players on your team
+	 * @return ArrayList of active players on your team
+	 */
 	public ArrayList<Athlete> getTeamList() {
 		return teamList;
 	}
 	
-	
+	/**
+	 * Gets the current bench players on your team
+	 * @return ArrayList of bench players on your team
+	 */
 	public ArrayList<Athlete> getBench(){
 		return bench;
 	}
 	
-	
+	/**
+	 * Gets the athlete who has had the most injuries on the team
+	 * @return the Athlete who has had the most injuries
+	 */
 	public Athlete getMostInjured() {
 		int currentHighest = 0;
 		Athlete currentAthlete = teamList.get(0);
@@ -42,12 +51,20 @@ public class TeamManager {
 		return currentAthlete;
 	}
 	
-	
+	/**
+	 * Gets the total number of slots still available on the team
+	 * @return the number of slots free
+	 */
 	public int getFreeSlots() {
 		return 11-(teamList.size()+bench.size());		
 	}
 	
-	
+	/**
+	 * Takes a name as a string and checks if an Athlete with that
+	 * name is on the team
+	 * @param stringAthlete the name of the potential Athlete
+	 * @return athlete if they are on the team or default athlete if they are not
+	 */
 	public Athlete athleteFromString(String stringAthlete) {
 		for(Athlete athlete:teamList) {
 			if(athlete.getName().equals(stringAthlete)) {
@@ -61,7 +78,7 @@ public class TeamManager {
 		}
 		return new Athlete();
 	}
-	
+
 	
 	public void swap(Athlete athlete1, Athlete athlete2) {
 		if(teamList.contains(athlete1)) {
@@ -89,6 +106,10 @@ public class TeamManager {
 		}
 	}
 	
+	/**
+	 * Resets the stamina of all athletes back to 10.
+	 * Only used after a bye has been taken
+	 */
 	public void resetAthletes() {
  		for(Athlete athlete:teamList) {
  			athlete.changeStamina(10);
@@ -98,7 +119,10 @@ public class TeamManager {
  		}
  	}	
 	
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String[] getTeamsString() {
 		String stringArray[] = new String[teamList.size()+bench.size()];
 		for(int i=0;i<teamList.size();i++) {

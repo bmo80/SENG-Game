@@ -15,7 +15,7 @@ Campbell
 Carter
 Clark
 Collins
-Cook or Cooke
+Cook
 Cooper
 Cox
 Davidson
@@ -29,7 +29,7 @@ Forester
 Foster
 Fox
 Gardener
-Gibb or Gibbs
+Gibb
 Gray
 Green
 Hall
@@ -63,10 +63,10 @@ Parker
 Paters
 Patterson
 Peterson
-Phillips or Philips
+Phillips
 Porter
 Powell
-Reid or Reed
+Reid
 Richards
 Richardson
 Roberts
@@ -80,7 +80,7 @@ Simpson
 Smith
 Smythe
 Snyder
-Stevens or Stephens
+Stevens
 Stewart
 Summers
 Taylor

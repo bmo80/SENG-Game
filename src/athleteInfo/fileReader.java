@@ -8,7 +8,12 @@ import java.util.Scanner;
 public class fileReader {
 	
 	public String name;
-
+	
+	/**
+	 * Constructor for fileReader class. Takes in a filename and attempts
+	 * to read the file
+	 * @param filename name of the file to be read
+	 */
 	fileReader(String filename) {
 		try {
 			readFile(filename);
@@ -18,6 +23,11 @@ public class fileReader {
 		}
 	}
 	
+	/**
+	 * Reads a file into a scanner and randomly pulls a value from it.
+	 * @param filename the file to be read
+	 * @throws FileNotFoundException
+	 */
 	private void readFile(String filename) throws FileNotFoundException {
 		Random rand = new Random();
 		int upperBound = 100;
@@ -32,8 +42,11 @@ public class fileReader {
 		setName(scanner.nextLine());
 		scanner.close();
 	}
-
-
+	
+	/**
+	 * Sets the name drawn so it can be retrieved
+	 * @param name name to be set
+	 */
 	private void setName(String name) {
 		this.name = name;
 	}
