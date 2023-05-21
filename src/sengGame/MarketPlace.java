@@ -15,7 +15,7 @@ public class MarketPlace{
 	private ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private MainGame gameStats;
-
+	private ArrayList<Athlete> setupPlayers = new ArrayList<Athlete>();
 	//Use to generate new players and refresh items after new week
 	public MarketPlace(MainGame game) {
 		gameStats = game;
@@ -24,14 +24,16 @@ public class MarketPlace{
 //		generateItems(4);
 	}	
 	
-	public void generateItems(int size) {
-		for(int i=0; i<size; i++) {
-			//Generate item
-			//itemsForSale.add(item);
-		}
-	}
 	
-	//Creates "number" amount of players in a given position
+
+	
+	
+	
+	/**
+	 * Generates a given number of athletes in a given position
+	 * @param size The number of Athletes to be Generated
+	 * @param position
+	 */
 	public void generateAthletes(int size, String position) {
 		for(int i=0; i<size; i++) {
 			Athlete athlete = new AthleteGenerator(position,gameStats.getWeek());
@@ -41,14 +43,27 @@ public class MarketPlace{
 		}
 	}
 	
+	
+	
+	/**
+	 * Gets the current items for sale in the market
+	 * @return ArrayList of items for sale
+	 */
 	public ArrayList<Item> getItemsForSale(){
 		return itemsForSale;
 	}
-	
+	/**
+	 * Gets the current players for sale in the market
+	 * @return ArrayList of Players for sale
+	 */
 	public ArrayList<Athlete> getPlayersForSale(){
 		return playersForSale;
 	}
 	
+	/**
+	 * Gets the number of players still available for sale in the market
+	 * @return The number of players
+	 */
 	public int getPlayerCount() {
 		int i = 0;
 		for(Athlete athlete: playersForSale) {
@@ -59,10 +74,30 @@ public class MarketPlace{
 		return i;
 	}
 	
+	/**
+	 * Gets the running MainGame instance
+	 * @return current instance of MainGame
+	 */
 	public MainGame getGameStats() {
 		return gameStats;
 	}
-
 	
+	/**
+	 * Generates the items for sale in the marketplace
+	 */
+	
+	
+	public ArrayList<Athlete> getSetupPlayers() {
+		return setupPlayers;
+	}
+	
+	public void createSetUp() {
+		for(int i=0; i<5; i++) {
+			setupPlayers.add(getAthlete("A"));
+		}
+		for(int i=0; i<5; i++) {
+			setupPlayers.add(getAthlete("D"));
+		}
+	}
 
 }

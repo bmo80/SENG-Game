@@ -11,16 +11,19 @@ import athleteInfo.TeamManager;
 public class Match{
 	
 	private MainGame gameStats;
-	private ArrayList<Athlete> opponents;
-	private ArrayList<Athlete> playerTeam;
-	private int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
-	private ArrayList<Integer> athleteScores = new ArrayList<Integer>();
+	public ArrayList<Athlete> opponents;
+	public ArrayList<Athlete> playerTeam;
+	public int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
+	private Stadium stadium;
+	public ArrayList<Integer> athleteScores = new ArrayList<Integer>();
 	
-	public Match(MainGame currentGame, ArrayList<Athlete> opps){
+	public Match(Stadium currentStadium, MainGame currentGame){
 		gameStats = currentGame;
+		stadium = currentStadium;
 		Collections.addAll(athleteScores, 0, 0, 0, 0, 0, 0);
 		playerTeam = gameStats.getTeams().getTeamList();
-		opponents = opps;
+		opponents = stadium.enemyTeams.get(stadium.selectedTeam);
+//		playMatch();
 	}
 	
 	public ArrayList<Athlete> getPlayerTeam(){
@@ -64,7 +67,6 @@ public class Match{
 		else if(checkAllInjured()) {
 			//Send - No healthy players error message
 			System.out.println("No healthy Athletes in team");
-			endMatch();
 			return false;
 		}
 		else if((currentPlayerIndex >= 6) || (currentOppIndex >= 6)) {
@@ -116,6 +118,7 @@ public class Match{
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
 		}
 		else if(oppsScore>playerScore) {
+			gameStats.losses += 1;
 			//Send message - Opponents win
 			System.out.println(oppsScore);
 			System.out.println(playerScore);
@@ -123,10 +126,11 @@ public class Match{
 		}
 		else if(playerScore>oppsScore){
 			//Send message - You won!
+			gameStats.wins += 1;
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
 			gameStats.changePoints(3+gameStats.getDifficulty());
-			gameStats.changeMoney(2500*(3-gameStats.getDifficulty()));
+			gameStats.changeMoney(10000*(3-gameStats.getDifficulty()));
 		}
 		else {
 			//Tie condition - Some rewards
