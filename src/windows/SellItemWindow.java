@@ -205,6 +205,7 @@ public class SellItemWindow {
 //					updateButton(itemSelected);
 					defaultItem();
 					updateLabels();
+					setButtonNames();
 				}
 			}
 		});
@@ -253,4 +254,6 @@ public class SellItemWindow {
 			index++;
 		}
 	}
+	
+	
 }

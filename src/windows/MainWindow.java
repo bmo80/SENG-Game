@@ -10,6 +10,7 @@ import athleteInfo.TeamManager;
 import sengGame.Club;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
+import sengGame.Match;
 import sengGame.Stadium;
 
 import javax.swing.JLabel;
@@ -25,7 +26,7 @@ public class MainWindow {
 	private MainGame game;
 	private MarketPlace market;
 	private Stadium stadium;
-
+	private Match match;
 	/**
 	 * Create the application.
 	 */

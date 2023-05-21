@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import athleteInfo.Athlete;
 import sengGame.MainGame;
+import sengGame.Match;
 import sengGame.Stadium;
 
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ public class StadiumWindow {
 	private int buttonSelected;
 	private Stadium stadium;
 	private ArrayList<Athlete> teamChosen;
+	Match match;
 	/**
 	 * Create the application.
 	 */
@@ -45,7 +47,7 @@ public class StadiumWindow {
 		frmStadium.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome to the Stadium!");
-		lblNewLabel.setBounds(220, 11, 150, 14);
+		lblNewLabel.setBounds(192, 11, 232, 14);
 		frmStadium.getContentPane().add(lblNewLabel);
 		
 		JLabel lblMoney = new JLabel("New label");
@@ -57,7 +59,7 @@ public class StadiumWindow {
 		frmStadium.getContentPane().add(lblWeek);
 		
 		JLabel lblChooseText = new JLabel("Choose Which team you would like to play!");
-		lblChooseText.setBounds(180, 36, 216, 14);
+		lblChooseText.setBounds(136, 37, 327, 14);
 		frmStadium.getContentPane().add(lblChooseText);
 		
 		JButton btnTeam1 = new JButton("Team1");
@@ -127,7 +129,12 @@ public class StadiumWindow {
 				System.out.println(String.format("Team chosen: %s", buttonSelected));
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-				//TODO setup to play a game vs PLAYER team if yes is chosen
+				if(result == JOptionPane.YES_OPTION) {
+					stadium.selectedTeam = buttonSelected-1;
+					MatchWindow window = new MatchWindow(stadium, stadium.match);
+					
+				} 
+				
 			}
 		});
 		btnChoose.setBounds(351, 280, 89, 23);
