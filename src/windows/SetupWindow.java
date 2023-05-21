@@ -1,5 +1,6 @@
 package windows;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -38,25 +39,26 @@ public class SetupWindow {
 	private void initialize() {
 		frmSetup = new JFrame();
 		frmSetup.setTitle("Setup");
-		frmSetup.setBounds(100, 100, 450, 300);
+		frmSetup.setBounds(100, 100, 546, 411);
 		frmSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSetup.getContentPane().setLayout(null);
 		
+		
 		txtName = new JTextField();
-		txtName.setBounds(186, 48, 228, 19);
+		txtName.setBounds(186, 91, 228, 19);
 		frmSetup.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
-		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(33, 50, 70, 15);
+		JLabel lblName = new JLabel("Enter Team name:");
+		lblName.setBounds(33, 93, 135, 15);
 		frmSetup.getContentPane().add(lblName);
 		
 		JLabel lblDifficulty = new JLabel("Difficulty:");
-		lblDifficulty.setBounds(33, 99, 70, 15);
+		lblDifficulty.setBounds(45, 161, 70, 15);
 		frmSetup.getContentPane().add(lblDifficulty);
 		
 		JLabel lblSeasonDuration = new JLabel("Season Duration:");
-		lblSeasonDuration.setBounds(33, 147, 131, 15);
+		lblSeasonDuration.setBounds(37, 256, 131, 15);
 		frmSetup.getContentPane().add(lblSeasonDuration);
 		
 		JSlider durationSlider = new JSlider();
@@ -64,29 +66,30 @@ public class SetupWindow {
 		durationSlider.setMaximum(15);
 		durationSlider.setMinorTickSpacing(1);
 		durationSlider.setMinimum(5);
-		durationSlider.setBounds(186, 146, 228, 16);
+		durationSlider.setBounds(186, 240, 228, 16);
 		frmSetup.getContentPane().add(durationSlider);
 		
 		JLabel lnlMinWeeks = new JLabel("5");
-		lnlMinWeeks.setBounds(186, 159, 32, 23);
+		lnlMinWeeks.setBounds(186, 252, 32, 23);
 		frmSetup.getContentPane().add(lnlMinWeeks);
 		
 		JLabel lblMaxWeeks = new JLabel("15");
-		lblMaxWeeks.setBounds(390, 163, 24, 15);
+		lblMaxWeeks.setBounds(412, 256, 24, 15);
 		frmSetup.getContentPane().add(lblMaxWeeks);
 		
 		JSlider difficultySlider = new JSlider();
+		difficultySlider.setPaintLabels(true);
 		difficultySlider.setMaximum(2);
 		difficultySlider.setMinorTickSpacing(1);
-		difficultySlider.setBounds(186, 99, 228, 16);
+		difficultySlider.setBounds(186, 161, 228, 16);
 		frmSetup.getContentPane().add(difficultySlider);
 		
 		JLabel lblMaxDifficulty = new JLabel("2");
-		lblMaxDifficulty.setBounds(402, 115, 24, 15);
+		lblMaxDifficulty.setBounds(412, 175, 24, 15);
 		frmSetup.getContentPane().add(lblMaxDifficulty);
 		
 		JLabel lnlMinDifficulty = new JLabel("0");
-		lnlMinDifficulty.setBounds(186, 111, 32, 23);
+		lnlMinDifficulty.setBounds(186, 171, 32, 23);
 		frmSetup.getContentPane().add(lnlMinDifficulty);
 		
 		JButton btnConfirm = new JButton("Confirm");
@@ -104,8 +107,16 @@ public class SetupWindow {
 				}
 			}
 		});
-		btnConfirm.setBounds(161, 205, 117, 25);
+		btnConfirm.setBounds(204, 301, 117, 25);
 		frmSetup.getContentPane().add(btnConfirm);
+		
+		JLabel lblWelcomeToSport = new JLabel("Welcome to the Team Manager game");
+		lblWelcomeToSport.setBounds(138, 12, 276, 15);
+		frmSetup.getContentPane().add(lblWelcomeToSport);
+		
+		JLabel label = new JLabel("1");
+		label.setBounds(297, 175, 24, 15);
+		frmSetup.getContentPane().add(label);
 		
 		
 	}

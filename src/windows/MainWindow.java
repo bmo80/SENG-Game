@@ -1,6 +1,8 @@
 package windows;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -26,6 +28,8 @@ public class MainWindow {
 	private MarketPlace market;
 	private Stadium stadium;
 	private Match match;
+	JLabel lblRecord;
+
 	/**
 	 * Create the application.
 	 */
@@ -54,8 +58,10 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frmMainGame = new JFrame();
+		frmMainGame.getContentPane().setBackground(new Color(222, 221, 218));
+		frmMainGame.getContentPane().setForeground(new Color(246, 211, 45));
 		frmMainGame.setTitle("Main Game");
-		frmMainGame.setBounds(100, 100, 450, 300);
+		frmMainGame.setBounds(100, 100, 651, 480);
 		frmMainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMainGame.getContentPane().setLayout(null);
 		
@@ -69,29 +75,32 @@ public class MainWindow {
 		
 		
 		
-		JButton btnClub = new JButton("Club");
+		JButton btnClub = new JButton("Go to Club");
+		btnClub.setBackground(Color.red);
 		btnClub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
 				ClubWindow club = new ClubWindow(game, frmMainGame);
 			}
 		});
-		btnClub.setBounds(12, 52, 117, 77);
+		btnClub.setBounds(12, 64, 148, 77);
 		frmMainGame.getContentPane().add(btnClub);
 		
 		
 		
-		JButton btnMarket = new JButton("Market");
+		JButton btnMarket = new JButton("Go to Market");
+		btnMarket.setBackground(Color.green);
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
 				MarketPlaceWindow window = new MarketPlaceWindow(market, frmMainGame);
 			}
 		});
-		btnMarket.setBounds(162, 52, 117, 77);
+		btnMarket.setBounds(12, 177, 148, 77);
 		frmMainGame.getContentPane().add(btnMarket);
 		
-		JButton btnStadium = new JButton("Stadium");
+		JButton btnStadium = new JButton("Go to Stadium");
+		btnStadium.setBackground(Color.cyan);
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
@@ -99,7 +108,7 @@ public class MainWindow {
 				StadiumWindow window = new StadiumWindow(stadium, frmMainGame);
 			}
 		});
-		btnStadium.setBounds(305, 52, 117, 77);
+		btnStadium.setBounds(12, 288, 148, 77);
 		frmMainGame.getContentPane().add(btnStadium);
 		
 		
@@ -124,7 +133,17 @@ public class MainWindow {
 ;				}
 			}
 		});
-		btnBye.setBounds(147, 196, 148, 25);
+		btnBye.setBounds(12, 400, 148, 25);
 		frmMainGame.getContentPane().add(btnBye);
+		
+		JLabel lblTeamName = new JLabel(game.getPlayerName()+" FC");
+		lblTeamName.setFont(new Font("Arial", Font.BOLD, 16));
+		lblTeamName.setBounds(259, 24, 172, 15);
+		frmMainGame.getContentPane().add(lblTeamName);
+		
+		lblRecord = new JLabel();
+		lblRecord.setBounds(494, 25, 110, 15);
+		frmMainGame.getContentPane().add(lblRecord);
 	}
+
 }

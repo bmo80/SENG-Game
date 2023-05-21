@@ -15,34 +15,24 @@ import java.awt.event.ActionEvent;
 
 public class MatchWindow {
 
-	private JFrame frmPlayMatch;
+	private JFrame frmPlayMatch, frmStadium;
 	private JFrame mainMenu;
 	private Stadium stadium;
 	private Match match;
-	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6, lblScores, lblScore;
+	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, 
+	lblPlayer6, lblScores, lblScore,lblWinLose;
+
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MatchWindow window = new MatchWindow();
-					window.frmPlayMatch.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public MatchWindow(Stadium curStadium, Match currentMatch) {
+
+	public MatchWindow(Stadium curStadium, Match currentMatch, JFrame curStadiumWindow) {
 		match = currentMatch;
 		stadium = curStadium;
+		frmStadium = curStadiumWindow;
+		frmStadium.setVisible(false);
 		match.playMatch();
 		initialize();
 		frmPlayMatch.setVisible(true);
@@ -94,17 +84,26 @@ public class MatchWindow {
 		showPlayerScores();
 		showGameScore();
 		
-		JLabel lblWinLose = new JLabel("New label");
-		lblWinLose.setBounds(188, 287, 70, 15);
+
+		lblWinLose = new JLabel("New label");
+		if(match.playerScore > match.oppsScore) {
+			lblWinLose.setText("Victory!");
+		} else {
+			lblWinLose.setText("Defeat!");
+		}
+		lblWinLose.setBounds(167, 287, 70, 15);
+
 		frmPlayMatch.getContentPane().add(lblWinLose);
 		
 		JButton btnFinish = new JButton("Finish");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				frmPlayMatch.setVisible(false);
+				frmStadium.setVisible(true);
 			}
 		});
-		btnFinish.setBounds(314, 282, 117, 25);
+		btnFinish.setBounds(302, 282, 117, 25);
+
 		frmPlayMatch.getContentPane().add(btnFinish);
 	}
 	

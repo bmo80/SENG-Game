@@ -23,13 +23,13 @@ public class SellPlayerWindow {
 	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
 	JButton bench1,bench2,bench3,bench4,bench5;
 	JLabel lblName, lblPosition, lblAttack, lblDefense, lblSellPrice;
-	private JFrame mainMenu;
+	private JFrame prevWindow;
 
 	/**
 	 * Create the application.
 	 */
 	public SellPlayerWindow(MarketPlace currentMarket, JFrame givenWindow) {
-		mainMenu = givenWindow;
+		prevWindow = givenWindow;
 		market = currentMarket;
 		initialize();
 		frmManageTeam.setVisible(true);
@@ -49,7 +49,7 @@ public class SellPlayerWindow {
 		lblMoney.setBounds(12, 12, 70, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
-		JLabel displayMoney = new JLabel(String.valueOf(market.getGameStats().getMoney()));
+		JLabel displayMoney = new JLabel(String.valueOf(market.getMoney()));
 		displayMoney.setBounds(72, 12, 70, 15);
 		frmManageTeam.getContentPane().add(displayMoney);
 		
@@ -58,7 +58,7 @@ public class SellPlayerWindow {
 		lblWeek.setBounds(12, 28, 70, 15);
 		frmManageTeam.getContentPane().add(lblWeek);
 		
-		JLabel weekNum = new JLabel(String.valueOf(market.getGameStats().getWeek())+"/5");
+		JLabel weekNum = new JLabel(String.valueOf(market.getWeek())+"/5");
 		weekNum.setBounds(72, 28, 70, 15);
 		frmManageTeam.getContentPane().add(weekNum);
 		
@@ -146,7 +146,7 @@ public class SellPlayerWindow {
 				updateLabels(athleteSelected);
 			}
 		});
-		bench1.setBounds(199, 227, 175, 37);
+		bench1.setBounds(12, 227, 175, 37);
 		frmManageTeam.getContentPane().add(bench1);
 		
 		bench2 = new JButton("New button");
@@ -157,7 +157,7 @@ public class SellPlayerWindow {
 			}
 		});
 		
-		bench2.setBounds(12, 227, 175, 37);
+		bench2.setBounds(199, 227, 175, 37);
 		frmManageTeam.getContentPane().add(bench2);
 		
 		bench3 = new JButton("New button");
@@ -226,10 +226,28 @@ public class SellPlayerWindow {
 						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
 					market.getGameStats().changeMoney(athleteSelected.getSellPrice());
-					market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
 					lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
-					setButtons();
 					market.getGameStats().checkGameEnd(market);
+					//Checks if the selected athlete is in Main team or other(bench)
+					if(market.getGameStats().getTeams().getTeamList().contains(athleteSelected)) {
+						market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
+						System.out.println("MAKING IT HERE");
+						//checks if there are any players on the bench and moves them up if so.
+						if(market.getGameStats().getTeams().getBench().size() > 0) {
+							Athlete movingAthlete = market.getGameStats().getTeams().getBench().get(0);
+							System.out.println(movingAthlete);
+							market.getGameStats().getTeams().getTeamList().add(movingAthlete);
+							market.getGameStats().getTeams().getBench().remove(movingAthlete);
+						}
+
+//						System.out.println(market.getGameStats().getTeams().getTeamList().get(5));
+						setButtons();
+					} else {
+						market.getGameStats().getTeams().getBench().remove(athleteSelected);
+						setButtons();
+					}
+					setButtons();
+				
 				}
 			}
 		});
@@ -239,7 +257,7 @@ public class SellPlayerWindow {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuyPlayerWindow window = new BuyPlayerWindow(market, mainMenu);
+				prevWindow.setVisible(true);
 				frmManageTeam.dispose();
 			}
 		});

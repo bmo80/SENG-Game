@@ -16,7 +16,7 @@ public class BuyItemWindow {
 
 	private JFrame frmItemTrading;
 	private MarketPlace market;
-	private JFrame mainMenu;
+	private JFrame prevWindow;
 	private JLabel lblPrice, lblName, lblType, lblEffect,lblMoney, lblWeek,lblBuyItems;
 	private JButton btnItem1,btnItem2,btnItem3,btnItem4,btnDone,btnPurchase;
 	private int itemSelected;
@@ -24,7 +24,7 @@ public class BuyItemWindow {
 	 * Create the application.
 	 */
 	public BuyItemWindow(MarketPlace currentMarket, JFrame givenWindow) {
-		mainMenu = givenWindow;
+		prevWindow = givenWindow;
 		market = currentMarket;
 		initialize();
 		frmItemTrading.setVisible(true);
@@ -58,8 +58,8 @@ public class BuyItemWindow {
 		JButton btnViewInventory = new JButton("View Inventory");
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmItemTrading.dispose();
-				SellItemWindow window = new SellItemWindow(market, mainMenu);
+				frmItemTrading.setVisible(false);
+				SellItemWindow window = new SellItemWindow(market, frmItemTrading);
 			}
 		});
 		btnViewInventory.setBounds(343, 7, 139, 25);
@@ -99,7 +99,7 @@ public class BuyItemWindow {
 		btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MarketPlaceWindow window = new MarketPlaceWindow(market, mainMenu);
+				prevWindow.setVisible(true);
 				frmItemTrading.dispose();
 			}
 		});
@@ -123,8 +123,9 @@ public class BuyItemWindow {
 	
 	}
 	
-	/*
-	 * Updates the Labels to display which item button you have clicked
+	/**
+	 * Updates the labels to display which item you have clicked
+	 * @param index position of the item in the itemsForSale list
 	 */
 	private void updateLabels(int index) {
 		lblName.setText(String.format("Name: %s", market.getItemsForSale().get(index-1).getName()));
@@ -133,9 +134,9 @@ public class BuyItemWindow {
 		lblPrice.setText(String.format("Price: %s", Integer.toString(market.getItemsForSale().get(index-1).getBuyPrice())));
 	}
 	
-	/*
-	 * Creates the Buttons everytime the BuyItemWindow
-	 * is instantiated.
+	/**
+	 * Initializes the buttons using a support function to display the different items
+	 * available.
 	 */
 	private void setItemButtons() {
 		
@@ -180,9 +181,9 @@ public class BuyItemWindow {
 		frmItemTrading.getContentPane().add(btnItem4);
 	}
 	
-	/*
-	 * Updates the button of the given item number
-	 * once the purchase button has been pressed
+	/**
+	 * Updates a button to be disabled and labeled "Purchased"
+	 * @param index the index of the button to be disabled
 	 */
 	private void updateButton(int index) {
 		switch (index) {
@@ -205,10 +206,10 @@ public class BuyItemWindow {
 		}
 	}
 	
-	/*
-	 * Checks if the Item in that slots has been purchased
-	 * if it has it greys it out and sets the text to "Purchased"
-	 * if not then it is set the the items name
+	/**
+	 * The support function which initializes the Buttons and Checks 
+	 * if any have been Purchased.
+	 * @param index
 	 */
 	private void setButtonName(int index) {
 		
@@ -249,8 +250,11 @@ public class BuyItemWindow {
 		}
 		
 	}
-	
-	private void setItemSelected(int item) {
-		itemSelected = item;
+	/**
+	 * Used to know the value of which item is currently being selected
+	 * @param index the button number that was pressed
+	 */
+	private void setItemSelected(int index) {
+		itemSelected = index;
 	}
 }

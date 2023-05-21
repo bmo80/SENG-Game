@@ -61,8 +61,8 @@ public class MarketPlaceWindow{
 		JButton btnBuysellPlayers = new JButton("Buy and Sell Players");
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuyPlayerWindow window = new BuyPlayerWindow(market, mainMenu);
-				frmMarketplace.dispose();
+				BuyPlayerWindow window = new BuyPlayerWindow(market, frmMarketplace);
+				frmMarketplace.setVisible(false);
 			}
 		});
 		btnBuysellPlayers.setBounds(35, 94, 195, 70);
@@ -71,8 +71,8 @@ public class MarketPlaceWindow{
 		JButton btnBuyAndSell = new JButton("Buy and Sell Items");
 		btnBuyAndSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuyItemWindow window = new BuyItemWindow(market, mainMenu);
-				frmMarketplace.dispose();
+				BuyItemWindow window = new BuyItemWindow(market, frmMarketplace);
+				frmMarketplace.setVisible(false);
 			}
 		});
 		btnBuyAndSell.setBounds(265, 94, 195, 70);

@@ -17,7 +17,7 @@ import sengGame.MarketPlace;
 
 public class SellItemWindow {
 
-	private JFrame frmSellItems, mainMenu;
+	private JFrame frmSellItems, prevWindow;
 	private JLabel lblItemName, lblItemType, lblItemEffect;
 	private Item itemSelected;
 	private MainGame game;
@@ -30,14 +30,14 @@ public class SellItemWindow {
 	public SellItemWindow(MarketPlace givenMarket, JFrame givenWindow) {
 		market = givenMarket;
 		game = market.getGameStats();
-		mainMenu = givenWindow;
+		prevWindow = givenWindow;
 		defaultItem();
 		initialize();
 		frmSellItems.setVisible(true);
 	}
 	
 	public void closeWindow() {
-		BuyItemWindow buyItemWindow = new BuyItemWindow(market, mainMenu);
+		prevWindow.setVisible(true);
 		frmSellItems.dispose();
 	}
 	

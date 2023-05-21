@@ -26,13 +26,15 @@ public class BuyPlayerWindow {
 	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
 	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
 	private int athleteSelected;
-	private JFrame mainMenu;
+	private JFrame marketWindow;
 
 	/**
-	 * Create the application.
+	 * Constructor for the BuyPlayer window.
+	 * @param curmarket the current marketplace
+	 * @param givenWindow 
 	 */
 	public BuyPlayerWindow(MarketPlace curmarket, JFrame givenWindow) {
-		mainMenu = givenWindow;
+		marketWindow = givenWindow;
 		market = curmarket;
 		initialize();
 		frmPlayerTrading.setVisible(true);
@@ -62,8 +64,8 @@ public class BuyPlayerWindow {
 		JButton btnViewMyTeam = new JButton("View my Team");
 		btnViewMyTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmPlayerTrading.dispose();
-				SellPlayerWindow window = new SellPlayerWindow(market, mainMenu);
+				frmPlayerTrading.setVisible(false);
+				SellPlayerWindow window = new SellPlayerWindow(market, frmPlayerTrading);
 			}
 		});
 		btnViewMyTeam.setBounds(369, 7, 134, 25);
@@ -138,7 +140,7 @@ public class BuyPlayerWindow {
 		JButton btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MarketPlaceWindow window = new MarketPlaceWindow(market, mainMenu);
+				marketWindow.setVisible(true);
 				frmPlayerTrading.dispose();
 			}
 		});

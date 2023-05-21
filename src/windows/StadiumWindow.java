@@ -62,7 +62,7 @@ public class StadiumWindow {
 		lblChooseText.setBounds(136, 37, 327, 14);
 		frmStadium.getContentPane().add(lblChooseText);
 		
-		JButton btnTeam1 = new JButton("Team1");
+		 btnTeam1 = new JButton("Team1");
 		btnTeam1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonSelected = 1;
@@ -72,7 +72,7 @@ public class StadiumWindow {
 		btnTeam1.setBounds(10, 90, 113, 43);
 		frmStadium.getContentPane().add(btnTeam1);
 		
-		JButton btnTeam2 = new JButton("Team 2");
+		btnTeam2 = new JButton("Team 2");
 		btnTeam2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonSelected = 2;
@@ -82,15 +82,18 @@ public class StadiumWindow {
 		btnTeam2.setBounds(10, 160, 113, 43);
 		frmStadium.getContentPane().add(btnTeam2);
 		
-		JButton btnTeam3 = new JButton("Team 3");
+		 btnTeam3 = new JButton("Team 3");
 		btnTeam3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonSelected = 3;
 				updateLabels(buttonSelected);
 			}
 		});
+		
 		btnTeam3.setBounds(10, 230, 113, 43);
 		frmStadium.getContentPane().add(btnTeam3);
+		
+		setButtons();
 		
 		JLabel lblActive = new JLabel("Active Players");
 		lblActive.setBounds(244, 71, 106, 14);
@@ -130,8 +133,14 @@ public class StadiumWindow {
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
-					MatchWindow window = new MatchWindow(stadium.getGameStats(), 
-							teamChosen);
+					stadium.selectedTeam = buttonSelected-1;
+					ArrayList<Athlete> blankTeam = new ArrayList<Athlete>();
+					Athlete athlete = new Athlete("Match played",1,1,"A");
+					blankTeam.add(athlete);
+					stadium.enemyTeams.set(buttonSelected-1, blankTeam);
+					MatchWindow window = new MatchWindow(stadium, stadium.match, frmStadium);
+					setButtons();
+
 					
 				} 
 				
@@ -141,10 +150,21 @@ public class StadiumWindow {
 		frmStadium.getContentPane().add(btnChoose);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmStadium.setVisible(false);
+				mainMenu.setVisible(true);
+				
+			}
+		});
 		btnBack.setBounds(483, 306, 89, 23);
 		frmStadium.getContentPane().add(btnBack);
 	}
 	
+	/**
+	 * Updates the Labels to display the correct team
+	 * @param index position of correct enemy team in ArrayList
+	 */
 	private void updateLabels(int index) {
 		ArrayList<Athlete> team = new ArrayList<Athlete>();
 		ArrayList<JLabel> labels = new ArrayList<JLabel>();
@@ -157,12 +177,31 @@ public class StadiumWindow {
 			count++;
 		}
 	}
-	
+	/**
+	 * Sets all the labels to be invisible
+	 */
 	private void startLabels() {
 		ArrayList<JLabel> labels = new ArrayList<JLabel>();
 		Collections.addAll(labels, lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6);
 		for(JLabel label: labels) {
 			label.setEnabled(false);
+		}
+	}
+	
+	/**
+	 * Checks if any of the enemy teams have already been played
+	 * if so it disables the button
+	 */
+	private void setButtons() {
+		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		Collections.addAll(buttons, btnTeam1, btnTeam2, btnTeam3);
+		int index = 0;
+		for(JButton btn: buttons) {
+			if(stadium.enemyTeams.get(index).size() == 1) {
+				btn.setText("Match Played");
+				btn.setEnabled(false);
+			} 
+			index++;
 		}
 	}
 }
