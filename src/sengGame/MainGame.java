@@ -1,9 +1,10 @@
 package sengGame;
 import java.util.*;
 
-import athleteInfo.Athlete;
-import athleteInfo.Item;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.Item;
+import purchasables.TeamManager;
+import windows.GameOverWindow;
 import windows.MainWindow;
 import windows.SetupBuyPlayerWindow;
 import windows.SetupWindow;
@@ -133,6 +134,12 @@ public class MainGame {
 		return totalPoints;
 	}
 	
+	public String getFinalStats() {
+		return String.format("%s FC finished up their %s week season with"
+				+ " %s points and $%s on the level %s difficulty."
+				+ "\nThanks for playing!",playerName,seasonDuration,totalPoints,
+				money, difficulty);
+	}
 	
 	/*
 	 * changes money and ensures it's not negative	
@@ -200,7 +207,7 @@ public class MainGame {
  	 * depending on the difficulty. 
  	 */
 	public void trainAthlete(String athleteName) {
-		Athlete athlete = teams.athleteFromString(athleteName);
+		Athlete athlete = teams.getAthleteFromString(athleteName);
 		if(athlete.getPosition().equals("A")){
 			athlete.changeAttack(4-difficulty);
 		} else {
@@ -209,26 +216,37 @@ public class MainGame {
 	}
 	
 	
-
-	public void checkGameEnd(MarketPlace market) {
-		if(teams.getFreeSlots() - market.getPlayerCount() >= 6) {
+	
+	public boolean checkGameEnd(MarketPlace market) {
+		if(teams.getFreeSlotsCount() - market.getPlayerCount() >= 6) {
 			//NOT ENOUGH PLAYERS END GAME
 			System.out.println("GAME OVER, NOT ENOUGH PLAYERS");
+			return true;
 		}else if(currentWeek > seasonDuration) {
 			//WEEKS OVER
 			System.out.println("GAME OVER, SEASON ENDED");
+			return true;
 		}
+		return false;
 	}
 	
 	//Gui code
 	
 	
 	public void launchMainScreen() {
-		MainWindow mainWindow = new MainWindow(this);
+		MarketPlace market = new MarketPlace(this);
+		if(checkGameEnd(market)) {
+			finishGame();
+		}
+		else {
+			MainWindow mainWindow = new MainWindow(this,market,
+					new Stadium(this));
+		}
 	}
 		
-	public void closeMainScreen(MainWindow mainWindow) {
-		mainWindow.closeWindow();
+	public void finishGame() {
+		//Open final window
+		GameOverWindow finalWindow = new GameOverWindow(this);
 	}
 	
 	public void closeSetupScreen(SetupBuyPlayerWindow setupWindow) {

@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import athleteInfo.Athlete;
+import purchasables.Athlete;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 
@@ -39,7 +39,7 @@ public class SellTeamWindow {
 	}
 	
 	public void defaultAthlete() {
-		if(market.getGameStats().getTeams().getFreeSlots() == 11) {
+		if(market.getGameStats().getTeams().getFreeSlotsCount() == 11) {
 			athleteSelected = new Athlete();
 		}
 		else if(market.getGameStats().getTeams().getTeamList().size() == 0) {

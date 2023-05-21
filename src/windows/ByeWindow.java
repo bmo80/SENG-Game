@@ -6,9 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import athleteInfo.Athlete;
 import sengGame.MainGame;
+import sengGame.MarketPlace;
+import sengGame.Stadium;
+
 import javax.swing.SwingConstants;
+
+import purchasables.Athlete;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,7 +30,7 @@ public class ByeWindow {
 	 */
 	public ByeWindow(MainGame currentGame,String athleteName) {
 		game = currentGame;
-		trainedAthlete = game.getTeams().athleteFromString(athleteName);
+		trainedAthlete = game.getTeams().getAthleteFromString(athleteName);
 		eventInfo = game.takeBye(athleteName);
 		//Add random event
 		initialize();

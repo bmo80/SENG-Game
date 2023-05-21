@@ -10,10 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import athleteInfo.Athlete;
-import athleteInfo.Item;
 import sengGame.MainGame;
 import javax.swing.SwingConstants;
+
+import purchasables.Athlete;
+import purchasables.Item;
 
 public class TeamWindow {
 
@@ -43,7 +44,7 @@ public class TeamWindow {
 	}
 	
 	public void defaultAthlete() {
-		if(game.getTeams().getFreeSlots() == 11) {
+		if(game.getTeams().getFreeSlotsCount() == 11) {
 			athleteSelected = new Athlete();
 		}
 		else if(game.getTeams().getTeamList().size() == 0) {

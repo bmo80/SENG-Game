@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import athleteInfo.Athlete;
+import purchasables.Athlete;
 import sengGame.MainGame;
 import sengGame.Match;
 import sengGame.Stadium;
@@ -20,19 +20,17 @@ import java.awt.event.ActionEvent;
 public class StadiumWindow {
 
 	private JFrame frmStadium, mainMenu;
-	JButton btnTeam1, btnTeam2, btnTeam3;
-	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
+	private JButton btnTeam1, btnTeam2, btnTeam3;
+	private JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
 	private int buttonSelected;
 	private Stadium stadium;
 	private ArrayList<Athlete> teamChosen;
-	MainGame gameStats;
 	/**
 	 * Create the application.
 	 */
-	public StadiumWindow(Stadium curStadium, JFrame mainGame, MainGame curGame) {
+	public StadiumWindow(Stadium curStadium, JFrame mainGame) {
 		mainMenu = mainGame;
 		stadium = curStadium;
-		gameStats = curGame;
 		initialize();
 		frmStadium.setVisible(true);
 	}
@@ -134,15 +132,11 @@ public class StadiumWindow {
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
-//					stadium.selectedTeam = teamChosen;
-					Match match = new Match(stadium, gameStats);
-					match.opponents = teamChosen;
-					System.out.println(stadium.enemyTeams.get(buttonSelected-1).get(0));
 					ArrayList<Athlete> blankTeam = new ArrayList<Athlete>();
 					Athlete athlete = new Athlete("Match played",1,1,"A");
 					blankTeam.add(athlete);
-					stadium.enemyTeams.set(buttonSelected-1, blankTeam);
-					MatchWindow window = new MatchWindow(match, frmStadium);
+					stadium.getEnemyTeams().set(buttonSelected-1, blankTeam);
+					MatchWindow window = new MatchWindow(new Match(stadium.getGameStats(),teamChosen), frmStadium);
 					setButtons();
 
 					
@@ -201,7 +195,7 @@ public class StadiumWindow {
 		Collections.addAll(buttons, btnTeam1, btnTeam2, btnTeam3);
 		int index = 0;
 		for(JButton btn: buttons) {
-			if(stadium.enemyTeams.get(index).size() == 1) {
+			if(stadium.getEnemyTeams().get(index).size() == 1) {
 				btn.setText("Match Played");
 				btn.setEnabled(false);
 			} 

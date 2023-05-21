@@ -7,8 +7,8 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.TeamManager;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 import sengGame.Match;
@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class MainWindow {
 
@@ -33,20 +34,16 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow(MainGame getGame) {
+	public MainWindow(MainGame getGame,MarketPlace givenMarket, Stadium givenStadium) {
 		game = getGame;
-		market = new MarketPlace(game);
-		stadium = new Stadium(game);
+		market = givenMarket;
+		stadium = givenStadium;
 		initialize();
 		frmMainGame.setVisible(true);		
 	}
 
 	public void closeWindow() {
 		frmMainGame.dispose();
-	}
-	
-	public void finishedWindow() {
-		game.closeMainScreen(this);
 	}
 	
 	public void showWindow() {
@@ -69,7 +66,7 @@ public class MainWindow {
 		MoneyLbl.setBounds(12, 8, 426, 15);
 		frmMainGame.getContentPane().add(MoneyLbl);
 		
-		JLabel WeekLbl = new JLabel(String.format("Week: %s", game.getWeek()));
+		JLabel WeekLbl = new JLabel(String.format("Week: %s/%s", game.getWeek(),game.getDuration()));
 		WeekLbl.setBounds(12, 25, 91, 15);
 		frmMainGame.getContentPane().add(WeekLbl);
 		
@@ -104,7 +101,7 @@ public class MainWindow {
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				StadiumWindow window = new StadiumWindow(stadium, frmMainGame, game);
+				StadiumWindow window = new StadiumWindow(stadium, frmMainGame);
 			}
 		});
 		btnStadium.setBounds(12, 288, 148, 77);
@@ -136,8 +133,9 @@ public class MainWindow {
 		frmMainGame.getContentPane().add(btnBye);
 		
 		JLabel lblTeamName = new JLabel(game.getPlayerName()+" FC");
+		lblTeamName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamName.setFont(new Font("Arial", Font.BOLD, 16));
-		lblTeamName.setBounds(259, 24, 172, 15);
+		lblTeamName.setBounds(161, 24, 334, 15);
 		frmMainGame.getContentPane().add(lblTeamName);
 		
 		lblRecord = new JLabel();

@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import athleteInfo.Athlete;
-import athleteInfo.Item;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.Item;
+import purchasables.TeamManager;
 import sengGame.MainGame;
 
 class MainGameTest {

@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import athleteInfo.Item;
+import purchasables.Item;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 

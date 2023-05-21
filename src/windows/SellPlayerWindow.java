@@ -6,13 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import athleteInfo.Athlete;
+import purchasables.Athlete;
 import sengGame.MarketPlace;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class SellPlayerWindow {
 
@@ -45,22 +46,14 @@ public class SellPlayerWindow {
 		frmManageTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmManageTeam.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel("Money: ");
-		lblMoney.setBounds(12, 12, 70, 15);
+		JLabel lblMoney = new JLabel(String.format("Money: $%s", market.getGameStats().getMoney()));
+		lblMoney.setBounds(12, 12, 130, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
-		JLabel displayMoney = new JLabel(String.valueOf(market.getGameStats().getMoney()));
-		displayMoney.setBounds(72, 12, 70, 15);
-		frmManageTeam.getContentPane().add(displayMoney);
-		
-		
-		JLabel lblWeek = new JLabel("Week:");
-		lblWeek.setBounds(12, 28, 70, 15);
+		JLabel lblWeek = new JLabel(String.format("Week: %s/%s", 
+				market.getGameStats().getWeek(),market.getGameStats().getDuration()));
+		lblWeek.setBounds(12, 28, 130, 15);
 		frmManageTeam.getContentPane().add(lblWeek);
-		
-		JLabel weekNum = new JLabel(String.valueOf(market.getGameStats().getWeek())+"/5");
-		weekNum.setBounds(72, 28, 70, 15);
-		frmManageTeam.getContentPane().add(weekNum);
 		
 		JLabel lblActive = new JLabel("Active");
 		lblActive.setBounds(174, 54, 70, 14);
@@ -227,27 +220,32 @@ public class SellPlayerWindow {
 				if(result == JOptionPane.YES_OPTION) {
 					market.getGameStats().changeMoney(athleteSelected.getSellPrice());
 					lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
-					market.getGameStats().checkGameEnd(market);
-					//Checks if the selected athlete is in Main team or other(bench)
-					if(market.getGameStats().getTeams().getTeamList().contains(athleteSelected)) {
-						market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
-						System.out.println("MAKING IT HERE");
-						//checks if there are any players on the bench and moves them up if so.
-						if(market.getGameStats().getTeams().getBench().size() > 0) {
-							Athlete movingAthlete = market.getGameStats().getTeams().getBench().get(0);
-							System.out.println(movingAthlete);
-							market.getGameStats().getTeams().getTeamList().add(movingAthlete);
-							market.getGameStats().getTeams().getBench().remove(movingAthlete);
+					if(market.getGameStats().checkGameEnd(market)) {
+						prevWindow.dispose();
+						frmManageTeam.dispose();
+						market.getGameStats().finishGame();
+					}
+					else {
+						//Checks if the selected athlete is in Main team or other(bench)
+						if(market.getGameStats().getTeams().getTeamList().contains(athleteSelected)) {
+							market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
+							System.out.println("MAKING IT HERE");
+							//checks if there are any players on the bench and moves them up if so.
+							if(market.getGameStats().getTeams().getBench().size() > 0) {
+								Athlete movingAthlete = market.getGameStats().getTeams().getBench().get(0);
+								System.out.println(movingAthlete);
+								market.getGameStats().getTeams().getTeamList().add(movingAthlete);
+								market.getGameStats().getTeams().getBench().remove(movingAthlete);
+							}
+	
+	//						System.out.println(market.getGameStats().getTeams().getTeamList().get(5));
+							setButtons();
+						} else {
+							market.getGameStats().getTeams().getBench().remove(athleteSelected);
+							setButtons();
 						}
-
-//						System.out.println(market.getGameStats().getTeams().getTeamList().get(5));
-						setButtons();
-					} else {
-						market.getGameStats().getTeams().getBench().remove(athleteSelected);
 						setButtons();
 					}
-					setButtons();
-				
 				}
 			}
 		});
@@ -265,7 +263,8 @@ public class SellPlayerWindow {
 		frmManageTeam.getContentPane().add(btnNewButton);
 		
 		JLabel lblNewLabel_2 = new JLabel("Manage your Team");
-		lblNewLabel_2.setBounds(232, 12, 103, 14);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_2.setBounds(174, 12, 211, 14);
 		frmManageTeam.getContentPane().add(lblNewLabel_2);
 	}
 	

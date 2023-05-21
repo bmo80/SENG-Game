@@ -13,11 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 import javax.swing.JPanel;
+
+import purchasables.Athlete;
+import purchasables.TeamManager;
 
 public class SetupBuyPlayerWindow {
 

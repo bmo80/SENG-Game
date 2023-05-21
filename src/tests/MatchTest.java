@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.TeamManager;
 import sengGame.MainGame;
 import sengGame.Match;
 
@@ -43,7 +43,7 @@ class MatchTest {
 	@Test
 	public void smallTeamTest() {
 		match.getPlayerTeam().remove(0);
-		assertFalse(match.verify());
+		assertFalse(match.verifyAbleToPlay());
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ class MatchTest {
 		match.verseAthletes(0, 0);
 		match.verseAthletes(0, 0);
 		match.verseAthletes(0, 0);
-		assertFalse(match.verify());
+		assertFalse(match.verifyAbleToPlay());
 	}
 	
 	@Test

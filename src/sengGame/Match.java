@@ -5,24 +5,22 @@ import java.util.Collections;
 
 import javax.swing.JFrame;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.TeamManager;
 
 public class Match{
 	
 	private MainGame gameStats;
-	public ArrayList<Athlete> opponents;
-	public ArrayList<Athlete> playerTeam;
-	public int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
-	private Stadium stadium;
-	public ArrayList<Integer> athleteScores = new ArrayList<Integer>();
+	private ArrayList<Athlete> opponents;
+	private ArrayList<Athlete> playerTeam;
+	private int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
+	private ArrayList<Integer> athleteScores = new ArrayList<Integer>();
 	
-	public Match(Stadium currentStadium, MainGame currentGame){
+	public Match(MainGame currentGame, ArrayList<Athlete> oppTeam){
 		gameStats = currentGame;
-		stadium = currentStadium;
+		opponents = oppTeam;
 		Collections.addAll(athleteScores, 0, 0, 0, 0, 0, 0);
 		playerTeam = gameStats.getTeams().getTeamList();
-//		playMatch();
 	}
 	
 	public ArrayList<Athlete> getPlayerTeam(){
@@ -41,6 +39,10 @@ public class Match{
 		return playerScore;
 	}
 	
+	public ArrayList<Integer> getAthleteScores() {
+		return athleteScores;
+	}
+	
 	public int getOppsScore() {
 		return oppsScore;
 	}
@@ -57,7 +59,7 @@ public class Match{
 		}return true;
 	}
 	
-	public boolean verify() {
+	public boolean verifyAbleToPlay() {
 		if(playerTeam.size() != 6) {
 			//Send - Not enough players error message
 			System.out.println("Team not full, need more players");
@@ -78,7 +80,6 @@ public class Match{
 	
 	public void verseAthletes(int playerIndex, int oppIndex) {
 		Athlete playerAthlete = playerTeam.get(playerIndex);
-		System.out.println(opponents.size());
 		Athlete opponentAthlete = opponents.get(oppIndex);
 		if(playerAthlete.getIsInjured()) {
 			System.out.println(String.format("%s is injured, going to next player",playerTeam.get(playerIndex)));
@@ -118,14 +119,13 @@ public class Match{
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
 		}
 		else if(oppsScore>playerScore) {
-			
 			//Send message - Opponents win
-			System.out.println(String.format("you: %s, opps: %s", playerScore, oppsScore));
+			System.out.println(oppsScore);
+			System.out.println(playerScore);
 			System.out.println("The opponents won the match");
 		}
 		else if(playerScore>oppsScore){
 			//Send message - You won!
-			System.out.println(String.format("you: %s, opps: %s", playerScore, oppsScore));
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
 			gameStats.changePoints(3+gameStats.getDifficulty());
@@ -142,7 +142,7 @@ public class Match{
 	}
 	
 	public void playMatch() {
-		while(verify()) {
+		while(verifyAbleToPlay()) {
 			verseAthletes(currentPlayerIndex,currentOppIndex);
 
 		}

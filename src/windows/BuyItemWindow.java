@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import athleteInfo.Item;
+import purchasables.Item;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 import javax.swing.JButton;

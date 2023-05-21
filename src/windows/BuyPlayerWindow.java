@@ -9,8 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.TeamManager;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 

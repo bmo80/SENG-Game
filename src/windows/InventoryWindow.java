@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import athleteInfo.Athlete;
-import athleteInfo.Item;
+import purchasables.Athlete;
+import purchasables.Item;
 import sengGame.MainGame;
 
 public class InventoryWindow {
@@ -197,7 +197,7 @@ public class InventoryWindow {
 							"Use Item", JOptionPane.PLAIN_MESSAGE,
 							null, choices, null);
 					if(selection != null) {
-						game.getTeams().athleteFromString(selection).useItem(itemSelected);
+						game.getTeams().getAthleteFromString(selection).useItem(itemSelected);
 						game.removeItem(itemSelected);
 						defaultItem();
 						updateLabels();

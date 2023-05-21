@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import athleteInfo.TeamManager;
+import purchasables.TeamManager;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

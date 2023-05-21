@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import athleteInfo.Athlete;
+import purchasables.Athlete;
 import sengGame.MainGame;
 import sengGame.Stadium;
 

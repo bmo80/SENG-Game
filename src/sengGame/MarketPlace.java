@@ -2,11 +2,12 @@ package sengGame;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import purchasables.Athlete;
+import purchasables.AthleteGenerator;
+import purchasables.Item;
+import purchasables.TeamManager;
 import windows.MarketPlaceWindow;
-import athleteInfo.Item;
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
-import athleteInfo.AthleteGenerator;
 
 public class MarketPlace{
 	
@@ -16,18 +17,13 @@ public class MarketPlace{
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
 	private MainGame gameStats;
 	private ArrayList<Athlete> setupPlayers = new ArrayList<Athlete>();
-	//Use to generate new players and refresh items after new week
+
 	public MarketPlace(MainGame game) {
 		gameStats = game;
 		generateAthletes(NUMBER, "A");
 		generateAthletes(NUMBER, "D");
-//		generateItems(4);
+		generateItems();
 	}	
-	
-	
-
-	
-	
 	
 	/**
 	 * Generates a given number of athletes in a given position
@@ -43,6 +39,12 @@ public class MarketPlace{
 		}
 	}
 	
+	//JUST FOR TESTING
+	public void generateItems() {
+		for(int i = 0; i<4; i++) {
+			itemsForSale.add(new Item("test","hp",5,500));
+		}
+	}
 	
 	
 	/**
@@ -93,10 +95,10 @@ public class MarketPlace{
 	
 	public void createSetUp() {
 		for(int i=0; i<5; i++) {
-			setupPlayers.add(new AthleteGenerator("A", gameStats.getWeek()));
+			setupPlayers.add(new AthleteGenerator("A",gameStats.getWeek()));
 		}
 		for(int i=0; i<5; i++) {
-			setupPlayers.add(new AthleteGenerator("D", gameStats.getWeek()));
+			setupPlayers.add(new AthleteGenerator("D",gameStats.getWeek()));
 		}
 	}
 

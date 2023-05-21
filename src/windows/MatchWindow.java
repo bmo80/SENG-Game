@@ -28,8 +28,8 @@ public class MatchWindow {
 	 * Create the application.
 	 */
 
-	public MatchWindow(Match curMatch, JFrame curStadiumWindow) {
-		match = curMatch;
+	public MatchWindow(Match currentMatch, JFrame curStadiumWindow) {
+		match = currentMatch;
 		frmStadium = curStadiumWindow;
 		frmStadium.setVisible(false);
 		match.playMatch();
@@ -85,7 +85,7 @@ public class MatchWindow {
 		
 
 		lblWinLose = new JLabel("New label");
-		if(match.playerScore > match.oppsScore) {
+		if(match.getPlayerScore() > match.getOppsScore()) {
 			lblWinLose.setText("Victory!");
 		} else {
 			lblWinLose.setText("Defeat!");
@@ -118,10 +118,11 @@ public class MatchWindow {
 	
 	private void setLabelScore(JLabel label, int index) {
 		label.setText(String.format("%s scored %s goals this match", 
-				match.playerTeam.get(index-1).getName(), match.athleteScores.get(index-1)));
+				match.getPlayerTeam().get(index-1).getName(), match.getAthleteScores().get(index-1)));
 	}
 	
 	private void showGameScore() {
-		lblScores.setText(String.format("%s : %s", match.playerScore, match.oppsScore));
+		lblScores.setText(String.format("%s : %s",
+				match.getPlayerScore(), match.getOppsScore()));
 	}
 }

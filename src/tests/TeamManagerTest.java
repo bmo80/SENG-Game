@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import athleteInfo.Athlete;
-import athleteInfo.TeamManager;
+import purchasables.Athlete;
+import purchasables.TeamManager;
 
 class TeamManagerTest {
 
@@ -39,13 +39,13 @@ class TeamManagerTest {
 	
 	@Test
 	public void removeAthleteTest() {
-		teams.removeAthlete(teams.athleteFromString("bench"));
+		teams.removeAthlete(teams.getAthleteFromString("bench"));
 		assertEquals(new ArrayList<Athlete>(),teams.getBench());
 	}
 	
 	@Test
 	public void removeThenAddTest() {
-		teams.removeAthlete(teams.athleteFromString("defend2"));
+		teams.removeAthlete(teams.getAthleteFromString("defend2"));
 		Athlete athlete = new Athlete("bob",10,10,"A");
 		teams.addAthlete(athlete);
 		assertEquals(athlete,teams.getTeamList().get(5));
@@ -68,37 +68,37 @@ class TeamManagerTest {
 	
 	@Test
 	public void freeSlotsTest() {
-		assertEquals(4,teams.getFreeSlots());
+		assertEquals(4,teams.getFreeSlotsCount());
 	}
 	
 	@Test
 	public void getAthleteFromStringTest() {
-		assertEquals(teams.getBench().get(0), teams.athleteFromString("bench"));
+		assertEquals(teams.getBench().get(0), teams.getAthleteFromString("bench"));
 	}
 	
 	@Test
 	public void cantGetAthleteFromStringTest() {
-		assertEquals("NULL", teams.athleteFromString("attahgfck1").getName());
+		assertEquals("NULL", teams.getAthleteFromString("attahgfck1").getName());
 	}
 	
 	@Test
 	public void activeSwapActiveTest() {
-		teams.swap(teams.athleteFromString("attack1"),
-				teams.athleteFromString("defend3"));
+		teams.swap(teams.getAthleteFromString("attack1"),
+				teams.getAthleteFromString("defend3"));
 		assertEquals("defend3", teams.getTeamList().get(0).getName());
 	}
 	
 	@Test
 	public void activeSwapBenchTest() {
-		teams.swap(teams.athleteFromString("attack1"),
-				teams.athleteFromString("bench"));
+		teams.swap(teams.getAthleteFromString("attack1"),
+				teams.getAthleteFromString("bench"));
 		assertEquals("bench", teams.getTeamList().get(0).getName());
 	}
 	
 	@Test
 	public void benchSwapActiveTest() {
-		teams.swap(teams.athleteFromString("bench"),
-				teams.athleteFromString("defend3"));
+		teams.swap(teams.getAthleteFromString("bench"),
+				teams.getAthleteFromString("defend3"));
 		assertEquals("defend3", teams.getBench().get(0).getName());
 	}
 	
@@ -106,8 +106,8 @@ class TeamManagerTest {
 	public void benchSwapBenchTest() {
 		Athlete athlete = new Athlete("bob",10,10,"A");
 		teams.addAthlete(athlete);
-		teams.swap(teams.athleteFromString("bob"),
-				teams.athleteFromString("bench"));
+		teams.swap(teams.getAthleteFromString("bob"),
+				teams.getAthleteFromString("bench"));
 		assertEquals(athlete, teams.getBench().get(0));
 	}
 	

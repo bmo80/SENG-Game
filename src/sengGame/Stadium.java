@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
-import athleteInfo.Athlete;
-import athleteInfo.AthleteGenerator;
+import purchasables.Athlete;
+import purchasables.AthleteGenerator;
 import windows.StadiumWindow;
 
 public class Stadium {
@@ -19,9 +19,9 @@ public class Stadium {
 	/*
 	 * Stores a list of opposing teams 
 	 */
-	public ArrayList<ArrayList<Athlete>> enemyTeams;
-	public Match match;
-	public ArrayList<Athlete> selectedTeam;
+	private ArrayList<ArrayList<Athlete>> enemyTeams;
+	private Match match;
+	private ArrayList<Athlete> selectedTeam;
 	/*
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats 		GameInfo
@@ -35,7 +35,6 @@ public class Stadium {
 			generateAthletes(3, "D", players);
 			enemyTeams.add(players);	
 		}
-		
 	}
 	
 	/*
