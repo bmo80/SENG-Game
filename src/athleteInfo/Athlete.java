@@ -15,7 +15,7 @@ public class Athlete extends Purchasable {
 		super();
 		//Reserved name
 		name = "NULL";
-		stamina = 0; 
+		stamina = 10; 
 		attack = 0;
 		defence = 0;
 		position = "D";
