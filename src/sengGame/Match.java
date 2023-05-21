@@ -1,21 +1,29 @@
 package sengGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import javax.swing.JFrame;
 
 import athleteInfo.Athlete;
+import athleteInfo.TeamManager;
 
 public class Match{
 	
 	private MainGame gameStats;
-	private ArrayList<Athlete> opponents;
-	private ArrayList<Athlete> playerTeam;
-	int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
+	public ArrayList<Athlete> opponents;
+	public ArrayList<Athlete> playerTeam;
+	public int oppsScore, playerScore, currentPlayerIndex, currentOppIndex = 0;
+	private Stadium stadium;
+	public ArrayList<Integer> athleteScores = new ArrayList<Integer>();
 	
-	public Match(MainGame currentStats, ArrayList<Athlete> opps){
-		gameStats = currentStats;
-		opponents = opps;
+	public Match(Stadium currentStadium, MainGame currentGame){
+		gameStats = currentGame;
+		stadium = currentStadium;
+		Collections.addAll(athleteScores, 0, 0, 0, 0, 0, 0);
 		playerTeam = gameStats.getTeams().getTeamList();
-		playMatch();
+		opponents = stadium.enemyTeams.get(stadium.selectedTeam);
+//		playMatch();
 	}
 	
 	public Boolean checkAllInjured() {
@@ -54,6 +62,8 @@ public class Match{
 		}else if(playerAthlete.getPositionStat() > opponentAthlete.getPositionStat()) {
 			playerScore ++;
 			playerAthlete.changeStamina(-gameStats.getDifficulty()-1);
+			int newScore = athleteScores.get(playerIndex) + 1;
+			athleteScores.set(playerIndex, newScore);
 			opponentAthlete.changeStamina(-gameStats.getDifficulty()-3);
 			currentOppIndex ++;
 		}else if(playerAthlete.getPositionStat() < opponentAthlete.getPositionStat()) {
@@ -78,6 +88,8 @@ public class Match{
 			System.out.println("By the end of the match, all athletes were injured so the match was lost");
 		}else if(oppsScore>playerScore) {
 			//Send message - Opponents win
+			System.out.println(oppsScore);
+			System.out.println(playerScore);
 			System.out.println("The opponents won the match");
 		}else if(playerScore>oppsScore){
 			//Send message - You won!
