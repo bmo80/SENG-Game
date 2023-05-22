@@ -12,6 +12,7 @@ import purchasables.Athlete;
 import purchasables.Item;
 import purchasables.TeamManager;
 import sengGame.MainGame;
+import sengGame.MarketPlace;
 
 class MainGameTest {
 	private MainGame mainGameTest;
@@ -145,5 +146,50 @@ class MainGameTest {
 		mainGameTest.trainAthlete("defend1");
 		assertEquals(9,mainGameTest.getTeams().getTeamList().get(1).getPositionStat());
 		}
+	
+	@Test
+	public void endGameFromSeasonTest() {
+		mainGameTest.takeBye("attack1");
+		mainGameTest.takeBye("attack1");
+		mainGameTest.takeBye("attack1");
+		mainGameTest.takeBye("attack1");
+		mainGameTest.takeBye("attack1");
+		assertTrue(mainGameTest.checkGameEnd(new MarketPlace(mainGameTest)));
+	}
+	
+	@Test
+	public void playerShortageEndGameTest() {
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		mainGameTest.getTeams().removeAthlete(mainGameTest.getTeams().getTeamList().get(0));
+		MarketPlace market = new MarketPlace(mainGameTest);
+		market.getPlayersForSale().get(0).changeName("Purchased");
+		market.getPlayersForSale().get(1).changeName("Purchased");
+		assertTrue(mainGameTest.checkGameEnd(market));
+	}
+	
+	@Test
+	public void advancedTest() {
+		mainGameTest.changeMoney(-1000000);
+		mainGameTest.changeMoney(1);
+		mainGameTest.changePoints(-1000000);
+		mainGameTest.changePoints(1);
+		for(int i = 0; i<15; i++) {
+			mainGameTest.addItem(new Item());
+		}
+		mainGameTest.removeItem(new Item());
+		mainGameTest.removeItem(new Item());
+		mainGameTest.removeItem(mainGameTest.getInventory().get(8));
+		mainGameTest.changePoints(mainGameTest.getInventory().size());
+		mainGameTest.getTeams().getTeamList().get(2).changeStamina(-1000000);
+		mainGameTest.takeBye("attack2");
+		assertTrue(mainGameTest.getFinalStats().equals("test FC finished up their 5 week season with"
+						+ " 10 points and $20001 on the level 1 difficulty."
+						+ "\nThanks for playing!"));
+
+	}
 
 }

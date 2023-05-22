@@ -64,12 +64,8 @@ class MarketPlaceTest {
 	}
 	
 //	@Test
-//	void test() {
-//		public void generateItems() {
-//			//Cleaned up generation and removed unnecessary getItem method
-//			
-//			
-//		}	
+//	public void advancedTest() {
+//		
 //	}
 
 }
