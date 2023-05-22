@@ -6,6 +6,7 @@ import java.util.Scanner;
 import purchasables.Athlete;
 import purchasables.AthleteGenerator;
 import purchasables.Item;
+import purchasables.ItemGenerator;
 import purchasables.TeamManager;
 import windows.MarketPlaceWindow;
 
@@ -42,7 +43,8 @@ public class MarketPlace{
 	//JUST FOR TESTING
 	public void generateItems() {
 		for(int i = 0; i<4; i++) {
-			itemsForSale.add(new Item("test","hp",5,500));
+			ItemGenerator item = new ItemGenerator();
+			itemsForSale.add(item);
 		}
 	}
 	
