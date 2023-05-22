@@ -23,19 +23,25 @@ public class BuyPlayerWindow {
 	private JFrame frmPlayerTrading;
 	private MarketPlace market;
 	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, 
-	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
+	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable, lblMoney;
 	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
 	private int athleteSelected;
 	private JFrame marketWindow;
-
+	/**
+	 * Initialize current and prev obj variables
+	 */
+	public MarketPlaceWindow prevObj;
+	private BuyPlayerWindow curObj;
 	/**
 	 * Constructor for the BuyPlayer window.
 	 * @param curmarket the current marketplace
 	 * @param givenWindow 
 	 */
-	public BuyPlayerWindow(MarketPlace curmarket, JFrame givenWindow) {
+	public BuyPlayerWindow(MarketPlace curmarket, JFrame givenWindow, MarketPlaceWindow prevObject) {
 		marketWindow = givenWindow;
 		market = curmarket;
+		prevObj = prevObject;
+		curObj = this;
 		initialize();
 		frmPlayerTrading.setVisible(true);
 	}
@@ -52,7 +58,7 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlayerTrading.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getGameStats().getMoney()));
+		lblMoney = new JLabel(String.format("Money: $%s",market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 194, 15);
 		frmPlayerTrading.getContentPane().add(lblMoney);	
 		
@@ -65,7 +71,8 @@ public class BuyPlayerWindow {
 		btnViewMyTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmPlayerTrading.setVisible(false);
-				SellPlayerWindow window = new SellPlayerWindow(market, frmPlayerTrading);
+				SellPlayerWindow window = new SellPlayerWindow(market, frmPlayerTrading, curObj);
+//				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
 			}
 		});
 		btnViewMyTeam.setBounds(369, 7, 134, 25);
@@ -141,6 +148,7 @@ public class BuyPlayerWindow {
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				marketWindow.setVisible(true);
+				prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				frmPlayerTrading.dispose();
 			}
 		});
@@ -152,7 +160,8 @@ public class BuyPlayerWindow {
 			public void actionPerformed(ActionEvent e) {	
 				market.getGameStats().getTeams().addAthlete(market.getPlayersForSale().get(athleteSelected-1));
 				market.getGameStats().changeMoney(-market.getPlayersForSale().get(athleteSelected-1).getBuyPrice());
-				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
+				lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+//				prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				updateButton(athleteSelected);
 				updateTeamSlots();
 				Athlete athlete = new Athlete("Purchased",1,1,"A");

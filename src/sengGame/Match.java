@@ -10,6 +10,7 @@ import purchasables.TeamManager;
 
 public class Match{
 	
+	private int moneyWon;
 	private MainGame gameStats;
 	private ArrayList<Athlete> opponents;
 	private ArrayList<Athlete> playerTeam;
@@ -123,9 +124,12 @@ public class Match{
 			System.out.println(oppsScore);
 			System.out.println(playerScore);
 			System.out.println("The opponents won the match");
+			gameStats.losses += 1;
+			gameStats.changeMoney(10000*(3-gameStats.getDifficulty()));
 		}
 		else if(playerScore>oppsScore){
 			//Send message - You won!
+			gameStats.wins += 1;
 			System.out.println("You won the match! Here is your reward...");
 			//Arbitrary points and money atm
 			gameStats.changePoints(3+gameStats.getDifficulty());
@@ -134,6 +138,7 @@ public class Match{
 		else {
 			//Tie condition - Some rewards
 			//Send message 
+			gameStats.draws += 1;
 			System.out.println("The match was a tie. Here is a minor reward...");
 			gameStats.changePoints(gameStats.getDifficulty());
 			gameStats.changeMoney(1000*(3-gameStats.getDifficulty()));
@@ -146,5 +151,9 @@ public class Match{
 			verseAthletes(currentPlayerIndex,currentOppIndex);
 
 		}
+	}
+	
+	public void getMoneyWon() {
+		return moneyWon;
 	}
 }

@@ -23,15 +23,20 @@ public class SellPlayerWindow {
 	private Athlete athleteSelected;
 	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
 	JButton bench1,bench2,bench3,bench4,bench5;
-	JLabel lblName, lblPosition, lblAttack, lblDefense, lblSellPrice;
+	JLabel lblName, lblPosition, lblAttack, lblDefense, lblSellPrice, lblMoney;
 	private JFrame prevWindow;
-
+	
+	/**
+	 * Initialize varaibles for previous obj
+	 */
+	private BuyPlayerWindow prevObj;
 	/**
 	 * Create the application.
 	 */
-	public SellPlayerWindow(MarketPlace currentMarket, JFrame givenWindow) {
+	public SellPlayerWindow(MarketPlace currentMarket, JFrame givenWindow, BuyPlayerWindow prevObject) {
 		prevWindow = givenWindow;
 		market = currentMarket;
+		prevObj = prevObject;
 		initialize();
 		frmManageTeam.setVisible(true);
 	}
@@ -46,7 +51,7 @@ public class SellPlayerWindow {
 		frmManageTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmManageTeam.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: $%s", market.getGameStats().getMoney()));
+		lblMoney = new JLabel(String.format("Money: $%s", market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 130, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
@@ -219,7 +224,8 @@ public class SellPlayerWindow {
 						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
 					market.getGameStats().changeMoney(athleteSelected.getSellPrice());
-					lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
+					lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+
 					if(market.getGameStats().checkGameEnd(market)) {
 						prevWindow.dispose();
 						frmManageTeam.dispose();
@@ -255,6 +261,8 @@ public class SellPlayerWindow {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+				prevObj.prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				prevWindow.setVisible(true);
 				frmManageTeam.dispose();
 			}

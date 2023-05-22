@@ -51,6 +51,9 @@ public class MainGame {
 	 */
 	private TeamManager teams;
 	
+	public int wins=0;
+	public int losses=0;
+	public int draws=0;
 	
 	/*
 	 * Constructs Object with given values - used to speed up testing

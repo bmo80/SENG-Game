@@ -24,13 +24,16 @@ public class StadiumWindow {
 	private JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
 	private int buttonSelected;
 	private Stadium stadium;
+	private MainWindow main;
 	private ArrayList<Athlete> teamChosen;
+	JLabel lblMoney, lblWeek;
 	/**
 	 * Create the application.
 	 */
-	public StadiumWindow(Stadium curStadium, JFrame mainGame) {
+	public StadiumWindow(Stadium curStadium, JFrame mainGame, MainWindow curMain) {
 		mainMenu = mainGame;
 		stadium = curStadium;
+		main = curMain;
 		initialize();
 		frmStadium.setVisible(true);
 	}
@@ -49,12 +52,12 @@ public class StadiumWindow {
 		lblNewLabel.setBounds(192, 11, 232, 14);
 		frmStadium.getContentPane().add(lblNewLabel);
 		
-		JLabel lblMoney = new JLabel("New label");
-		lblMoney.setBounds(10, 11, 46, 14);
+		lblMoney = new JLabel(String.format("Money: $%s", stadium.getGameStats().getMoney()));
+		lblMoney.setBounds(10, 11, 113, 14);
 		frmStadium.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel("New label");
-		lblWeek.setBounds(10, 28, 46, 14);
+		lblWeek = new JLabel(String.format("Week: %s/%s", stadium.getGameStats().getWeek(),stadium.getGameStats().getDuration()));
+		lblWeek.setBounds(10, 28, 96, 14);
 		frmStadium.getContentPane().add(lblWeek);
 		
 		JLabel lblChooseText = new JLabel("Choose Which team you would like to play!");
@@ -138,8 +141,7 @@ public class StadiumWindow {
 					stadium.getEnemyTeams().set(buttonSelected-1, blankTeam);
 					MatchWindow window = new MatchWindow(new Match(stadium.getGameStats(),teamChosen), frmStadium);
 					setButtons();
-
-					
+					updateMainWindow();
 				} 
 				
 			}
@@ -201,5 +203,12 @@ public class StadiumWindow {
 			} 
 			index++;
 		}
+	}
+	
+	private void updateMainWindow() {
+		lblMoney.setText(String.format("Money: $%s",stadium.getGameStats().getMoney()));
+		main.MoneyLbl.setText(String.format("Money: $%s",stadium.getGameStats().getMoney()));
+		main.lblRecord.setText(String.format("Record: %s - %s - %s", stadium.getGameStats().wins, 
+								stadium.getGameStats().losses, stadium.getGameStats().draws));
 	}
 }

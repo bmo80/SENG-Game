@@ -23,14 +23,19 @@ public class SellItemWindow {
 	private MainGame game;
 	private MarketPlace market;
 	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
-
+	private BuyItemWindow prevObj;
+	/**
+	 *initialize prev 
+	 */
+	
 	/**
 	 * Create the application.
 	 */
-	public SellItemWindow(MarketPlace givenMarket, JFrame givenWindow) {
+	public SellItemWindow(MarketPlace givenMarket, JFrame givenWindow, BuyItemWindow prevObject) {
 		market = givenMarket;
 		game = market.getGameStats();
 		prevWindow = givenWindow;
+		prevObj = prevObject;
 		defaultItem();
 		initialize();
 		frmSellItems.setVisible(true);
@@ -61,7 +66,7 @@ public class SellItemWindow {
 		frmSellItems.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSellItems.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %S",game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",game.getMoney()));
 		lblMoney.setBounds(12, 12, 519, 15);
 		frmSellItems.getContentPane().add(lblMoney);
 		
@@ -186,6 +191,8 @@ public class SellItemWindow {
 		JButton btnDone = new JButton("Go Back");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prevObj.lblMoney.setText(String.format("Money: $%s", 
+						Integer.toString(market.getGameStats().getMoney())));
 				closeWindow();
 			}
 		});
@@ -200,7 +207,7 @@ public class SellItemWindow {
 				}else {
 					market.getGameStats().removeItem(itemSelected);
 					market.getGameStats().changeMoney(itemSelected.getBuyPrice());
-					lblMoney.setText(String.format("Money: %s", 
+					lblMoney.setText(String.format("Money: $%s", 
 							Integer.toString(market.getGameStats().getMoney())));
 //					updateButton(itemSelected);
 					defaultItem();

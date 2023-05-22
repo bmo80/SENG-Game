@@ -17,15 +17,24 @@ public class BuyItemWindow {
 	private JFrame frmItemTrading;
 	private MarketPlace market;
 	private JFrame prevWindow;
-	private JLabel lblPrice, lblName, lblType, lblEffect,lblMoney, lblWeek,lblBuyItems;
+	private JLabel lblPrice, lblName, lblType, lblEffect, lblWeek,lblBuyItems;
 	private JButton btnItem1,btnItem2,btnItem3,btnItem4,btnDone,btnPurchase;
 	private int itemSelected;
+	public JLabel lblMoney;
+	/**
+	 * Initialize previous and current obj variables
+	 */
+	MarketPlaceWindow prevObj;
+	BuyItemWindow curObj;
+	
 	/**
 	 * Create the application.
 	 */
-	public BuyItemWindow(MarketPlace currentMarket, JFrame givenWindow) {
+	public BuyItemWindow(MarketPlace currentMarket, JFrame givenWindow, MarketPlaceWindow prevObject) {
 		prevWindow = givenWindow;
 		market = currentMarket;
+		prevObj = prevObject;
+		curObj = this;
 		initialize();
 		frmItemTrading.setVisible(true);
 	}
@@ -40,7 +49,7 @@ public class BuyItemWindow {
 		frmItemTrading.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmItemTrading.getContentPane().setLayout(null);
 		
-		lblMoney = new JLabel(String.format("Money: %s",
+		lblMoney = new JLabel(String.format("Money: $%s",
 				Integer.toString(market.getGameStats().getMoney())));
 		lblMoney.setBounds(12, 12, 128, 15);
 		frmItemTrading.getContentPane().add(lblMoney);
@@ -59,7 +68,7 @@ public class BuyItemWindow {
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmItemTrading.setVisible(false);
-				SellItemWindow window = new SellItemWindow(market, frmItemTrading);
+				SellItemWindow window = new SellItemWindow(market, frmItemTrading, curObj);
 			}
 		});
 		btnViewInventory.setBounds(343, 7, 139, 25);
@@ -99,6 +108,8 @@ public class BuyItemWindow {
 		btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prevObj.lblMoney.setText(String.format("Money: $%s", 
+						Integer.toString(market.getGameStats().getMoney())));
 				prevWindow.setVisible(true);
 				frmItemTrading.dispose();
 			}
@@ -111,7 +122,7 @@ public class BuyItemWindow {
 			public void actionPerformed(ActionEvent e) {
 				market.getGameStats().getInventory().add(market.getItemsForSale().get(itemSelected-1));
 				market.getGameStats().changeMoney(-market.getItemsForSale().get(itemSelected-1).getBuyPrice());
-				lblMoney.setText(String.format("Money: %s", 
+				lblMoney.setText(String.format("Money: $%s", 
 						Integer.toString(market.getGameStats().getMoney())));
 				updateButton(itemSelected);
 				Item item = new Item("Purchased","A",1,1);

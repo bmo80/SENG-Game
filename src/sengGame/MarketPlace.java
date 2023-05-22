@@ -93,6 +93,10 @@ public class MarketPlace{
 		return setupPlayers;
 	}
 	
+	/**
+	 * Generates the 10 players shown on the setup screen
+	 * only even used on game initialization
+	 */
 	public void createSetUp() {
 		for(int i=0; i<5; i++) {
 			setupPlayers.add(new AthleteGenerator("A",gameStats.getWeek()));

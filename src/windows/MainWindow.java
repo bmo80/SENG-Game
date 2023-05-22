@@ -26,9 +26,10 @@ public class MainWindow {
 
 	private JFrame frmMainGame;
 	private MainGame game;
+	private MainWindow main;
 	private MarketPlace market;
 	private Stadium stadium;
-	private Match match;
+	JLabel MoneyLbl;
 	JLabel lblRecord;
 
 	/**
@@ -38,6 +39,7 @@ public class MainWindow {
 		game = getGame;
 		market = givenMarket;
 		stadium = givenStadium;
+		main = this;
 		initialize();
 		frmMainGame.setVisible(true);		
 	}
@@ -62,7 +64,7 @@ public class MainWindow {
 		frmMainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMainGame.getContentPane().setLayout(null);
 		
-		JLabel MoneyLbl = new JLabel(String.format("Money: $%s", game.getMoney()));
+		MoneyLbl = new JLabel(String.format("Money: $%s", game.getMoney()));
 		MoneyLbl.setBounds(12, 8, 426, 15);
 		frmMainGame.getContentPane().add(MoneyLbl);
 		
@@ -90,7 +92,8 @@ public class MainWindow {
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				MarketPlaceWindow window = new MarketPlaceWindow(market, frmMainGame);
+				MarketPlaceWindow window = new MarketPlaceWindow(market, frmMainGame, main);
+				MoneyLbl.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 			}
 		});
 		btnMarket.setBounds(12, 177, 148, 77);
@@ -101,7 +104,8 @@ public class MainWindow {
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				StadiumWindow window = new StadiumWindow(stadium, frmMainGame);
+				StadiumWindow window = new StadiumWindow(stadium, frmMainGame, main);
+				MoneyLbl.setText(String.format("Money: $%s", game.getMoney()));
 			}
 		});
 		btnStadium.setBounds(12, 288, 148, 77);
@@ -138,7 +142,7 @@ public class MainWindow {
 		lblTeamName.setBounds(161, 24, 334, 15);
 		frmMainGame.getContentPane().add(lblTeamName);
 		
-		lblRecord = new JLabel();
+		lblRecord = new JLabel("Record: 0 - 0 - 0");
 		lblRecord.setBounds(494, 25, 110, 15);
 		frmMainGame.getContentPane().add(lblRecord);
 	}

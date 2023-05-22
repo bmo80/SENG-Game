@@ -17,7 +17,6 @@ public class MatchWindow {
 
 	private JFrame frmPlayMatch, frmStadium;
 	private JFrame mainMenu;
-	private Stadium stadium;
 	private Match match;
 	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, 
 	lblPlayer6, lblScores, lblScore,lblWinLose;
@@ -87,8 +86,10 @@ public class MatchWindow {
 		lblWinLose = new JLabel("New label");
 		if(match.getPlayerScore() > match.getOppsScore()) {
 			lblWinLose.setText("Victory!");
-		} else {
+		} else if(match.getPlayerScore() < match.getOppsScore()){
 			lblWinLose.setText("Defeat!");
+		} else {
+			lblWinLose.setText("Draw!");
 		}
 		lblWinLose.setBounds(167, 287, 70, 15);
 
@@ -97,7 +98,9 @@ public class MatchWindow {
 		JButton btnFinish = new JButton("Finish");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				frmPlayMatch.setVisible(false);
+			
 				frmStadium.setVisible(true);
 			}
 		});

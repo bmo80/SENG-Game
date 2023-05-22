@@ -21,10 +21,18 @@ public class MarketPlaceWindow{
 	private JFrame frmMarketplace;
 	private MarketPlace market;
 	private JFrame mainMenu;
-
-	public MarketPlaceWindow(MarketPlace currentMarket, JFrame window) {
+	/**
+	 * Create variables to keep track of current and prev object instances
+	 */
+	private MainWindow prevObj;
+	private MarketPlaceWindow curObj;
+	
+	JLabel lblMoney;
+	public MarketPlaceWindow(MarketPlace currentMarket, JFrame window, MainWindow prevObject) {
 		mainMenu = window;
 		market = currentMarket;
+		prevObj = prevObject;
+		curObj = this;
 		initialize();
 		frmMarketplace.setVisible(true);
 	}
@@ -44,7 +52,7 @@ public class MarketPlaceWindow{
 		frmMarketplace.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMarketplace.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s",market.getGameStats().getMoney()));
+		lblMoney = new JLabel(String.format("Money: $%s",market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 232, 15);
 		frmMarketplace.getContentPane().add(lblMoney);
 		
@@ -61,7 +69,8 @@ public class MarketPlaceWindow{
 		JButton btnBuysellPlayers = new JButton("Buy and Sell Players");
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuyPlayerWindow window = new BuyPlayerWindow(market, frmMarketplace);
+				BuyPlayerWindow window = new BuyPlayerWindow(market, frmMarketplace, curObj);
+//				lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				frmMarketplace.setVisible(false);
 			}
 		});
@@ -71,8 +80,10 @@ public class MarketPlaceWindow{
 		JButton btnBuyAndSell = new JButton("Buy and Sell Items");
 		btnBuyAndSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuyItemWindow window = new BuyItemWindow(market, frmMarketplace);
+				BuyItemWindow window = new BuyItemWindow(market, frmMarketplace, curObj);
 				frmMarketplace.setVisible(false);
+//				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
+//				mainObj.MoneyLbl.setText(String.format("Money: %s",market.getGameStats().getMoney()));
 			}
 		});
 		btnBuyAndSell.setBounds(265, 94, 195, 70);
@@ -85,6 +96,7 @@ public class MarketPlaceWindow{
 		JButton btnMainMenu = new JButton("Main Menu");
 		btnMainMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prevObj.MoneyLbl.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				closeWindow();
 			}
 		});

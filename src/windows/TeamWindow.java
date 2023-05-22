@@ -125,9 +125,12 @@ public class TeamWindow {
 		Athlete1.setBounds(23, 77, 160, 39);
 		frmTeam.getContentPane().add(Athlete1);
 		
+		athleteSelected = game.getTeams().getTeamList().get(0);
+		
 		 Athlete2 = new JButton("Athlete 2");
 		Athlete2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getTeamList().get(1);
 				updateLabels(athleteSelected);	
 			}
@@ -138,6 +141,7 @@ public class TeamWindow {
 		 Athlete3 = new JButton("Athlete 3");
 		Athlete3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getTeamList().get(2);
 				updateLabels(athleteSelected);	
 			}
@@ -148,6 +152,7 @@ public class TeamWindow {
 		 Athlete4 = new JButton("Athlete 4");
 		Athlete4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getTeamList().get(3);
 				updateLabels(athleteSelected);	
 			}
@@ -158,6 +163,7 @@ public class TeamWindow {
 		 Athlete5 = new JButton("Athlete 5");
 		Athlete5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getTeamList().get(4);
 				updateLabels(athleteSelected);	
 			}
@@ -168,6 +174,7 @@ public class TeamWindow {
 		 Athlete6 = new JButton("Athlete 6");
 		Athlete6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getTeamList().get(5);
 				updateLabels(athleteSelected);	
 			}
@@ -184,6 +191,7 @@ public class TeamWindow {
 		 Bench1 = new JButton("Bench 1");
 		Bench1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getBench().get(0);
 				updateLabels(athleteSelected);
 			}
@@ -194,6 +202,7 @@ public class TeamWindow {
 		 Bench2 = new JButton("Bench 2");
 		Bench2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getBench().get(1);
 				updateLabels(athleteSelected);
 			}
@@ -204,6 +213,7 @@ public class TeamWindow {
 		 Bench3 = new JButton("Bench 3");
 		Bench3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getBench().get(2);
 				updateLabels(athleteSelected);
 			}
@@ -214,6 +224,7 @@ public class TeamWindow {
 		 Bench4 = new JButton("Bench 4");
 		Bench4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
 				athleteSelected = game.getTeams().getBench().get(3);
 				updateLabels(athleteSelected);
 			}
@@ -232,6 +243,22 @@ public class TeamWindow {
 		btnDone.setBounds(414, 340, 117, 25);
 		frmTeam.getContentPane().add(btnDone);
 		
+
+
+		
+		Bench5 = new JButton("Bench 5");
+		Bench5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				previousAthlete = athleteSelected;
+				athleteSelected = game.getTeams().getBench().get(4);
+				updateLabels(athleteSelected);
+			}
+		});
+		Bench5.setBounds(108, 351, 160, 39);
+		frmTeam.getContentPane().add(Bench5);
+		
+		setButtons();
+		
 		JButton btnSwap = new JButton("Swap");
 		btnSwap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -241,22 +268,11 @@ public class TeamWindow {
 					game.getTeams().swap(previousAthlete, athleteSelected);
 					
 				}
+				setButtons();
 			}
 		});
 		btnSwap.setBounds(414, 288, 117, 25);
 		frmTeam.getContentPane().add(btnSwap);
-		
-		Bench5 = new JButton("Bench 5");
-		Bench5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				athleteSelected = game.getTeams().getBench().get(4);
-				updateLabels(athleteSelected);
-			}
-		});
-		Bench5.setBounds(108, 351, 160, 39);
-		frmTeam.getContentPane().add(Bench5);
-		
-		setButtons();
 		
 		JLabel lblTeamName = new JLabel(String.format("%s's Team", game.getPlayerName()));
 		lblTeamName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -314,5 +330,6 @@ public class TeamWindow {
 			athlete.setText("Empty Slot");
 		}
 	}
+	
 	
 }
