@@ -5,7 +5,18 @@ import java.util.Random;
 import purchasables.Athlete;
 import purchasables.AthleteGenerator;
 
+/**
+ * The RandomEvent class deals with the logic of generating and then executing
+ * the random events for the game
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class RandomEvent {
+	
+	/**
+	 * For storing the current maingame object
+	 */
 	private MainGame gameStats;
 	
 	/**
@@ -18,6 +29,7 @@ public class RandomEvent {
 	
 	/**
 	*Generates a random number between 0 and 99
+	*@return returns the generated number and passes it to the runEvent method
 	*/
 	public String generateEvent() {
 		int generatedNumber = new Random().nextInt(100);

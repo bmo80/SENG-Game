@@ -10,6 +10,13 @@ import purchasables.ItemGenerator;
 import purchasables.TeamManager;
 import windows.MarketPlaceWindow;
 
+/**
+ * MarketPlace class deals with creating and storing everything displayed on the market.
+ * This involves a maximum of 6 players or 4 items at any given time.
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class MarketPlace{
 	
 	/**
@@ -36,7 +43,7 @@ public class MarketPlace{
 	/**
 	 * Constructor for market place. Generates 6 Athletes, 3 of each type
 	 * and 4 random items.
-	 * @param game
+	 * @param game current maingame object
 	 */
 	public MarketPlace(MainGame game) {
 		gameStats = game;
@@ -49,7 +56,7 @@ public class MarketPlace{
 	 * Generates a given number of athletes in a given position and sets
 	 * their buy and sell price based on their positional stat.
 	 * @param size The number of Athletes to be Generated
-	 * @param position
+	 * @param position position of the Athletes to be Generated
 	 */
 	public void generateAthletes(int size, String position) {
 		for(int i=0; i<size; i++) {

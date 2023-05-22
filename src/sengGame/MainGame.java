@@ -18,46 +18,54 @@ import windows.SetupWindow;
  * @version 1.0 13/5/23
  */
 public class MainGame {
-	/*
+	/**
 	 * Name of player/ players team
 	 */
 	private String playerName;
-	/*
+	/**
 	 * Player-chosen length of season in weeks 
 	 */
 	private int seasonDuration;
-	/*
+	/**
 	 * Player-chosen difficulty 0/1/2 for easy/medium/hard
 	 */
 	private int difficulty;
-	/*
+	/**
 	 * Current week - starting at 1
 	 */
 	private int currentWeek;
-	/*
+	/**
 	 * Player's current collection of Item objects
 	 */
 	private ArrayList<Item> inventory;
-	/*
+	/**
 	 * Player's current money balance (for buying Items and Athletes)
 	 */
 	private int money;
-	/*
+	/**
 	 * Player's total points (earned by winning or tying matches)
 	 */
 	private int totalPoints;
-	/*
+	/**
 	 * Contains both the active and bench teams
 	 */
 	private TeamManager teams;
-	
+	/**
+	 * for keeping track of the player wins
+	 */
 	public int wins=0;
+	/**
+	 * for keeping track of the player losses
+	 */
 	public int losses=0;
+	/**
+	 * for keeping track of the player draws
+	 */
 	public int draws=0;
 	
-	/*
+	/**
 	 * Constructs Object with given values - used to speed up testing
-	 * @param name		Name of player
+	 * @param name		Name of players team
 	 * @param duration		Length of season in weeks
 	 * @param chosenDifficulty		difficulty of game
 	 */
@@ -69,6 +77,13 @@ public class MainGame {
 		money = 35000 + (5000*(4-difficulty));
 	}
 	
+	/**
+	 * Overloaded Constructor for Main game, takes in extra param TeamManager
+	 * @param name Name of the players Team
+	 * @param duration Length of Season in Weeks
+	 * @param chosenDifficulty difficulty of game (1-3)
+	 * @param givenTeams ArrayList of teams to be made into a TeamManager
+	 */
 	public MainGame(String name, int duration, int chosenDifficulty,
 			TeamManager givenTeams) {
 		playerName = name;
@@ -81,15 +96,15 @@ public class MainGame {
 		money = 10000*(3-difficulty);
 	}
 	
-	/*
+	/**
 	 * Returns an array of athlete objects from active team
-	 * @return		active team ArrayList<Athlete>
+	 * @return	active team ArrayList
 	 */
  	public TeamManager getTeams() {
  		return teams;
  	}
 	
- 	/*
+ 	/**
  	 * Returns player name
  	 * @return		player name
  	 */
@@ -97,7 +112,7 @@ public class MainGame {
 		return playerName;
 	}
 	
- 	/*
+ 	/**
  	 * Returns game difficulty
  	 * @return		difficulty
  	 */
@@ -105,7 +120,7 @@ public class MainGame {
 		return difficulty;
 	}
 	
-	/*
+	/**
 	 * Returns Player money
 	 * @return		player money
 	 */
@@ -113,15 +128,15 @@ public class MainGame {
 		return money;
 	}
 	
-	/*
+	/**
 	 * Returns an array of item objects from inventory
-	 * @return		inventory ArrayList<Item>
+	 * @return		inventory ArrayList
 	 */
 	public ArrayList<Item> getInventory(){
 		return inventory;
 	}
 	
-	/*
+	/**
 	 * Returns current week
 	 * @return		current week
 	 */
@@ -129,14 +144,27 @@ public class MainGame {
 		return currentWeek;
 	}
 	
+	/**
+	 * Gets duration of season in weeks
+	 * @return duration of season
+	 */
 	public int getDuration() {
 		return seasonDuration;
 	}
-
+	
+	/**
+	 * Gets the total points the player has earned
+	 * @return the total points the player has earned
+	 */
 	public int getPoints() {
 		return totalPoints;
 	}
 	
+	/**
+	 * End game screen message giving the player their points, money
+	 * and difficulty played through the season.
+	 * @return the String storing that message
+	 */
 	public String getFinalStats() {
 		return String.format("%s FC finished up their %s week season with"
 				+ " %s points and $%s on the level %s difficulty."
@@ -144,7 +172,7 @@ public class MainGame {
 				money, difficulty);
 	}
 	
-	/*
+	/**
 	 * changes money and ensures it's not negative	
 	 * @param amount 	amount to change by
 	 */
@@ -157,7 +185,7 @@ public class MainGame {
 		}
 	}
 	
-	/*
+	/**
 	 * changes total points and ensures it's not negative	
 	 * @param amount 	amount to change by
 	 */
@@ -170,8 +198,12 @@ public class MainGame {
 			totalPoints += amount;
 		}
 	}
-
 	
+	/**
+	 * Checks if there is room in the players inventory then adds the item
+	 * if there is.
+	 * @param item the item potentially being added
+	 */
 	public void addItem(Item item) {
 		if(inventory.size()>=10) {
 			System.out.println("Inventory Full");
@@ -181,6 +213,10 @@ public class MainGame {
 		}
 	}
 	
+	/**
+	 * Method to attempt to remove and item from the player inventory
+	 * @param item the item to be removed
+	 */
 	public void removeItem(Item item) {
 		if(!inventory.contains(item)) {
 			System.out.println("Item not in inventory");
@@ -195,8 +231,8 @@ public class MainGame {
 	 * Bye method takes an athlete to train then changes current week,
 	 * Resets the Market, Stadium and athlete stamina. After training
 	 * the method then runs the random event generator
-	 * @param athleteName
-	 * @return
+	 * @param athleteName The name of the athlete that will be trained
+	 * @return the generated event for the bye
 	 */
 	public String takeBye(String athleteName) {
 		currentWeek ++;

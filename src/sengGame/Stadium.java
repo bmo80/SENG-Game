@@ -9,6 +9,13 @@ import purchasables.Athlete;
 import purchasables.AthleteGenerator;
 import windows.StadiumWindow;
 
+/**
+ * The Stadium class Generates the enemy teams that the player can
+ * choose to play
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class Stadium {
 
 	/**

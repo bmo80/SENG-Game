@@ -8,6 +8,12 @@ import javax.swing.JFrame;
 import purchasables.Athlete;
 import purchasables.TeamManager;
 
+/**
+ * Match class deals with all the logic of playing a match from start to finish
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class Match{
 	/**
 	 * Stores the amount of money the player won for their match.
