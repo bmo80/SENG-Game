@@ -19,11 +19,29 @@ public class AthleteGenerator extends Athlete {
 	 * Athletes fullname
 	 */
 	private String name;
+	/**
+	 * Stores the value of the athletes position
+	 */
 	private String position;
+	/**
+	 * Value of Athletes attack
+	 */
 	private int attack;
+	/**
+	 * Value of Athletes defence
+	 */
 	private int defence;
+	/**
+	 * min variable for use in a random number generator
+	 */
 	private int min;
+	/**
+	 * max variable for use in a random number generator
+	 */
 	private int max;
+	/**
+	 * Stores the current week the game is in
+	 */
 	private int week;
 	
 	/**

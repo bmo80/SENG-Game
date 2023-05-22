@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class FileReader {
 	
+	/**
+	 * Stores generated name to be set later
+	 */
 	public String name;
 	
 	/**

@@ -1,8 +1,18 @@
 package purchasables;
 
 public class Purchasable {
+	
+	/**
+	 * Stores buy price of the purchasable object
+	 */
 	private int buyPrice;
+	/**
+	 * Stores the sell price of the purchasable object
+	 */
 	private int sellPrice;
+	/**
+	 * Stores description of the purchasable object
+	 */
 	private String description;
 	
 	/**

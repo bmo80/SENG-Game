@@ -1,8 +1,17 @@
 package purchasables;
 
 public class Item extends Purchasable{
+	/**
+	 * Stores name of the Item
+	 */
 	private String name;
+	/**
+	 * Stores the type of the Item
+	 */
 	private String type;
+	/**
+	 * Stores the effect of the Item
+	 */
 	private int effect;
 	
 	/**
@@ -64,10 +73,18 @@ public class Item extends Purchasable{
 		name = newName;
 	}
 	
+	/**
+	 * Allows you to set a custom type for the item
+	 * @param newType the type you wish the item to be
+	 */
 	public void setType(String newType) {
 		type = newType;
 	}
 	
+	/**
+	 * Set a custom effect level for the item
+	 * @param newEffect the value that the respective stat will be affected
+	 */
 	public void setEffect(int newEffect) {
 		effect = newEffect;
 	}

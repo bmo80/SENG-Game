@@ -5,9 +5,20 @@ import java.util.Arrays;
 
 public class TeamManager {
 	
+	/**
+	 * initialize the team list ArrayList
+	 */
 	private ArrayList<Athlete> teamList;
+	/**
+	 * initialize the bench ArrayList
+	 */
 	private ArrayList<Athlete> bench;
 	
+	/**
+	 * Constructor for team manager. Takes in two values and stores them in team and bench
+	 * @param currentTeam the ArrayList to be stored as current team
+	 * @param currentBench the ArrayList to be stored as the bench
+	 */
 	public TeamManager(ArrayList<Athlete> currentTeam, ArrayList<Athlete> currentBench){
 		teamList = currentTeam;
 		bench = currentBench;
@@ -79,7 +90,11 @@ public class TeamManager {
 		return new Athlete();
 	}
 
-	
+	/**
+	 * Swaps two athletes positions in the team/bench
+	 * @param athlete1 One of the Athletes you wish to swap
+	 * @param athlete2 The other Athlete you wish to swap
+	 */
 	public void swap(Athlete athlete1, Athlete athlete2) {
 		if(teamList.contains(athlete1)) {
 			if(teamList.contains(athlete2)) {
@@ -120,8 +135,8 @@ public class TeamManager {
  	}	
 	
 	/**
-	 * 
-	 * @return
+	 * Gets a list of all the team members names. 
+	 * @return The list of all the team members names.
 	 */
 	public String[] getTeamsString() {
 		String stringArray[] = new String[teamList.size()+bench.size()];
@@ -135,7 +150,11 @@ public class TeamManager {
 	}
 	
 		
-	
+	/**
+	 * Adds an athlete to the team. Checks if the active team is full and sends 
+	 * the athlete to the bench if so.
+	 * @param chosenAthlete The Athlete you wish to add to the team.
+	 */
 	public void addAthlete(Athlete chosenAthlete) {
 		if(teamList.size() >= 6){
 			// Call Exception - teamList full - overflow to bench?
@@ -145,6 +164,10 @@ public class TeamManager {
 		}
 	}
 	
+	/**
+	 * Removes the specified Athlete from the team
+	 * @param chosenAthlete the specified Athlete to be removed
+	 */
 	public void removeAthlete(Athlete chosenAthlete) {
 		if(teamList.contains(chosenAthlete)) {
 			teamList.remove(chosenAthlete);
@@ -154,6 +177,10 @@ public class TeamManager {
 		}
 	}
 	
+	/**
+	 * Moves an active player to the bench.
+	 * @param chosenAthlete The Athlete that is being moved to the bench
+	 */
 	public void benchAthlete(Athlete chosenAthlete) {
 		if(bench.size() >= 5){
 			// Call exception - bench full

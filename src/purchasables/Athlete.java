@@ -1,13 +1,33 @@
 package purchasables;
 
 public class Athlete extends Purchasable {
+	/**
+	 * Variable to store the name of the Athlete
+	 */
 	private String name;
-	//Stats Capped at 10
+	/**
+	 * Stores the Athletes stamina value
+	 */
 	private int stamina;
+	/**
+	 * Stores the Athletes attack value
+	 */
 	private int attack;
+	/**
+	 * Stores the Athletes defense value
+	 */
 	private int defence;
+	/**
+	 * String that stores the athletes postion
+	 */
 	private String position;
+	/**
+	 * boolean that stores wether the athlete is injured or not
+	 */
 	private boolean isInjured;
+	/**
+	 * Stores the number of times the athlete has been injured.
+	 */
 	private int previousInjuries;
 	
 	/**
@@ -130,8 +150,8 @@ public class Athlete extends Purchasable {
 	}
 	
 	/**
-	 * 
-	 * @param change
+	 * Changes the Athletes stamina by the specified amount
+	 * @param change the amount stamina will be changed by
 	 */
 	public void changeStamina(int change) {
 		stamina = verifyChange(stamina, change);
@@ -141,14 +161,26 @@ public class Athlete extends Purchasable {
 		}
 	}
 	
+	/**
+	 * Changes the Attack of the Athlete by a specified amount
+	 * @param change the amount the attack will be changed by
+	 */
 	public void changeAttack(int change) {
 		attack = verifyChange(attack, change);	
 	}
 	
+	/**
+	 * Changes the defence of Athlete by a specified amount
+	 * @param change the amount the defence will be changed by
+	 */
 	public void changeDefence(int change) {
 		defence = verifyChange(defence, change);
 	}
 	
+	/**
+	 * Checks which position stat you wish to change and sends it to the support functions
+	 * @param amount the amount the stat will be changed by
+	 */
 	public void changePositionStat(int amount) {
 		if(position.equals("A")){
 			changeAttack(amount);
@@ -157,7 +189,12 @@ public class Athlete extends Purchasable {
 			changeDefence(amount);
 		}
 	}
-	
+	/**
+	 * Checks if the stat change doesnt overflow above 10 or go below 0
+	 * @param stat The Athlete statistic to be change
+	 * @param change The amount the statistic will be change by
+	 * @return The new value for the statistic.
+	 */
 	public int verifyChange(int stat, int change) {
 		if(stat + change >= 10) {
 			//Send message?? - 'Stat cannot exceed 10'
@@ -171,11 +208,14 @@ public class Athlete extends Purchasable {
 		}
 	}
 	
+	/**
+	 * Checks which item is being used and then applies it to the correct stat
+	 * @param item The Item to be used
+	 */
 	public void useItem(Item item) {
 		if(item.getName().equals("Stamina")) {
 			changeStamina(item.getEffect());
 		}else if(item.getName().equals("Attack")) {
-			System.out.println("made it here");
 			changeAttack(item.getEffect());
 		}else if(item.getName().equals("Defence")) {
 			changeDefence(item.getEffect());
@@ -186,13 +226,20 @@ public class Athlete extends Purchasable {
 		}
 	}
 	
+	/**
+	 * Changes the postion of the Athlete
+	 * @param newPosition the position the Athlete is Changing to.
+	 */
 	public void changePosition(String newPosition) {
 		if(newPosition.toUpperCase() == "D" || newPosition.toUpperCase() == "A") {
 			position = newPosition.toUpperCase();
 		}
 	}
 	
-	
+	/**
+	 * Changes the athlete to be injured or not
+	 * @param injury boolean for if the athlete is injured.
+	 */
 	public void changeIsInjured(boolean injury) {
 		if(injury == true && isInjured != true) {
 			previousInjuries ++;
