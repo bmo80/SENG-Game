@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import mainMenus.MainGame;
+import mainMenus.MarketPlace;
 import purchasables.Athlete;
 import purchasables.Item;
 import purchasables.TeamManager;
-import sengGame.MainGame;
-import sengGame.MarketPlace;
 
 class MainGameTest {
 	private MainGame mainGameTest;
@@ -86,19 +86,19 @@ class MainGameTest {
 	
 	@Test
 	public void getMoneyTest() {
-		assertEquals(20000,mainGameTest.getMoney());
+		assertEquals(30000,mainGameTest.getMoney());
 		}
 	
 	@Test
 	public void changeMoneyTest() {
 		mainGameTest.changeMoney(-20000);
-		assertEquals(0,mainGameTest.getMoney());
+		assertEquals(10000,mainGameTest.getMoney());
 		}
 	
 	@Test
 	public void illegalChangeMoneyTest() {
 		mainGameTest.changeMoney(-35000);
-		assertEquals(20000,mainGameTest.getMoney());
+		assertEquals(30000,mainGameTest.getMoney());
 		}
 	
 	@Test
@@ -186,7 +186,7 @@ class MainGameTest {
 		mainGameTest.getTeams().getTeamList().get(2).changeStamina(-1000000);
 		mainGameTest.takeBye("attack2");
 		assertTrue(mainGameTest.getFinalStats().equals("test FC finished up their 5 week season with"
-						+ " 10 points and $20001 on the level 1 difficulty."
+						+ " 10 points and $30001 on the level 1 difficulty."
 						+ "\nThanks for playing!"));
 
 	}

@@ -4,9 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import mainMenus.Match;
+import mainMenus.Stadium;
 import purchasables.Athlete;
-import sengGame.Match;
-import sengGame.Stadium;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

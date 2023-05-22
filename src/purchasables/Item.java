@@ -1,5 +1,11 @@
 package purchasables;
 
+/**
+ * The Item Class stores all attributes relating to an Item Object
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class Item extends Purchasable{
 	/**
 	 * Stores name of the Item
@@ -34,7 +40,6 @@ public class Item extends Purchasable{
 	 * @param cost the cost of the item
 	 */
 	public Item(String defName, String defType, int defEffect, int cost) {
-		//For now the sell price is the buy price - 10,000 * difficulty
 		super(cost * 10, cost * 8, 
 				String.format("%s is for %s", defName, defType));
 		name = defName;

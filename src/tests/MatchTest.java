@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import mainMenus.MainGame;
+import mainMenus.Match;
 import purchasables.Athlete;
 import purchasables.TeamManager;
-import sengGame.MainGame;
-import sengGame.Match;
 
 class MatchTest {
 	private Match match;

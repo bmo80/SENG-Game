@@ -11,14 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import sengGame.MainGame;
-import sengGame.MarketPlace;
 import javax.swing.JPanel;
 
 import purchasables.Athlete;
 import purchasables.TeamManager;
 import javax.swing.JTextField;
+
+import mainMenus.MainGame;
+import mainMenus.MarketPlace;
 
 /**
  * This is the class for the SetupWindow. Handles the displaying and
@@ -404,6 +404,10 @@ public class SetupBuyPlayerWindow {
 					"Team Slots Available: %s/6", 6- teams.getTeamList().size()));
 	}
 	
+	/**
+	 * Sets athleteSelected to be currently selected athlete
+	 * @param num index of currently selected athlete
+	 */
 	private void setAthleteSelected(int num) {
 		athleteSelected = num;
 	}

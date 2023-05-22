@@ -73,7 +73,7 @@ public class Athlete extends Purchasable {
 	
 	@Override
 	/**
-	 * Overrides the system.out to print Athletes
+	 * Overrides the toString to print Athletes
 	 */
 	public String toString() {
 		return String.format("%s: ATK(%s) DEF(%s) POS(%s) " +
@@ -254,6 +254,7 @@ public class Athlete extends Purchasable {
 	public void changeIsInjured(boolean injury) {
 		if( injury == true && isInjured != true) {
 			previousInjuries ++;
+			isInjured = injury;
 		}
 		else {
 			isInjured = injury;

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.JFrame;
-
-import sengGame.MainGame;
-import sengGame.Match;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -16,6 +13,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import mainMenus.MainGame;
+import mainMenus.Match;
+
 import java.awt.Font;
 
 /**
@@ -33,6 +34,9 @@ public class MatchWindow {
 	 * Variable to store the current match object
 	 */
 	private Match match;
+	/**
+	 * Variable to store the message
+	 */
 	private String message;
 	/**
 	 * Variables to store the labels to be initialized
@@ -42,12 +46,12 @@ public class MatchWindow {
 
 
 	/**
-	 * Create the application.
 	 * Constructor for the MatchWindow. Checks if the conditions
 	 * are met to be able to play then initializes the frame to show
 	 * the results
-	 * @param currentMatch current match object
-	 * @param curStadiumWindow stadium frame
+	 * @param givenGame current MainGame instance
+	 * @param opponents ArrayList containing the opponents Athletes
+	 * @param curStadiumWindow current Stadium window
 	 */
 	public MatchWindow(MainGame givenGame, ArrayList<Athlete> opponents,
 			JFrame curStadiumWindow) {

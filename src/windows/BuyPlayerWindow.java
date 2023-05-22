@@ -4,10 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import mainMenus.MarketPlace;
+
 import javax.swing.JButton;
 
 import purchasables.Athlete;
-import sengGame.MarketPlace;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -66,8 +68,7 @@ public class BuyPlayerWindow {
 	/**
 	 * Constructor for the BuyPlayer window.
 	 * @param curmarket the current marketplace
-	 * @param givenWindow 
-	 * @param givenWindow the previous window frame
+	 * @param givenWindow current marketplace window
 	 * @param prevObject instance of the previous frames object
 	 */
 	public BuyPlayerWindow(MarketPlace curmarket,

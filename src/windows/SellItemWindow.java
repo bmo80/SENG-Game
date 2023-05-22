@@ -9,9 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import mainMenus.MainGame;
+import mainMenus.MarketPlace;
 import purchasables.Item;
-import sengGame.MainGame;
-import sengGame.MarketPlace;
 
 /**
  * Window Class for Selling items. Deals with displaying the correct items

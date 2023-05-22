@@ -4,8 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import mainMenus.MarketPlace;
 import purchasables.Item;
-import sengGame.MarketPlace;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

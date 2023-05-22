@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import mainMenus.MainGame;
+import mainMenus.Stadium;
 import purchasables.Athlete;
-import sengGame.MainGame;
-import sengGame.Stadium;
 
 class StadiumTest {
 	private Stadium stadium;

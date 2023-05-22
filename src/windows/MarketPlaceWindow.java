@@ -3,11 +3,11 @@ package windows;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import mainMenus.MarketPlace;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import sengGame.MarketPlace;
 
 /**
  * Deals with displaying the options of the marketplace

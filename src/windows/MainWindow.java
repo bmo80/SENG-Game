@@ -4,11 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JFrame;
-
-import sengGame.MainGame;
-import sengGame.MarketPlace;
-import sengGame.Stadium;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -16,9 +11,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+import mainMenus.MainGame;
+import mainMenus.MarketPlace;
+import mainMenus.Stadium;
+
 /**
- * MainWindow Deals with display all the options from the main window.
- * These are Going to stadium, marketplace, club or taking a bye
+ * MainWindow Deals with displaying all the options from the main window.
+ * These are stadium, marketplace, club or taking a bye
  * @author Blair Brydon
  * @author Ben Moore
  *

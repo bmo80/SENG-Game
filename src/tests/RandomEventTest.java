@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import mainMenus.MainGame;
+import mainMenus.RandomEvent;
 import purchasables.Athlete;
 import purchasables.TeamManager;
-import sengGame.MainGame;
-import sengGame.RandomEvent;
 
 class RandomEventTest {
 	RandomEvent event;
@@ -25,19 +25,19 @@ class RandomEventTest {
 	
 	@Test
 	public void statIncreaseTest() {
-		assertEquals("OPPattack1 Trained extra hard and increased their stats",
+		assertEquals("OPPattack1 increased their stats",
 				event.runEvent(90));
 	}
 	
 	@Test
 	public void athleteQuitsTest() {
-		assertEquals("OPPattack1 Was getting too injured and decided to leave",
+		assertEquals("OPPattack1 decided to leave",
 				event.runEvent(81));
 	}
 	
 	@Test
 	public void athleteJoinsTest() {
-		assertEquals("You had positions open so a new athlete decided to join!",
+		assertEquals("New athlete decided to join!",
 				event.runEvent(76));
 	}
 	

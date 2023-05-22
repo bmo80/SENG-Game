@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import sengGame.MainGame;
 import javax.swing.SwingConstants;
+
+import mainMenus.MainGame;
 
 /**
  * Deals with displaying the options for the players club

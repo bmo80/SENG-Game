@@ -5,13 +5,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import purchasables.Athlete;
-import sengGame.MarketPlace;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import mainMenus.MarketPlace;
 
 /**
  * SellPlayerWindow class deals with showing the players current team
@@ -30,7 +32,7 @@ public class SellPlayerWindow {
 	 * Variable for storing the current MarketPlace object
 	 */
 	private MarketPlace market;
-	private int sold;
+	
 	/**
 	 * Variable for storing the currently selected athlete
 	 */
@@ -313,6 +315,12 @@ public class SellPlayerWindow {
 		frmManageTeam.getContentPane().add(lblNewLabel_2);
 	}
 	
+	/**
+	 * Sets the button for the corresponding athlete. If there is no
+	 * athlete, the button is disabled and the text is set to "Empty Slot"
+	 * @param index index of the athlete
+	 * @param athlete button of the corresponding athlete to be set
+	 */
 	private void setTeamName(int index, JButton athlete) {
 		if (market.getGameStats().getTeams().getTeamList().size() >= index) {
 			athlete.setText(market.getGameStats().getTeams().getTeamList().get(
@@ -324,6 +332,12 @@ public class SellPlayerWindow {
 		}
 	}
 	
+	/**
+	 * Sets the button for the corresponding athlete on the bench.If there is no
+	 * athlete for that slot, the button is disabled and the text is set to "Empty Slot"
+	 * @param index the index of the benched athlete
+	 * @param athlete the button of the corresponding athlete
+	 */
 	private void setBenchName(int index, JButton athlete) {
 		if (market.getGameStats().getTeams().getBench().size() >= index) {
 			athlete.setText(market.getGameStats().getTeams().getBench().get(
@@ -335,6 +349,10 @@ public class SellPlayerWindow {
 		}
 	}
 	
+	/**
+	 * Updates the labels to display the stats of the currently selected athlete
+	 * @param athlete the currently selected athlete
+	 */
 	private void updateLabels(Athlete athlete) {
 		lblName.setText(athlete.getName());
 		lblPosition.setText(String.format(
@@ -347,7 +365,7 @@ public class SellPlayerWindow {
 				"Sell Price: %s", Integer.toString(athlete.getSellPrice())));
 	}
 	
-	/*
+	/**
 	 * Sets all of the buttons for the team and bench using
 	 * support functions setTeamName and setBenchName
 	 */

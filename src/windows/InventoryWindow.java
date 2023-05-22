@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import mainMenus.MainGame;
 import purchasables.Item;
-import sengGame.MainGame;
 
 /**
  * Inventory Window deals with the displaying of the current items in
@@ -224,7 +224,7 @@ public class InventoryWindow {
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(itemSelected.getName().equals("NULL")) {
-					//No!
+					//Not allowed
 				}else {
 					String[] choices = game.getTeams().getTeamsString();
 					String selection = (String) JOptionPane.showInputDialog(

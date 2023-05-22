@@ -32,7 +32,6 @@ public class SetupWindow {
 	 *Constructor for the setup window, initializes the frame
 	 */
 	public SetupWindow() {
-//		game = getGame;
 		initialize();
 		frmSetup.setVisible(true);
 	}

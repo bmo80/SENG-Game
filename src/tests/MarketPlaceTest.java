@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import mainMenus.MainGame;
+import mainMenus.MarketPlace;
 import purchasables.Item;
-import sengGame.MainGame;
-import sengGame.MarketPlace;
 
 class MarketPlaceTest {
 	private MarketPlace market;
@@ -33,29 +33,29 @@ class MarketPlaceTest {
 	@Test
 	public void generateAthleteTest() {
 		market.generateAthletes(3,"A");
-		assertEquals(9,market.getPlayersForSale().size());
+		assertEquals(8,market.getPlayersForSale().size());
 	}
 	
 	@Test
 	public void getPlayerPositionTest() {
-		assertEquals("D",market.getPlayersForSale().get(5).getPosition());
+		assertEquals("D",market.getPlayersForSale().get(4).getPosition());
 	}
 	
 	@Test
 	public void getPlayerPriceTest() {
-		assertEquals(1000*market.getPlayersForSale().get(5).getPositionStat(),
-				market.getPlayersForSale().get(5).getBuyPrice());
+		assertEquals(1000*market.getPlayersForSale().get(4).getPositionStat(),
+				market.getPlayersForSale().get(4).getBuyPrice());
 	}
 	
 	@Test
 	public void getPlayerCountTest() {
-		assertEquals(6,market.getPlayerCount());
+		assertEquals(5,market.getPlayerCount());
 	}
 	
 	@Test
 	public void changePlayerCountTest() {
 		market.getPlayersForSale().get(0).changeName("Purchased");
-		assertEquals(5,market.getPlayerCount());
+		assertEquals(4,market.getPlayerCount());
 	}
 	
 	@Test

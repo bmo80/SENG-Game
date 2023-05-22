@@ -8,10 +8,9 @@ import java.util.Collections;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import sengGame.MainGame;
 import javax.swing.SwingConstants;
 
+import mainMenus.MainGame;
 import purchasables.Athlete;
 
 /**

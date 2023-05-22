@@ -2,11 +2,9 @@ package windows;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import sengGame.MainGame;
-
 import javax.swing.SwingConstants;
 
+import mainMenus.MainGame;
 import purchasables.Athlete;
 
 import javax.swing.JButton;

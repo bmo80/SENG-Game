@@ -3,7 +3,8 @@ package windows;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
 
-import sengGame.MainGame;
+import mainMenus.MainGame;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;

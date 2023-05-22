@@ -96,7 +96,11 @@ public class TeamManager {
 		}
 		return new Athlete();
 	}
-
+	/**
+	 * Checks if the specified name is legal
+	 * @param givenName the name to be checked
+	 * @return True or False depending on if the name is correct
+	 */
 	public boolean checkIllegalName(String givenName) {
 		for( String name: getTeamsString()) {
 			if( name.equals(givenName)){
@@ -187,7 +191,7 @@ public class TeamManager {
 	/**
 	 * Adds an athlete to the team. Checks if the active team is full and 
 	 * puts last athlete in team onto bench to make room if so.
-	 * @param chosenAthlete The Athlete you wish to add to the team.
+	 * @param incomingAthlete The Athlete you wish to add to the team.
 	 */
 	public void teamAdd(Athlete incomingAthlete) {
 		if(teamList.size() >= 6) {
