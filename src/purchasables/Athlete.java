@@ -172,11 +172,12 @@ public class Athlete extends Purchasable {
 	}
 	
 	public void useItem(Item item) {
-		if(item.getType().equals("Stamina")) {
+		if(item.getName().equals("Stamina")) {
 			changeStamina(item.getEffect());
-		}else if(item.getType().equals("Attack")) {
+		}else if(item.getName().equals("Attack")) {
+			System.out.println("made it here");
 			changeAttack(item.getEffect());
-		}else if(item.getType().equals("Defence")) {
+		}else if(item.getName().equals("Defence")) {
 			changeDefence(item.getEffect());
 		}else {
 			//HP case

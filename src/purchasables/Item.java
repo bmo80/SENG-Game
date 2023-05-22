@@ -64,4 +64,12 @@ public class Item extends Purchasable{
 		name = newName;
 	}
 	
+	public void setType(String newType) {
+		type = newType;
+	}
+	
+	public void setEffect(int newEffect) {
+		effect = newEffect;
+	}
+	
 }
