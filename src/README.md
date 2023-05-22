@@ -1,2 +1,3 @@
-# SENG-Game-Working-Branch
-This is the branch where coding will be done/ tested before being committed to main.
+After downloading this source folder:
+javac -cp src -d bin mainMenus/MainGame.java
+java -cp bin mainMenus.MainGame
