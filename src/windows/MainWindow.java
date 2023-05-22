@@ -1,24 +1,18 @@
 package windows;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
-import purchasables.Athlete;
-import purchasables.TeamManager;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
-import sengGame.Match;
 import sengGame.Stadium;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -30,13 +24,13 @@ import javax.swing.SwingConstants;
  *
  */
 public class MainWindow {
-	
+
 	/**
 	 * Variable to store the current frame
 	 */
 	private JFrame frmMainGame;
 	/**
-	 * Varaible to store current MainGame object
+	 * Variable to store current MainGame object
 	 */
 	private MainGame game;
 	/**
@@ -54,7 +48,7 @@ public class MainWindow {
 	/**
 	 * Variables to store Money and record labels
 	 */
-	JLabel MoneyLbl, lblRecord;
+	JLabel MoneyLbl, lblRecord, totalPointsLbl;
 
 	/**
 	 * Constructor for the MainWindow. Sets the initial variables and
@@ -63,13 +57,14 @@ public class MainWindow {
 	 * @param givenMarket current instance of the marketplace
 	 * @param givenStadium current instance of the stadium
 	 */
-	public MainWindow(MainGame getGame,MarketPlace givenMarket, Stadium givenStadium) {
+	public MainWindow(MainGame getGame,
+			MarketPlace givenMarket, Stadium givenStadium) {
 		game = getGame;
 		market = givenMarket;
 		stadium = givenStadium;
 		main = this;
 		initialize();
-		frmMainGame.setVisible(true);		
+		frmMainGame.setVisible(true);
 	}
 	
 	/**
@@ -78,6 +73,7 @@ public class MainWindow {
 	public void closeWindow() {
 		frmMainGame.dispose();
 	}
+	
 	/**
 	 * Show this window
 	 */
@@ -101,10 +97,10 @@ public class MainWindow {
 		MoneyLbl.setBounds(12, 8, 426, 15);
 		frmMainGame.getContentPane().add(MoneyLbl);
 		
-		JLabel WeekLbl = new JLabel(String.format("Week: %s/%s", game.getWeek(),game.getDuration()));
+		JLabel WeekLbl = new JLabel(String.format("Week: %s/%s",
+				game.getWeek(), game.getDuration()));
 		WeekLbl.setBounds(12, 25, 91, 15);
 		frmMainGame.getContentPane().add(WeekLbl);
-		
 		
 		
 		JButton btnClub = new JButton("Go to Club");
@@ -125,8 +121,10 @@ public class MainWindow {
 		btnMarket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				MarketPlaceWindow window = new MarketPlaceWindow(market, frmMainGame, main);
-				MoneyLbl.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+				MarketPlaceWindow window = new MarketPlaceWindow(
+						market, frmMainGame, main);
+				MoneyLbl.setText(String.format("Money: $%s",
+						market.getGameStats().getMoney()));
 			}
 		});
 		btnMarket.setBounds(12, 177, 148, 77);
@@ -137,7 +135,8 @@ public class MainWindow {
 		btnStadium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmMainGame.setVisible(false);
-				StadiumWindow window = new StadiumWindow(stadium, frmMainGame, main);
+				StadiumWindow window = new StadiumWindow(
+						stadium, frmMainGame, main);
 				MoneyLbl.setText(String.format("Money: $%s", game.getMoney()));
 			}
 		});
@@ -145,12 +144,12 @@ public class MainWindow {
 		frmMainGame.getContentPane().add(btnStadium);
 		
 		
-		
 		JButton btnBye = new JButton("Take bye week");
 		btnBye.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showConfirmDialog(frmMainGame, 
-						"This will advance to the next week.\nDo you want to continue?",
+						"This will advance to the next week."
+						+ "\nDo you want to continue?",
 						"Bye Warning",JOptionPane.YES_NO_OPTION);
 				if(choice == JOptionPane.YES_OPTION) {
 					frmMainGame.dispose();
@@ -160,8 +159,6 @@ public class MainWindow {
 							"Weekly training", JOptionPane.PLAIN_MESSAGE,
 							null, choices, null);
 					//Run special window (over top) showing what happened
-					//e.g. week advanced, athletes/Market/stadium reset
-					//ALSO inform random events
 					ByeWindow byeWindow = new ByeWindow(game,selection);
 ;				}
 			}
@@ -172,12 +169,27 @@ public class MainWindow {
 		JLabel lblTeamName = new JLabel(game.getPlayerName()+" FC");
 		lblTeamName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamName.setFont(new Font("Arial", Font.BOLD, 16));
-		lblTeamName.setBounds(161, 24, 334, 15);
+		lblTeamName.setBounds(161, 20, 334, 20);
 		frmMainGame.getContentPane().add(lblTeamName);
 		
-		lblRecord = new JLabel("Record: 0 - 0 - 0");
-		lblRecord.setBounds(494, 25, 110, 15);
+		lblRecord = new JLabel("Record: W:0 - T:0 - L:0");
+		lblRecord.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblRecord.setBounds(403, 8, 210, 15);
 		frmMainGame.getContentPane().add(lblRecord);
+		
+		JLabel weeksLeftLbl = new JLabel(String.format("%s Weeks left",
+				game.getDuration()-game.getWeek()));
+		weeksLeftLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		weeksLeftLbl.setFont(new Font("Dialog", Font.BOLD, 35));
+		weeksLeftLbl.setBounds(204, 288, 378, 57);
+		frmMainGame.getContentPane().add(weeksLeftLbl);
+		
+		totalPointsLbl = new JLabel(String.format("%s Total points",
+				game.getPoints()));
+		totalPointsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		totalPointsLbl.setFont(new Font("Dialog", Font.BOLD, 35));
+		totalPointsLbl.setBounds(204, 137, 378, 57);
+		frmMainGame.getContentPane().add(totalPointsLbl);
 	}
 
 }

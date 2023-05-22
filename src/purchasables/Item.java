@@ -1,11 +1,5 @@
 package purchasables;
 
-/**
- * The Item Class stores all attributes relating to an Item Object
- * @author Blair Brydon
- * @author Ben Moore
- *
- */
 public class Item extends Purchasable{
 	/**
 	 * Stores name of the Item
@@ -33,7 +27,7 @@ public class Item extends Purchasable{
 	
 	/**
 	 * Overloaded Constructor for Item Class. Allows for Creation of a
-	 * custom Item. Invokes the parent class purchasable aswell.
+	 * custom Item. Invokes the parent class purchasable as well.
 	 * @param defName name of the item
 	 * @param defType the type the item will be
 	 * @param defEffect the effect the item will have
@@ -41,7 +35,8 @@ public class Item extends Purchasable{
 	 */
 	public Item(String defName, String defType, int defEffect, int cost) {
 		//For now the sell price is the buy price - 10,000 * difficulty
-		super(cost*10,cost*8,String.format("%s is for %s", defName,defType));
+		super(cost * 10, cost * 8, 
+				String.format("%s is for %s", defName, defType));
 		name = defName;
 		type = defType;
 		effect = defEffect;

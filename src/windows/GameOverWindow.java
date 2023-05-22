@@ -1,8 +1,8 @@
 package windows;
 
-
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+
 import sengGame.MainGame;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
  * @author Ben Moore
  */
 public class GameOverWindow {
+
 	/**
 	 * Variable to store the current frame
 	 */

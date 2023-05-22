@@ -5,18 +5,7 @@ import java.util.Random;
 import purchasables.Athlete;
 import purchasables.AthleteGenerator;
 
-/**
- * The RandomEvent class deals with the logic of generating and then executing
- * the random events for the game
- * @author Blair Brydon
- * @author Ben Moore
- *
- */
 public class RandomEvent {
-	
-	/**
-	 * For storing the current maingame object
-	 */
 	private MainGame gameStats;
 	
 	/**
@@ -29,11 +18,10 @@ public class RandomEvent {
 	
 	/**
 	*Generates a random number between 0 and 99
-	*@return returns the generated number and passes it to the runEvent method
 	*/
 	public String generateEvent() {
 		int generatedNumber = new Random().nextInt(100);
-		generatedNumber += 5*gameStats.getDifficulty();
+		generatedNumber += 5 * gameStats.getDifficulty();
 		return runEvent(generatedNumber);
 	}
 	
@@ -46,19 +34,17 @@ public class RandomEvent {
 	 */
 	public String runEvent(int generatedNumber) {
 		Athlete mostInjured = gameStats.getTeams().getMostInjured();
-
-		if(generatedNumber>85) {
+		if (generatedNumber > 85) {
 			return increaseStat(gameStats);
 		}
-		else if(generatedNumber>(80-(mostInjured.getPreviousInjuries()*
-				(1+gameStats.getDifficulty())))) {
+		else if (generatedNumber > (80 - (mostInjured.getPreviousInjuries() *
+				(1 + gameStats.getDifficulty())))) {
 			makeAthleteQuit(mostInjured, gameStats);
-			return String.format("%s Was getting too injured and decided to leave"
-					, mostInjured.getName());
+			return String.format("%s decided to leave",mostInjured.getName());
 		}
-		else if(generatedNumber>(75-gameStats.getTeams().getFreeSlotsCount())) {
+		else if (generatedNumber >
+		(75 - gameStats.getTeams().getFreeSlotsCount())) {
 			return makeAthleteJoin(gameStats);
-			
 		}
 		return "Nothing special happened this week";
 	}
@@ -70,9 +56,11 @@ public class RandomEvent {
 	 * @return returns a string saying which athlete had their stat increased and by how much
 	 */
 	public String increaseStat(MainGame gameStats) {
-		int athIndex = new Random().nextInt(gameStats.getTeams().getTeamList().size());
-		gameStats.getTeams().getTeamList().get(athIndex).changePositionStat(1+gameStats.getDifficulty());
-		return String.format("%s Trained extra hard and increased their stats",
+		int athIndex = new Random().nextInt(
+				gameStats.getTeams().getTeamList().size());
+		gameStats.getTeams().getTeamList().get(athIndex).changePositionStat(
+				1 + gameStats.getDifficulty());
+		return String.format("%s increased their stats",
 				gameStats.getTeams().getTeamList().get(athIndex).getName());
 	}
 	
@@ -83,6 +71,11 @@ public class RandomEvent {
 	 */
 	public void makeAthleteQuit(Athlete leavingAthlete, MainGame gameStats) {
 		gameStats.getTeams().removeAthlete(leavingAthlete);
+		if (gameStats.getTeams().getBench().size() > 0) {
+			gameStats.getTeams().addAthlete(
+					gameStats.getTeams().getBench().get(0));
+			gameStats.getTeams().getBench().remove(0);
+		}
 	}
 	
 	/**
@@ -91,9 +84,10 @@ public class RandomEvent {
 	 * @return Whether or not an athlete joined depending on if there was space.
 	 */
 	public String makeAthleteJoin(MainGame gameStats) {
-		if(gameStats.getTeams().getFreeSlotsCount()>0) {
-			gameStats.getTeams().addAthlete(new AthleteGenerator("A",gameStats.getWeek()));
-			return "You had positions open so a new athlete decided to join!";
+		if (gameStats.getTeams().getFreeSlotsCount() > 0) {
+			gameStats.getTeams().addAthlete(new AthleteGenerator(
+					"A", gameStats.getWeek()));
+			return "New athlete decided to join!";
 		}
 		return "Nothing special happened this week...";
 	}

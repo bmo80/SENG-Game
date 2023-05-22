@@ -1,14 +1,9 @@
 package windows;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import sengGame.MainGame;
-import sengGame.MarketPlace;
-import sengGame.Stadium;
 
 import javax.swing.SwingConstants;
 
@@ -18,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
 /**
  * The Bye Window deals with displaying what random events
  * happened during the bye week
@@ -25,6 +21,7 @@ import java.awt.event.ActionEvent;
  * @author Ben Moore
  */
 public class ByeWindow {
+
 	/**
 	 * Variable for the current frame
 	 */
@@ -52,11 +49,10 @@ public class ByeWindow {
 		game = currentGame;
 		trainedAthlete = game.getTeams().getAthleteFromString(athleteName);
 		eventInfo = game.takeBye(athleteName);
-		//Add random event
 		initialize();
 		frmByeWindow.setVisible(true);
-		
 	}
+	
 	/**
 	 * Method to re launch the main screen after the bye and dispose of the window
 	 */
@@ -75,24 +71,28 @@ public class ByeWindow {
 		frmByeWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmByeWindow.getContentPane().setLayout(null);
 		
-		JLabel lblAfterTakingA = new JLabel("After taking a bye week, the following happened:");
+		JLabel lblAfterTakingA = new JLabel(
+				"After taking a bye week, the following happened:");
 		lblAfterTakingA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAfterTakingA.setBounds(12, 23, 416, 15);
 		frmByeWindow.getContentPane().add(lblAfterTakingA);
 		
 		JLabel athleteLabel = new JLabel(String.format("%s gained %s %s",
-				trainedAthlete.getName(), Integer.toString(4-game.getDifficulty()),
+				trainedAthlete.getName(),
+				Integer.toString(4-game.getDifficulty()),
 				trainedAthlete.getPosition()));
 		athleteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		athleteLabel.setBounds(12, 56, 416, 15);
 		frmByeWindow.getContentPane().add(athleteLabel);
 
-		JLabel lblMarketAndStadium = new JLabel("Market and Stadium have been reset");
+		JLabel lblMarketAndStadium = new JLabel(
+				"Market and Stadium have been reset");
 		lblMarketAndStadium.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMarketAndStadium.setBounds(12, 88, 416, 15);
 		frmByeWindow.getContentPane().add(lblMarketAndStadium);
 		
-		JLabel lblAllAthletesHave = new JLabel("All athletes have full stamina");
+		JLabel lblAllAthletesHave = new JLabel(
+				"All athletes have full stamina");
 		lblAllAthletesHave.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAllAthletesHave.setBounds(12, 120, 416, 15);
 		frmByeWindow.getContentPane().add(lblAllAthletesHave);
@@ -102,7 +102,6 @@ public class ByeWindow {
 		lblRandomEvent.setBounds(12, 149, 416, 15);
 		frmByeWindow.getContentPane().add(lblRandomEvent);
 		
-		//To be added
 		JLabel randomEventLabel = new JLabel(eventInfo);
 		randomEventLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		randomEventLabel.setBounds(12, 169, 416, 51);

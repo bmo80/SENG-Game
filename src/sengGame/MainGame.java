@@ -18,54 +18,56 @@ import windows.SetupWindow;
  * @version 1.0 13/5/23
  */
 public class MainGame {
-	/**
+	/*
 	 * Name of player/ players team
 	 */
 	private String playerName;
-	/**
+	/*
 	 * Player-chosen length of season in weeks 
 	 */
 	private int seasonDuration;
-	/**
+	/*
 	 * Player-chosen difficulty 0/1/2 for easy/medium/hard
 	 */
 	private int difficulty;
-	/**
+	/*
 	 * Current week - starting at 1
 	 */
 	private int currentWeek;
-	/**
+	/*
 	 * Player's current collection of Item objects
 	 */
 	private ArrayList<Item> inventory;
-	/**
+	/*
 	 * Player's current money balance (for buying Items and Athletes)
 	 */
 	private int money;
-	/**
+	/*
 	 * Player's total points (earned by winning or tying matches)
 	 */
 	private int totalPoints;
-	/**
+	/*
 	 * Contains both the active and bench teams
 	 */
 	private TeamManager teams;
+	
+
 	/**
 	 * for keeping track of the player wins
 	 */
-	public int wins=0;
+	private int wins=0;
 	/**
 	 * for keeping track of the player losses
 	 */
-	public int losses=0;
+	private int losses=0;
 	/**
 	 * for keeping track of the player draws
 	 */
-	public int draws=0;
+	private int draws = 0;
 	
-	/**
+	/*
 	 * Constructs Object with given values - used to speed up testing
-	 * @param name		Name of players team
+	 * @param name		Name of player's team
 	 * @param duration		Length of season in weeks
 	 * @param chosenDifficulty		difficulty of game
 	 */
@@ -74,7 +76,7 @@ public class MainGame {
 		seasonDuration = duration;
 		difficulty = chosenDifficulty;
 		currentWeek = 1;
-		money = 35000 + (5000*(4-difficulty));
+		money = 35000 + (5000 * (4 - difficulty));
 	}
 	
 	/**
@@ -93,18 +95,18 @@ public class MainGame {
 		teams = givenTeams;
 		totalPoints = 0;
 		inventory = new ArrayList<Item>();
-		money = 10000*(3-difficulty);
+		money = 10000 * (5 - 2 * difficulty);
 	}
 	
-	/**
-	 * Returns an array of athlete objects from active team
-	 * @return	active team ArrayList
+	/*
+	 * Returns TeamManager class containing active team and bench lists
+	 * @return	TeamManager class
 	 */
  	public TeamManager getTeams() {
  		return teams;
  	}
 	
- 	/**
+ 	/*
  	 * Returns player name
  	 * @return		player name
  	 */
@@ -112,7 +114,7 @@ public class MainGame {
 		return playerName;
 	}
 	
- 	/**
+ 	/*
  	 * Returns game difficulty
  	 * @return		difficulty
  	 */
@@ -120,7 +122,7 @@ public class MainGame {
 		return difficulty;
 	}
 	
-	/**
+	/*
 	 * Returns Player money
 	 * @return		player money
 	 */
@@ -128,15 +130,15 @@ public class MainGame {
 		return money;
 	}
 	
-	/**
+	/*
 	 * Returns an array of item objects from inventory
-	 * @return		inventory ArrayList
+	 * @return		inventory ArrayList<Item>
 	 */
 	public ArrayList<Item> getInventory(){
 		return inventory;
 	}
 	
-	/**
+	/*
 	 * Returns current week
 	 * @return		current week
 	 */
@@ -151,13 +153,37 @@ public class MainGame {
 	public int getDuration() {
 		return seasonDuration;
 	}
-	
+
 	/**
 	 * Gets the total points the player has earned
 	 * @return the total points the player has earned
 	 */
 	public int getPoints() {
 		return totalPoints;
+	}
+	
+	public int getWins() {
+		return wins;
+	}
+	
+	public int getDraws() {
+		return draws;
+	}
+	
+	public int getLosses() {
+		return losses;
+	}
+	
+	public void addWin() {
+		wins ++;
+	}
+	
+	public void addDraw() {
+		draws ++;
+	}
+	
+	public void addLoss() {
+		losses ++;
 	}
 	
 	/**
@@ -168,47 +194,38 @@ public class MainGame {
 	public String getFinalStats() {
 		return String.format("%s FC finished up their %s week season with"
 				+ " %s points and $%s on the level %s difficulty."
-				+ "\nThanks for playing!",playerName,seasonDuration,totalPoints,
+				+ "\nThanks for playing!",
+				playerName, seasonDuration, totalPoints,
 				money, difficulty);
 	}
 	
-	/**
+	/*
 	 * changes money and ensures it's not negative	
 	 * @param amount 	amount to change by
 	 */
 	public void changeMoney(int amount) {
-		if((money + amount)<0) {
-			System.out.println("Your balance can't be negative");
-		}
-		else {
+		if ((money + amount) >= 0) {
 			money += amount;
 		}
 	}
 	
-	/**
+	/*
 	 * changes total points and ensures it's not negative	
 	 * @param amount 	amount to change by
 	 */
 	public void changePoints(int amount) {
-		if((totalPoints + amount) < 0) {
-			System.out.println("You can't have negative points");
-			totalPoints = 0;
-		}
-		else{
+		if ((totalPoints + amount) >= 0) {
 			totalPoints += amount;
 		}
 	}
-	
+
 	/**
 	 * Checks if there is room in the players inventory then adds the item
 	 * if there is.
 	 * @param item the item potentially being added
 	 */
 	public void addItem(Item item) {
-		if(inventory.size()>=10) {
-			System.out.println("Inventory Full");
-		}
-		else {
+		if (inventory.size() < 10) {
 			inventory.add(item);
 		}
 	}
@@ -218,10 +235,7 @@ public class MainGame {
 	 * @param item the item to be removed
 	 */
 	public void removeItem(Item item) {
-		if(!inventory.contains(item)) {
-			System.out.println("Item not in inventory");
-		}
-		else {
+		if (inventory.contains(item)) {
 			inventory.remove(item);
 		}
 	}
@@ -231,8 +245,8 @@ public class MainGame {
 	 * Bye method takes an athlete to train then changes current week,
 	 * Resets the Market, Stadium and athlete stamina. After training
 	 * the method then runs the random event generator
-	 * @param athleteName The name of the athlete that will be trained
-	 * @return the generated event for the bye
+	 * @param athleteName 		Athlete to be trained
+	 * @return String 		Message about random event
 	 */
 	public String takeBye(String athleteName) {
 		currentWeek ++;
@@ -242,22 +256,20 @@ public class MainGame {
 		return event.generateEvent();
 	}
 
- 	
-
- 	/**
+ 	/*
  	 * Takes athlete to train and increases their position stat 
- 	 * depending on the difficulty.  
+ 	 * depending on the difficulty. 
  	 * @param athleteName the athlete who is to be trained
  	 */
 	public void trainAthlete(String athleteName) {
 		Athlete athlete = teams.getAthleteFromString(athleteName);
-		if(athlete.getPosition().equals("A")){
-			athlete.changeAttack(4-difficulty);
-		} else {
-			athlete.changeDefence(4-difficulty);
+		if (athlete.getPosition().equals("A")){
+			athlete.changeAttack(4 - difficulty);
+		}
+		else {
+			athlete.changeDefence(4 - difficulty);
 		}
 	}
-	
 	
 	/**
 	 * Checks if the game can be continued to be played. there are 2 situation this fails
@@ -267,19 +279,33 @@ public class MainGame {
 	 * @return True or False if the season has ended
 	 */
 	public boolean checkGameEnd(MarketPlace market) {
-		if(teams.getFreeSlotsCount() - market.getPlayerCount() >= 6) {
-			//NOT ENOUGH PLAYERS END GAME
-			System.out.println("GAME OVER, NOT ENOUGH PLAYERS");
-			return true;
-		}else if(currentWeek > seasonDuration) {
-			//WEEKS OVER
-			System.out.println("GAME OVER, SEASON ENDED");
+		if (teams.getFreeSlotsCount() > 5) {
+			//if there are less than 6 athletes in team.
+			int amountNeeded = teams.getFreeSlotsCount() - 5;
+			if (market.getPlayerCount() < amountNeeded) {
+				return true;
+			}
+			else {
+				int cost = 0;
+				for (Athlete athlete: market.getPlayersForSale()) {
+					if (!athlete.getName().equals("Purchased")) {
+						cost += athlete.getBuyPrice();
+						amountNeeded -= 1;
+						if (amountNeeded == 0) {
+							break;
+						}
+					}
+				}
+				if (cost > money) {
+					return true;
+				}
+			}
+		}else if (currentWeek > seasonDuration) {
 			return true;
 		}
 		return false;
 	}
 	
-	//Gui code
 	
 	/**
 	 * Initializes a new market place and launches the main Window
@@ -287,7 +313,7 @@ public class MainGame {
 	 */
 	public void launchMainScreen() {
 		MarketPlace market = new MarketPlace(this);
-		if(checkGameEnd(market)) {
+		if (checkGameEnd(market)) {
 			finishGame();
 		}
 		else {
@@ -300,7 +326,6 @@ public class MainGame {
 	 * Method that finishes the game and shows the end game screen
 	 */
 	public void finishGame() {
-		//Open final window
 		GameOverWindow finalWindow = new GameOverWindow(this);
 	}
 	
@@ -313,14 +338,12 @@ public class MainGame {
 		launchMainScreen();
 	}
 	
-	
 	/**
 	 * Main method from where the program is started
 	 * @param args default parameter for main method
 	 */
 	public static void main(String[] args) {
-		//Implement tests
-		SetupWindow setupWindow = new SetupWindow();	
+		SetupWindow setupWindow = new SetupWindow();
 	}
 	
 }

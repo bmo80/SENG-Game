@@ -3,6 +3,7 @@ package windows;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import purchasables.Item;
 import sengGame.MarketPlace;
 import javax.swing.JButton;
@@ -44,15 +45,15 @@ public class BuyItemWindow {
 	/**
 	 * Label for the money display
 	 */
-	public JLabel lblMoney;
+	JLabel lblMoney;
 	/**
 	 * Initialize variable to store previous object instance
 	 */
-	MarketPlaceWindow prevObj;
+	private MarketPlaceWindow prevObj;
 	/**
 	 * Variable to store the current object instance
 	 */
-	BuyItemWindow curObj;
+	private BuyItemWindow curObj;
 	
 	/**
 	 * Constructor for the BuyItemwindow
@@ -65,6 +66,7 @@ public class BuyItemWindow {
 		market = currentMarket;
 		prevObj = prevObject;
 		curObj = this;
+		itemSelected = 1;
 		initialize();
 		frmItemTrading.setVisible(true);
 	}
@@ -83,7 +85,6 @@ public class BuyItemWindow {
 				Integer.toString(market.getGameStats().getMoney())));
 		lblMoney.setBounds(12, 12, 128, 15);
 		frmItemTrading.getContentPane().add(lblMoney);
-	
 		
 		lblWeek = new JLabel(String.format("Week: %s",
 				Integer.toString(market.getGameStats().getWeek())));
@@ -98,22 +99,23 @@ public class BuyItemWindow {
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmItemTrading.setVisible(false);
-				SellItemWindow window = new SellItemWindow(market, frmItemTrading, curObj);
+				SellItemWindow window = new SellItemWindow(
+						market, frmItemTrading, curObj);
 			}
 		});
 		btnViewInventory.setBounds(343, 7, 139, 25);
 		frmItemTrading.getContentPane().add(btnViewInventory);
 		
 		
-		lblName = new JLabel("Name:");
-		lblName.setBounds(295, 100, 133, 15);
+		lblName = new JLabel("Changes:");
+		lblName.setBounds(293, 124, 133, 15);
 		frmItemTrading.getContentPane().add(lblName);
 		
 		lblType = new JLabel("Type:");
-		lblType.setBounds(295, 125, 199, 15);
+		lblType.setBounds(293, 97, 199, 15);
 		frmItemTrading.getContentPane().add(lblType);
 		
-		lblEffect = new JLabel("Effect:");
+		lblEffect = new JLabel("By:");
 		lblEffect.setBounds(295, 150, 133, 15);
 		frmItemTrading.getContentPane().add(lblEffect);
 		
@@ -123,22 +125,20 @@ public class BuyItemWindow {
 
 		setItemButtons();
 		
-		JLabel lblinventorySlots = new JLabel(String.format("Inventory Slots Available:"
-				+ " %s/5", 5-market.getGameStats().getInventory().size()));
+		JLabel lblinventorySlots = new JLabel(String.format(
+				"Inventory Slots Available:%s/5",
+				5 - market.getGameStats().getInventory().size()));
 		lblinventorySlots.setBounds(12, 251, 207, 15);
 		frmItemTrading.getContentPane().add(lblinventorySlots);
-		
-		
 		
 		JLabel lblItemInformation = new JLabel("Item Information");
 		lblItemInformation.setBounds(342, 70, 123, 15);
 		frmItemTrading.getContentPane().add(lblItemInformation);
-
 		
 		btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prevObj.lblMoney.setText(String.format("Money: $%s", 
+				prevObj.lblMoney.setText(String.format("Money: $%s",
 						Integer.toString(market.getGameStats().getMoney())));
 				prevWindow.setVisible(true);
 				frmItemTrading.dispose();
@@ -150,22 +150,36 @@ public class BuyItemWindow {
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(market.getItemsForSale().get(itemSelected-1).getName().equals("Purchased")) {
-					int confirm = JOptionPane.showConfirmDialog(null,"Please select a new item to buy","Item not selected",
+				if (market.getItemsForSale().get(itemSelected - 1).getName().equals(
+						"Purchased")) {
+					JOptionPane.showConfirmDialog(null,
+							"Please select a new item to buy",
+							"Item not selected",
 							JOptionPane.DEFAULT_OPTION);
 				}
-				market.getGameStats().getInventory().add(market.getItemsForSale().get(itemSelected-1));
-				market.getGameStats().changeMoney(-market.getItemsForSale().get(itemSelected-1).getBuyPrice());
-				lblMoney.setText(String.format("Money: $%s", 
-						Integer.toString(market.getGameStats().getMoney())));
-				updateButton(itemSelected);
-				Item item = new Item("Purchased","A",1,1);
-				market.getItemsForSale().set(itemSelected-1, item);
+				else if(market.getGameStats().getMoney() - 
+						market.getItemsForSale().get(itemSelected - 1).getBuyPrice()
+						< 0) {
+					JOptionPane.showConfirmDialog(null,
+							"You cant afford this item",
+							"TOO EXPENSIVE",
+							JOptionPane.DEFAULT_OPTION);
+				}
+				else {
+					market.getGameStats().getInventory().add(
+							market.getItemsForSale().get(itemSelected - 1));
+					market.getGameStats().changeMoney(
+							-market.getItemsForSale().get(itemSelected - 1).getBuyPrice());
+					lblMoney.setText(String.format("Money: $%s",
+							Integer.toString(market.getGameStats().getMoney())));
+					updateButton(itemSelected);
+					Item item = new Item("Purchased", "A", 1, 1);
+					market.getItemsForSale().set(itemSelected - 1, item);
+				}
 			}
 		});
 		btnPurchase.setBounds(365, 231, 117, 25);
 		frmItemTrading.getContentPane().add(btnPurchase);
-	
 	}
 	
 	/**
@@ -173,10 +187,16 @@ public class BuyItemWindow {
 	 * @param index position of the item in the itemsForSale list
 	 */
 	private void updateLabels(int index) {
-		lblName.setText(String.format("Name: %s", market.getItemsForSale().get(index-1).getName()));
-		lblType.setText(String.format("Type: %s", market.getItemsForSale().get(index-1).getType()));
-		lblEffect.setText(String.format("Effect: %s", Integer.toString(market.getItemsForSale().get(index-1).getEffect())));
-		lblPrice.setText(String.format("Price: %s", Integer.toString(market.getItemsForSale().get(index-1).getBuyPrice())));
+		lblName.setText(String.format("Changes: %s",
+				market.getItemsForSale().get(index-1).getName()));
+		lblType.setText(String.format("Type: %s",
+				market.getItemsForSale().get(index-1).getType()));
+		lblEffect.setText(String.format("By: %s",
+				Integer.toString(
+						market.getItemsForSale().get(index-1).getEffect())));
+		lblPrice.setText(String.format("Price: %s",
+				Integer.toString(
+						market.getItemsForSale().get(index-1).getBuyPrice())));
 	}
 	
 	/**
@@ -261,40 +281,51 @@ public class BuyItemWindow {
 		switch (index) {
 			case 1:
 				btnItem1 = new JButton();
-				if(market.getItemsForSale().get(index-1).getName().equals("Purchased")) {
+				if (market.getItemsForSale().get(index-1).getName().equals(
+						"Purchased")) {
 					btnItem1.setText("Purchased");
 					btnItem1.setEnabled(false);
-				} else {
-					btnItem1.setText(market.getItemsForSale().get(index-1).getName());
+				}
+				else {
+					btnItem1.setText(
+							market.getItemsForSale().get(index-1).getName());
 				}
 			case 2:
 				btnItem2 = new JButton();
-				if(market.getItemsForSale().get(index-1).getName().equals("Purchased")) {
+				if (market.getItemsForSale().get(index-1).getName().equals(
+						"Purchased")) {
 					btnItem2.setText("Purchased");
 					btnItem2.setEnabled(false);
-				} else {
-					btnItem2.setText(market.getItemsForSale().get(index-1).getName());
+				}
+				else {
+					btnItem2.setText(
+							market.getItemsForSale().get(index-1).getName());
 				}
 			case 3:
 				btnItem3 = new JButton();
-				if(market.getItemsForSale().get(index-1).getName().equals("Purchased")) {
+				if (market.getItemsForSale().get(index-1).getName().equals(
+						"Purchased")) {
 					btnItem3.setText("Purchased");
 					btnItem3.setEnabled(false);
-				} else {
-					btnItem3.setText(market.getItemsForSale().get(index-1).getName());
+				}
+				else {
+					btnItem3.setText(
+							market.getItemsForSale().get(index-1).getName());
 				}
 			case 4:
 				btnItem4 = new JButton();
-				if(market.getItemsForSale().get(index-1).getName().equals("Purchased")) {
+				if (market.getItemsForSale().get(index-1).getName().equals(
+						"Purchased")) {
 					btnItem4.setText("Purchased");
 					btnItem4.setEnabled(false);
-				} else {
-					btnItem4.setText(market.getItemsForSale().get(index-1).getName());
 				}
-			
+				else {
+					btnItem4.setText(
+							market.getItemsForSale().get(index-1).getName());
+				}
 		}
-		
 	}
+	
 	/**
 	 * Used to know the value of which item is currently being selected
 	 * @param index the button number that was pressed

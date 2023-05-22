@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import purchasables.Item;
 import sengGame.MainGame;
 
@@ -19,6 +21,7 @@ import sengGame.MainGame;
  *
  */
 public class InventoryWindow {
+
 	/**
 	 * Create frame variables to store potential frames
 	 */
@@ -40,7 +43,6 @@ public class InventoryWindow {
 	 */
 	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10; 
 	
-	
 	/**
 	 * Constructor for Inventory Window. Initializes the frame
 	 * @param givenGame current instance of main game
@@ -53,6 +55,7 @@ public class InventoryWindow {
 		initialize();
 		frmInventory.setVisible(true);
 	}
+	
 	/**
 	 * Creates a new instance of the club window and disposes the current one
 	 */
@@ -66,9 +69,10 @@ public class InventoryWindow {
 	 * If it is not then grab the first item in the inventory
 	 */
 	public void defaultItem() {
-		if(game.getInventory().size() == 0) {
+		if (game.getInventory().size() == 0) {
 			itemSelected = new Item();
-		}else {
+		}
+		else {
 			itemSelected = game.getInventory().get(0);
 		}
 	}
@@ -83,11 +87,12 @@ public class InventoryWindow {
 		frmInventory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInventory.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: $%s",game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",
+				game.getMoney()));
 		lblMoney.setBounds(12, 12, 519, 15);
 		frmInventory.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel(String.format("Week: %s",game.getWeek()));
+		JLabel lblWeek = new JLabel(String.format("Week: %s", game.getWeek()));
 		lblWeek.setBounds(12, 28, 95, 15);
 		frmInventory.getContentPane().add(lblWeek);
 		
@@ -95,18 +100,18 @@ public class InventoryWindow {
 		lblTeam.setBounds(146, 12, 95, 39);
 		frmInventory.getContentPane().add(lblTeam);
 		
-		lblItemName = new JLabel(String.format("Name: %s",
+		lblItemName = new JLabel(String.format("Changes: %s",
 				itemSelected.getName()));
-		lblItemName.setBounds(399, 77, 169, 15);
+		lblItemName.setBounds(399, 100, 169, 15);
 		frmInventory.getContentPane().add(lblItemName);
 		
 		
 		lblItemType = new JLabel(String.format("Type: %s",
 				itemSelected.getType()));
-		lblItemType.setBounds(399, 101, 169, 15);
+		lblItemType.setBounds(399, 73, 169, 15);
 		frmInventory.getContentPane().add(lblItemType);
 		
-		lblItemEffect = new JLabel(String.format("Effect: %s",
+		lblItemEffect = new JLabel(String.format("By: %s",
 				itemSelected.getEffect()));
 		lblItemEffect.setBounds(399, 128, 108, 15);
 		frmInventory.getContentPane().add(lblItemEffect);
@@ -227,13 +232,16 @@ public class InventoryWindow {
 							"Use Item", JOptionPane.PLAIN_MESSAGE,
 							null, choices, null);
 					if(selection != null) {
-						game.getTeams().getAthleteFromString(selection).useItem(itemSelected);
-						System.out.println("Made it here aswell");
-						int confirm = JOptionPane.showConfirmDialog(null,String.format("Item: %s used on %s STM(%s).",
-								itemSelected.getName(), game.getTeams().getAthleteFromString(selection), game.getTeams().
-								getAthleteFromString(selection).getStamina()),"Item Used", JOptionPane.DEFAULT_OPTION);
+						game.getTeams().getAthleteFromString(selection).useItem(
+								itemSelected);
+						int confirm = JOptionPane.showConfirmDialog(null,
+								String.format("Item: %s used on %s STM(%s).",
+								itemSelected.getName(),
+								game.getTeams().getAthleteFromString(selection),
+								game.getTeams().
+								getAthleteFromString(selection).getStamina()),
+								"Item Used", JOptionPane.DEFAULT_OPTION);
 						game.removeItem(itemSelected);
-//						defaultItem();
 						updateLabels();
 						setButtons();
 					}
@@ -249,9 +257,10 @@ public class InventoryWindow {
 	 * @param itemIndex the index/value of the current button clicked
 	 */
 	private void setItemSelected(int itemIndex) {
-		if(itemIndex<game.getInventory().size()) {
+		if (itemIndex < game.getInventory().size()) {
 			itemSelected = game.getInventory().get(itemIndex);
-		}else {
+		}
+		else {
 			itemSelected = new Item();
 		}
 		updateLabels();
@@ -261,29 +270,31 @@ public class InventoryWindow {
 	 * Method to update the display labels to the current item selected
 	 */
 	private void updateLabels() {
-		lblItemName.setText(String.format("Name: %s",
+		lblItemName.setText(String.format("Changes: %s",
 				itemSelected.getName()));
 		lblItemType.setText(String.format("Type: %s",
 				itemSelected.getType()));
-		lblItemEffect.setText(String.format("Effect: %s",
+		lblItemEffect.setText(String.format("By: %s",
 				itemSelected.getEffect()));
 	}
+	
 	/**
 	 * Set the buttons to display the respective items in the player inventory
 	 */
 	private void setButtons() {
 		ArrayList<JButton> items = new ArrayList<JButton>();
-		Collections.addAll(items, Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10);
+		Collections.addAll(items, Item1, Item2, Item3, Item4, Item5,
+				Item6, Item7, Item8, Item9, Item10);
 		int index = 1;
-		for(JButton btn: items) {
-			if(game.getInventory().size() >= index) {
-				btn.setText(game.getInventory().get(index-1).getName());
-				index++;
-			} else {
+		for (JButton btn: items) {
+			if (game.getInventory().size() >= index) {
+				btn.setText(game.getInventory().get(index - 1).getName());
+				index ++;
+			}
+			else {
 				btn.setEnabled(false);
 				btn.setText("Empty Slot");
 			}
-
 		}
 	}
 }

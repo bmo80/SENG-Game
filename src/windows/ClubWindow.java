@@ -2,9 +2,11 @@ package windows;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import sengGame.MainGame;
 import javax.swing.SwingConstants;
 
@@ -15,6 +17,7 @@ import javax.swing.SwingConstants;
  *
  */
 public class ClubWindow {
+
 	/**
 	 * Varaible to store the current frame
 	 */
@@ -39,6 +42,7 @@ public class ClubWindow {
 		initialize();
 		frmClub.setVisible(true);
 	}
+	
 	/**
 	 * Closes the current window and opens the main screen
 	 */
@@ -57,11 +61,13 @@ public class ClubWindow {
 		frmClub.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmClub.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: $%s", game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",
+				game.getMoney()));
 		lblMoney.setBounds(12, 12, 502, 15);
 		frmClub.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel(String.format("Week: %s", game.getWeek()));
+		JLabel lblWeek = new JLabel(String.format("Week: %s",
+				game.getWeek()));
 		lblWeek.setBounds(12, 28, 83, 15);
 		frmClub.getContentPane().add(lblWeek);
 		
@@ -87,7 +93,8 @@ public class ClubWindow {
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmClub.dispose();
-				InventoryWindow window = new InventoryWindow(game, mainMenu);
+				InventoryWindow window = new InventoryWindow(game,
+						mainMenu);
 			}
 		});
 		btnViewInventory.setBounds(265, 94, 195, 70);

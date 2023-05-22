@@ -1,13 +1,8 @@
 package sengGame;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import javax.swing.JFrame;
-
 import purchasables.Athlete;
 import purchasables.AthleteGenerator;
-import windows.StadiumWindow;
 
 /**
  * The Stadium class Generates the enemy teams that the player can
@@ -28,14 +23,14 @@ public class Stadium {
 	 */
 	private ArrayList<ArrayList<Athlete>> enemyTeams;
 	
-	/**
+	/*
 	 * Constructor method, generates enemy teams and runs main method
 	 * @param currentStats current instance of maingame
 	 */
 	public Stadium(MainGame currentStats) {
 		gameStats = currentStats;
 		enemyTeams = new ArrayList<ArrayList<Athlete>>();
-		for(int i =0; i<3; i++) {
+		for (int i = 0; i < 3; i ++) {
 			ArrayList<Athlete> players = new ArrayList<Athlete>();
 			generateAthletes(3, "A", players);
 			generateAthletes(3, "D", players);
@@ -49,9 +44,11 @@ public class Stadium {
 	 * @param position Which position each athlete will be
 	 * @param players list to be filled with athletes
 	 */
-	public void generateAthletes(int size, String position,ArrayList<Athlete> players) {
-		for(int i=0; i<size; i++) {
-			AthleteGenerator athlete = new AthleteGenerator(position,gameStats.getWeek());
+	public void generateAthletes(int size, String position,
+			ArrayList<Athlete> players) {
+		for (int i = 0; i < size; i ++) {
+			AthleteGenerator athlete = new AthleteGenerator(
+					position, gameStats.getWeek());
 			players.add(athlete);
 		}
 	}

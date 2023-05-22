@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import purchasables.Athlete;
 import purchasables.TeamManager;
+import javax.swing.JTextField;
 
 /**
  * This is the class for the SetupWindow. Handles the displaying and
@@ -27,6 +28,7 @@ import purchasables.TeamManager;
  *
  */
 public class SetupBuyPlayerWindow {
+
 	/**
 	 * Variable to store the current frame
 	 */
@@ -38,8 +40,8 @@ public class SetupBuyPlayerWindow {
 	/**
 	 * Label Variables to display respective information
 	 */
-	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, 
-			lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
+	private JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef,
+	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
 	/**
 	 * Button Variables to display respective athlete
 	 */
@@ -58,7 +60,7 @@ public class SetupBuyPlayerWindow {
 	 */
 	private int duration, difficulty, money;
 	/**
-	 * Varaible to store the current team as a TeamManger object
+	 * Variable to store the current team as a TeamManger object
 	 */
 	private TeamManager teams;
 	/**
@@ -68,7 +70,7 @@ public class SetupBuyPlayerWindow {
 	/**
 	 * Panel to group together labels
 	 */
-	private JPanel panel;
+	private JTextField nicknameBox;
 
 	/**
 	 * Constructor for SetupBuyPlayerWindow. Sets the required variables
@@ -81,19 +83,24 @@ public class SetupBuyPlayerWindow {
 		playerName = name;
 		duration = length;
 		difficulty = diff;
+		athleteSelected = 1;
 		market = new MarketPlace(new MainGame(playerName,duration, difficulty));
 		market.createSetUp();
-		teams = new TeamManager(new ArrayList<Athlete>(), new ArrayList<Athlete>());
+		teams = new TeamManager(new ArrayList<Athlete>(),
+				new ArrayList<Athlete>());
 		money = market.getGameStats().getMoney();
 		initialize();
+		playerStatDisplay(1);
 		frmMakeTeam.setVisible(true);
 	}
+	
 	/**
 	 * Closes the current frame
 	 */
 	public void closeWindow() {
 		frmMakeTeam.dispose();
 	}
+	
 	/**
 	 * Calls closeSetupScreen method which opens the main window
 	 * @param game current maingame object
@@ -118,7 +125,8 @@ public class SetupBuyPlayerWindow {
 		lblMoney.setBounds(12, 12, 194, 15);
 		frmMakeTeam.getContentPane().add(lblMoney);
 		
-		JLabel lblPlayerTrading = new JLabel("You need to recruit atleast 6 players for your team!");
+		JLabel lblPlayerTrading = new JLabel(
+				"You need to recruit at LEAST 6 players for your team!");
 		lblPlayerTrading.setBounds(94, 51, 394, 39);
 		frmMakeTeam.getContentPane().add(lblPlayerTrading);
 		
@@ -225,15 +233,15 @@ public class SetupBuyPlayerWindow {
 		JButton btnDone = new JButton("Start Game");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(teams.getTeamList().size() < 6) {
+				if (teams.getTeamList().size() < 6) {
 					JOptionPane.showMessageDialog(frmMakeTeam, String.format(
 							"Your team must have at least 6 athletes."
 							+ "\nCurrently you only have %s"
 							,teams.getTeamList().size()));
 				}
 				else {
-					finishedWindow(new MainGame(playerName, duration, difficulty,
-							teams));
+					finishedWindow(new MainGame(playerName,
+							duration, difficulty, teams));
 				}
 			}
 		});
@@ -243,21 +251,37 @@ public class SetupBuyPlayerWindow {
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(market.getSetupPlayers().get(athleteSelected-1).getName() == "Purchased") {
-					int confirm = JOptionPane.showConfirmDialog(null,"Please select a new player to buy","Player not selected",
+				if (market.getSetupPlayers().get(athleteSelected-1).getName()
+						== "Purchased") {
+					JOptionPane.showConfirmDialog(null,
+							"Please select a new player to buy",
+							"Player not selected",
 							JOptionPane.DEFAULT_OPTION);
-				} else {
-					if(money - market.getSetupPlayers().get(athleteSelected-1).getBuyPrice() < 0) {
-						//BANNED
+				}
+				else {
+					if (money - market.getSetupPlayers().get(
+							athleteSelected-1).getBuyPrice() < 0) {
+						//Not allowed
 					}
 					else {
-						teams.addAthlete(market.getSetupPlayers().get(athleteSelected-1));
-						money -= market.getSetupPlayers().get(athleteSelected-1).getBuyPrice();
-						lblMoney.setText(String.format("Money: %s",money));
-						updateTeamSlots();
-						Athlete athlete = new Athlete("Purchased",1,1,"A");
-						market.getSetupPlayers().set(athleteSelected-1, athlete);
-						setAthleteButtons();
+						if (teams.checkIllegalName(market.getSetupPlayers().get(
+								athleteSelected-1).getName())) {
+							JOptionPane.showConfirmDialog(null,
+									"Please change Athletes name","NAME CLASH",
+									JOptionPane.DEFAULT_OPTION);
+						}
+						else {
+							teams.addAthlete(market.getSetupPlayers().get(
+									athleteSelected-1));
+							money -= market.getSetupPlayers().get(
+									athleteSelected-1).getBuyPrice();
+							lblMoney.setText(String.format("Money: %s",money));
+							updateTeamSlots();
+							Athlete athlete = new Athlete("Purchased",1,1,"A");
+							market.getSetupPlayers().set(
+									athleteSelected-1, athlete);
+							setAthleteButtons();
+						}
 					}
 				}
 			}
@@ -270,12 +294,40 @@ public class SetupBuyPlayerWindow {
 		lblWelcome.setBounds(235, 24, 139, 15);
 		frmMakeTeam.getContentPane().add(lblWelcome);
 		
-		panel = new JPanel();
+		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(375, 102, 214, 253);
 		frmMakeTeam.getContentPane().add(panel);
-	
+		
+		nicknameBox = new JTextField();
+		nicknameBox.setBounds(375, 369, 214, 25);
+		frmMakeTeam.getContentPane().add(nicknameBox);
+		nicknameBox.setColumns(10);
+		
+		JButton btnSetNickname = new JButton("Set Nickname");
+		btnSetNickname.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( nicknameBox.getText().equals("Purchased")||
+						teams.checkIllegalName(nicknameBox.getText())) {
+					JOptionPane.showConfirmDialog(null,
+							"That name is taken","INVALID NAME",
+							JOptionPane.DEFAULT_OPTION);
+				}
+				else {
+					market.getSetupPlayers().get(
+							athleteSelected-1).changeName(nicknameBox.getText());
+					playerStatDisplay(athleteSelected);
+					setAthleteButtons();
+				}
+			}
+		});
+		btnSetNickname.setBounds(396, 406, 162, 25);
+		frmMakeTeam.getContentPane().add(btnSetNickname);
+		
+		
+		
 	}
+	
 	/**
 	 * Displays the currently selected athletes stats in the
 	 * appropriate labels
@@ -283,15 +335,22 @@ public class SetupBuyPlayerWindow {
 	 */
 	private void playerStatDisplay(int number) {
 		lblAthleteName.setText(market.getSetupPlayers().get(number-1).getName());
-		if(market.getSetupPlayers().get(number-1).getPosition() == "A") {
+		if (market.getSetupPlayers().get(number-1).getPosition() == "A") {
 			lblAthletePos.setText("Attacker");
-		} else {
+		}
+		else {
 			lblAthletePos.setText("Defence");
 		}
-		lblAthleteAtt.setText(Integer.toString(market.getSetupPlayers().get(number-1).getAttack()));
-		lblAthleteDef.setText(Integer.toString(market.getSetupPlayers().get(number-1).getDefence()));
-		lblAthleteStam.setText(Integer.toString(market.getSetupPlayers().get(number-1).getStamina()));
-		lblPrice.setText(String.format("Price: %s", market.getSetupPlayers().get(number-1).getBuyPrice()));
+		lblAthleteAtt.setText(Integer.toString(
+				market.getSetupPlayers().get(number-1).getAttack()));
+		lblAthleteDef.setText(Integer.toString(
+				market.getSetupPlayers().get(number-1).getDefence()));
+		lblAthleteStam.setText(Integer.toString(
+				market.getSetupPlayers().get(number-1).getStamina()));
+		lblPrice.setText(String.format("Price: %s",
+				market.getSetupPlayers().get(number-1).getBuyPrice()));
+		nicknameBox.setText(
+				market.getSetupPlayers().get(athleteSelected-1).getName());
 	}
 	
 	/**
@@ -302,11 +361,14 @@ public class SetupBuyPlayerWindow {
 		ArrayList<JButton> list = new ArrayList<JButton>();
 		Collections.addAll(list, Athlete1, Athlete2, Athlete3, Athlete4, 
 				Athlete5, Athlete6, Athlete7, Athlete8, Athlete9, Athlete10);
+		
 		int index = 1;
-		for(JButton button: list) {
+		for (JButton button: list) {
 			setButtonName(index, button);
 			index++;
 		}
+		
+
 	}
 	
 	/**
@@ -316,11 +378,13 @@ public class SetupBuyPlayerWindow {
 	 * @param button the button of the currently selected athlete
 	 */
 	private void setButtonName(int index, JButton button) {
-		if(market.getSetupPlayers().get(index-1).getName().equals("Purchased")) {
+		if (market.getSetupPlayers().get(index - 1).getName().equals(
+				"Purchased")) {
 			button.setText("Purchased");
 			button.setEnabled(false);
-		} else {
-			button.setText(market.getSetupPlayers().get(index-1).getName());
+		}
+		else {
+			button.setText(market.getSetupPlayers().get(index - 1).getName());
 		}
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -334,13 +398,12 @@ public class SetupBuyPlayerWindow {
 	 * Updates the available teams slots after a purchase
 	 */
 	private void updateTeamSlots() {
-			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - teams.getBench().size()));
-			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- teams.getTeamList().size()));
+			lblBenchSlotsAvailable.setText(String.format(
+					"Bench Slots available: %s/5", 5 - teams.getBench().size()));
+			lblTeamSlotsAvailable.setText(String.format(
+					"Team Slots Available: %s/6", 6- teams.getTeamList().size()));
 	}
-	/**
-	 * Sets the athlete selected
-	 * @param num index of athlete selected
-	 */
+	
 	private void setAthleteSelected(int num) {
 		athleteSelected = num;
 	}

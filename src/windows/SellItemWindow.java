@@ -20,6 +20,7 @@ import sengGame.MarketPlace;
  *@author Ben Moore
  */
 public class SellItemWindow {
+
 	/**
 	 * Variables for the current and previous frames
 	 */
@@ -43,12 +44,11 @@ public class SellItemWindow {
 	/**
 	 * Variables for the item buttons to display the respective item
 	 */
-	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
+	private JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
 	/**
-	 * Varaible to store the previous windows object
+	 * Variable to store the previous windows object
 	 */
 	private BuyItemWindow prevObj;
-
 	
 	/**
 	 * Constructor for the sell item window. Initializes the frame
@@ -56,7 +56,8 @@ public class SellItemWindow {
 	 * @param givenWindow the previous window
 	 * @param prevObject the previous windows object
 	 */
-	public SellItemWindow(MarketPlace givenMarket, JFrame givenWindow, BuyItemWindow prevObject) {
+	public SellItemWindow(MarketPlace givenMarket,
+			JFrame givenWindow, BuyItemWindow prevObject) {
 		market = givenMarket;
 		game = market.getGameStats();
 		prevWindow = givenWindow;
@@ -65,6 +66,7 @@ public class SellItemWindow {
 		initialize();
 		frmSellItems.setVisible(true);
 	}
+	
 	/**
 	 * Closes the current window and sets the previous one to be visible
 	 */
@@ -72,6 +74,7 @@ public class SellItemWindow {
 		prevWindow.setVisible(true);
 		frmSellItems.dispose();
 	}
+	
 	/**
 	 * sets the item selected to be either a default item
 	 * or the first item in the players inventory upon initialization
@@ -84,6 +87,7 @@ public class SellItemWindow {
 		}
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -94,11 +98,13 @@ public class SellItemWindow {
 		frmSellItems.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSellItems.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: $%s",game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",
+				game.getMoney()));
 		lblMoney.setBounds(12, 12, 519, 15);
 		frmSellItems.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel(String.format("Week: %s",game.getWeek()));
+		JLabel lblWeek = new JLabel(String.format("Week: %s",
+				game.getWeek()));
 		lblWeek.setBounds(12, 28, 95, 15);
 		frmSellItems.getContentPane().add(lblWeek);
 		
@@ -106,18 +112,18 @@ public class SellItemWindow {
 		lblTeam.setBounds(146, 12, 95, 39);
 		frmSellItems.getContentPane().add(lblTeam);
 		
-		lblItemName = new JLabel(String.format("Name: %s",
+		lblItemName = new JLabel(String.format("Changes: %s",
 				itemSelected.getName()));
-		lblItemName.setBounds(399, 77, 169, 15);
+		lblItemName.setBounds(399, 101, 169, 15);
 		frmSellItems.getContentPane().add(lblItemName);
 		
 		
 		lblItemType = new JLabel(String.format("Type: %s",
 				itemSelected.getType()));
-		lblItemType.setBounds(399, 101, 169, 15);
+		lblItemType.setBounds(399, 74, 169, 15);
 		frmSellItems.getContentPane().add(lblItemType);
 		
-		lblItemEffect = new JLabel(String.format("Effect: %s",
+		lblItemEffect = new JLabel(String.format("By: %s",
 				itemSelected.getEffect()));
 		lblItemEffect.setBounds(399, 128, 108, 15);
 		frmSellItems.getContentPane().add(lblItemEffect);
@@ -230,14 +236,16 @@ public class SellItemWindow {
 		JButton btnSellItem = new JButton("Sell");
 		btnSellItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(itemSelected.getName().equals("NULL")) {
-					//No!
-				}else {
+				if (itemSelected.getName().equals("NULL")) {
+					//Not allowed
+				}
+				else {
 					market.getGameStats().removeItem(itemSelected);
-					market.getGameStats().changeMoney(itemSelected.getBuyPrice());
+					market.getGameStats().changeMoney(
+							itemSelected.getBuyPrice());
 					lblMoney.setText(String.format("Money: $%s", 
-							Integer.toString(market.getGameStats().getMoney())));
-//					updateButton(itemSelected);
+							Integer.toString(
+									market.getGameStats().getMoney())));
 					defaultItem();
 					updateLabels();
 					setButtonNames();
@@ -247,10 +255,6 @@ public class SellItemWindow {
 		btnSellItem.setBounds(414, 185, 117, 25);
 		frmSellItems.getContentPane().add(btnSellItem);
 		
-
-		
-		
-		
 	}
 	
 	/**
@@ -259,13 +263,14 @@ public class SellItemWindow {
 	 * @param index the index of the corresponding item
 	 */
 	private void setButton(JButton btn, int index) {
-		if(market.getGameStats().getInventory().size() >= index) {
-			btn.setText(market.getGameStats().getInventory().get(index-1).getName());
-		} else {
+		if (market.getGameStats().getInventory().size() >= index) {
+			btn.setText(
+					market.getGameStats().getInventory().get(index-1).getName());
+		}
+		else {
 			btn.setText("Empty");
 			btn.setEnabled(false);
 		}
-		
 	}
 	
 	/**
@@ -273,22 +278,24 @@ public class SellItemWindow {
 	 * @param itemIndex the index of the selected item
 	 */
 	private void setItemSelected(int itemIndex) {
-		if(itemIndex<game.getInventory().size()) {
+		if (itemIndex < game.getInventory().size()) {
 			itemSelected = game.getInventory().get(itemIndex);
-		}else {
+		}
+		else {
 			itemSelected = new Item();
 		}
 		updateLabels();
 	}
+	
 	/**
 	 * Updates the labels to be the current item selected
 	 */
 	private void updateLabels() {
-		lblItemName.setText(String.format("Name: %s",
+		lblItemName.setText(String.format("Changes: %s",
 				itemSelected.getName()));
 		lblItemType.setText(String.format("Type: %s",
 				itemSelected.getType()));
-		lblItemEffect.setText(String.format("Effect: %s",
+		lblItemEffect.setText(String.format("By: %s",
 				itemSelected.getEffect()));
 	}
 	
@@ -300,12 +307,11 @@ public class SellItemWindow {
 	private void setButtonNames() {
 		ArrayList<JButton> list = new ArrayList<JButton>();
 		int index = 1;
-		Collections.addAll(list, Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10);
+		Collections.addAll(list, Item1, Item2, Item3, Item4,
+				Item5, Item6, Item7, Item8, Item9, Item10);
 		for(JButton btn: list) {
 			setButton(btn, index);
 			index++;
 		}
 	}
-	
-	
 }

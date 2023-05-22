@@ -1,9 +1,9 @@
 package windows;
 
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import purchasables.Athlete;
 import sengGame.MarketPlace;
 import javax.swing.JButton;
@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
  *
  */
 public class SellPlayerWindow {
+
 	/**
 	 * Variable for storing the current frame
 	 */
@@ -29,6 +30,7 @@ public class SellPlayerWindow {
 	 * Variable for storing the current MarketPlace object
 	 */
 	private MarketPlace market;
+	private int sold;
 	/**
 	 * Variable for storing the currently selected athlete
 	 */
@@ -46,15 +48,14 @@ public class SellPlayerWindow {
 	 */
 	JLabel lblName, lblPosition, lblAttack, lblDefense, lblSellPrice, lblMoney;
 	/**
-	 * Varaible to store the previous frame
+	 * Variable to store the previous frame
 	 */
 	private JFrame prevWindow;
 	
 	/**
-	 * Initialize varaibles for previous obj
+	 * Initialize variables for previous obj
 	 */
 	private BuyPlayerWindow prevObj;
-
 	
 	/**
 	 * SellPlayerWindow Constructor. Sets the variables and initializes the frame
@@ -62,7 +63,8 @@ public class SellPlayerWindow {
 	 * @param givenWindow BuyPlayerWindow window frame
 	 * @param prevObject BuyPlayerWindow window object
 	 */
-	public SellPlayerWindow(MarketPlace currentMarket, JFrame givenWindow, BuyPlayerWindow prevObject) {
+	public SellPlayerWindow(MarketPlace currentMarket,
+			JFrame givenWindow, BuyPlayerWindow prevObject) {
 		prevWindow = givenWindow;
 		market = currentMarket;
 		prevObj = prevObject;
@@ -80,12 +82,14 @@ public class SellPlayerWindow {
 		frmManageTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmManageTeam.getContentPane().setLayout(null);
 		
-		lblMoney = new JLabel(String.format("Money: $%s", market.getGameStats().getMoney()));
+		lblMoney = new JLabel(String.format("Money: $%s", 
+				market.getGameStats().getMoney()));
 		lblMoney.setBounds(12, 12, 130, 15);
 		frmManageTeam.getContentPane().add(lblMoney);
 		
 		JLabel lblWeek = new JLabel(String.format("Week: %s/%s", 
-				market.getGameStats().getWeek(),market.getGameStats().getDuration()));
+				market.getGameStats().getWeek(),
+				market.getGameStats().getDuration()));
 		lblWeek.setBounds(12, 28, 130, 15);
 		frmManageTeam.getContentPane().add(lblWeek);
 		
@@ -97,7 +101,6 @@ public class SellPlayerWindow {
 		lblBench.setBounds(174, 210, 46, 14);
 		frmManageTeam.getContentPane().add(lblBench);
 		
-		//Main Team athletes
 		Athlete1 = new JButton();
 		
 		Athlete1.addActionListener(new ActionListener() {
@@ -164,7 +167,6 @@ public class SellPlayerWindow {
 		Athlete6.setBounds(199, 168, 175, 37);
 		frmManageTeam.getContentPane().add(Athlete6);
 		
-		//Bench Athletes
 		bench1 = new JButton("New button");
 		
 		bench1.addActionListener(new ActionListener() {
@@ -249,37 +251,41 @@ public class SellPlayerWindow {
 		JButton btnSellPlayer = new JButton("Sell Player");
 		btnSellPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(frmManageTeam, "Are you sure you want to sell this player?", "Confirm Sale",
+				int result = JOptionPane.showConfirmDialog(frmManageTeam,
+						"Are you sure you want to sell this player?",
+						"Confirm Sale",
 						JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-				if(result == JOptionPane.YES_OPTION) {
-					market.getGameStats().changeMoney(athleteSelected.getSellPrice());
-					lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
-
-					if(market.getGameStats().checkGameEnd(market)) {
+				if (result == JOptionPane.YES_OPTION) {
+					market.getGameStats().changeMoney(
+							athleteSelected.getSellPrice());
+					lblMoney.setText(String.format(
+							"Money: $%s",market.getGameStats().getMoney()));
+					//Checks if the selected athlete is in Main team or other(bench)
+					if (market.getGameStats().getTeams().getTeamList().contains(
+							athleteSelected)) {
+						market.getGameStats().getTeams().getTeamList().remove(
+								athleteSelected);
+						//checks if there are any players on the bench and moves them up if so.
+						if(market.getGameStats().getTeams().getBench().size() > 0) {
+							Athlete movingAthlete = 
+									market.getGameStats().getTeams().getBench().get(0);
+							market.getGameStats().getTeams().getTeamList().add(
+									movingAthlete);
+							market.getGameStats().getTeams().getBench().remove(
+									movingAthlete);
+						}
+						setButtons();
+					}
+					else {
+						market.getGameStats().getTeams().getBench().remove(
+								athleteSelected);
+						setButtons();
+					}
+					setButtons();
+					if (market.getGameStats().checkGameEnd(market)) {
 						prevWindow.dispose();
 						frmManageTeam.dispose();
 						market.getGameStats().finishGame();
-					}
-					else {
-						//Checks if the selected athlete is in Main team or other(bench)
-						if(market.getGameStats().getTeams().getTeamList().contains(athleteSelected)) {
-							market.getGameStats().getTeams().getTeamList().remove(athleteSelected);
-							System.out.println("MAKING IT HERE");
-							//checks if there are any players on the bench and moves them up if so.
-							if(market.getGameStats().getTeams().getBench().size() > 0) {
-								Athlete movingAthlete = market.getGameStats().getTeams().getBench().get(0);
-								System.out.println(movingAthlete);
-								market.getGameStats().getTeams().getTeamList().add(movingAthlete);
-								market.getGameStats().getTeams().getBench().remove(movingAthlete);
-							}
-	
-	//						System.out.println(market.getGameStats().getTeams().getTeamList().get(5));
-							setButtons();
-						} else {
-							market.getGameStats().getTeams().getBench().remove(athleteSelected);
-							setButtons();
-						}
-						setButtons();
 					}
 				}
 			}
@@ -290,8 +296,10 @@ public class SellPlayerWindow {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
-				prevObj.prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+				prevObj.lblMoney.setText(String.format("Money: $%s",
+						market.getGameStats().getMoney()));
+				prevObj.prevObj.lblMoney.setText(String.format("Money: $%s",
+						market.getGameStats().getMoney()));
 				prevWindow.setVisible(true);
 				frmManageTeam.dispose();
 			}
@@ -305,49 +313,41 @@ public class SellPlayerWindow {
 		frmManageTeam.getContentPane().add(lblNewLabel_2);
 	}
 	
-	/**
-	 * Sets the button for the corresponding athlete. If there is no
-	 * athlete, the button is disabled and the text is set to "Empty Slot"
-	 * @param index index of the athlete
-	 * @param athlete button of the corresponding athlete to be set
-	 */
 	private void setTeamName(int index, JButton athlete) {
-		if(market.getGameStats().getTeams().getTeamList().size() >= index) {
-			athlete.setText(market.getGameStats().getTeams().getTeamList().get(index-1).getName());
-		} else {
+		if (market.getGameStats().getTeams().getTeamList().size() >= index) {
+			athlete.setText(market.getGameStats().getTeams().getTeamList().get(
+					index - 1).getName());
+		}
+		else {
 			athlete.setEnabled(false);
 			athlete.setText("Empty Slot");
 		}
 	}
 	
-	/**
-	 * Sets the button for the corresponding athlete on the bench.If there is no
-	 * athlete for that slot, the button is disabled and the text is set to "Empty Slot"
-	 * @param index the index of the benched athlete
-	 * @param athlete the button of the corresponding athlete
-	 */
 	private void setBenchName(int index, JButton athlete) {
-		if(market.getGameStats().getTeams().getBench().size() >= index) {
-			athlete.setText(market.getGameStats().getTeams().getBench().get(index-1).getName());
-		}else {
+		if (market.getGameStats().getTeams().getBench().size() >= index) {
+			athlete.setText(market.getGameStats().getTeams().getBench().get(
+					index - 1).getName());
+		}
+		else {
 			athlete.setEnabled(false);
 			athlete.setText("Empty Slot");
 		}
 	}
 	
-	/**
-	 * Updates the labels to display the stats of the currently selected athlete
-	 * @param athlete the currently selected athlete
-	 */
 	private void updateLabels(Athlete athlete) {
 		lblName.setText(athlete.getName());
-		lblPosition.setText(String.format("Position: %s", athlete.getPosition()));
-		lblAttack.setText(String.format("Attack: %s", Integer.toString(athlete.getAttack())));
-		lblDefense.setText(String.format("Defence: %s", Integer.toString(athlete.getDefence())));
-		lblSellPrice.setText(String.format("Sell Price: %s", Integer.toString(athlete.getSellPrice())));
+		lblPosition.setText(String.format(
+				"Position: %s", athlete.getPosition()));
+		lblAttack.setText(String.format(
+				"Attack: %s", Integer.toString(athlete.getAttack())));
+		lblDefense.setText(String.format(
+				"Defence: %s", Integer.toString(athlete.getDefence())));
+		lblSellPrice.setText(String.format(
+				"Sell Price: %s", Integer.toString(athlete.getSellPrice())));
 	}
 	
-	/**
+	/*
 	 * Sets all of the buttons for the team and bench using
 	 * support functions setTeamName and setBenchName
 	 */
@@ -355,16 +355,17 @@ public class SellPlayerWindow {
 		ArrayList<JButton> teamList = new ArrayList<JButton>();
 		ArrayList<JButton> benchList = new ArrayList<JButton>();
 		Collections.addAll(benchList, bench1, bench2, bench3, bench4, bench5);
-		Collections.addAll(teamList, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6);
+		Collections.addAll(teamList, Athlete1, Athlete2, Athlete3,
+				Athlete4, Athlete5, Athlete6);
 		int index = 1;
 		for(JButton button: teamList) {
 			setTeamName(index, button);
-			index++;
+			index ++;
 		}
 		index = 1;
 		for(JButton button: benchList) {
 			setBenchName(index, button);
-			index++;
+			index ++;
 		}
 	}
 }

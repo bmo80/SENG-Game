@@ -29,7 +29,7 @@ class MatchTest {
 		
 	@Test
 	public void noInjuredTest() {
-		assertFalse(match.checkAllInjured());
+		assertFalse(Match.checkAllInjured(match.getPlayerTeam()));
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ class MatchTest {
 		for(Athlete athlete: match.getPlayerTeam()) {
 			athlete.changeIsInjured(true);
 		}
-		assertTrue(match.checkAllInjured());
+		assertTrue(Match.checkAllInjured(match.getPlayerTeam()));
 	}
 	
 	@Test

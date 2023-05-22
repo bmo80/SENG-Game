@@ -1,7 +1,7 @@
 package windows;
 
-
 import javax.swing.JFrame;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
  *
  */
 public class SetupWindow {
+
 	/**
 	 * Variable to store the current frame
 	 */
@@ -27,13 +28,13 @@ public class SetupWindow {
 	 */
 	private JTextField txtName;
 
-
 	/**
-	 * Constructor for the setup window, initializes the frame
+	 *Constructor for the setup window, initializes the frame
 	 */
 	public SetupWindow() {
+//		game = getGame;
 		initialize();
-		frmSetup.setVisible(true);		
+		frmSetup.setVisible(true);
 	}
 	
 	/**
@@ -73,11 +74,11 @@ public class SetupWindow {
 		frmSetup.getContentPane().add(durationSlider);
 		
 		JLabel lnlMinWeeks = new JLabel("5");
-		lnlMinWeeks.setBounds(186, 252, 32, 23);
+		lnlMinWeeks.setBounds(190, 252, 32, 23);
 		frmSetup.getContentPane().add(lnlMinWeeks);
 		
 		JLabel lblMaxWeeks = new JLabel("15");
-		lblMaxWeeks.setBounds(412, 256, 24, 15);
+		lblMaxWeeks.setBounds(400, 256, 24, 15);
 		frmSetup.getContentPane().add(lblMaxWeeks);
 		
 		JSlider difficultySlider = new JSlider();
@@ -88,24 +89,28 @@ public class SetupWindow {
 		frmSetup.getContentPane().add(difficultySlider);
 		
 		JLabel lblMaxDifficulty = new JLabel("2");
-		lblMaxDifficulty.setBounds(412, 175, 24, 15);
+		lblMaxDifficulty.setBounds(400, 175, 24, 15);
 		frmSetup.getContentPane().add(lblMaxDifficulty);
 		
 		JLabel lnlMinDifficulty = new JLabel("0");
-		lnlMinDifficulty.setBounds(186, 171, 32, 23);
+		lnlMinDifficulty.setBounds(190, 171, 32, 23);
 		frmSetup.getContentPane().add(lnlMinDifficulty);
 		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(txtName.getText().length() > 15 || txtName.getText().length() < 3) {
-					JOptionPane.showMessageDialog(frmSetup, String.format("Your name must be "
+				if (txtName.getText().length() > 15 ||
+						txtName.getText().length() < 3) {
+					JOptionPane.showMessageDialog(frmSetup, String.format(
+							"Your name must be "
 							+ "between 5 and 15 characters\n%s is %s characters"
 							+ " long",txtName.getText(), txtName.getText().length()));
-				}else {
+				}
+				else {
 					SetupBuyPlayerWindow nextSetupWindow = new SetupBuyPlayerWindow(
 							txtName.getText(), 
-							durationSlider.getValue(), difficultySlider.getValue());
+							durationSlider.getValue(),
+							difficultySlider.getValue());
 					frmSetup.setVisible(false);
 				}
 			}
@@ -118,8 +123,12 @@ public class SetupWindow {
 		frmSetup.getContentPane().add(lblWelcomeToSport);
 		
 		JLabel label = new JLabel("1");
-		label.setBounds(297, 175, 24, 15);
+		label.setBounds(295, 175, 24, 15);
 		frmSetup.getContentPane().add(label);
+		
+		JLabel lnlMinWeeks_1 = new JLabel("10");
+		lnlMinWeeks_1.setBounds(295, 252, 32, 23);
+		frmSetup.getContentPane().add(lnlMinWeeks_1);
 		
 		
 	}

@@ -8,7 +8,6 @@ package purchasables;
  *
  */
 public class Purchasable {
-	
 	/**
 	 * Stores buy price of the purchasable object
 	 */
@@ -24,7 +23,7 @@ public class Purchasable {
 	
 	/**
 	 * Default Constructor for Purchasable.
-	 * Sets a default buy and sell price aswell as a description
+	 * Sets a default buy and sell price as well as a description
 	 */
 	public Purchasable() {
 		buyPrice = 100;

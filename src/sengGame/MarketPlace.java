@@ -1,14 +1,11 @@
 package sengGame;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import purchasables.Athlete;
 import purchasables.AthleteGenerator;
 import purchasables.Item;
 import purchasables.ItemGenerator;
-import purchasables.TeamManager;
-import windows.MarketPlaceWindow;
 
 /**
  * MarketPlace class deals with creating and storing everything displayed on the market.
@@ -19,10 +16,6 @@ import windows.MarketPlaceWindow;
  */
 public class MarketPlace{
 	
-	/**
-	 * Constant for the number of Athletes to be generated
-	 */
-	private int NUMBER = 3;
 	/**
 	 * Initializes an Array to hold all current players for sale
 	 */
@@ -43,26 +36,27 @@ public class MarketPlace{
 	/**
 	 * Constructor for market place. Generates 6 Athletes, 3 of each type
 	 * and 4 random items.
-	 * @param game current maingame object
+	 * @param game current MainGame object
 	 */
 	public MarketPlace(MainGame game) {
 		gameStats = game;
-		generateAthletes(NUMBER, "A");
-		generateAthletes(NUMBER, "D");
+		generateAthletes(3, "A");
+		generateAthletes(2, "D");
 		generateItems();
-	}	
+	}
 	
 	/**
 	 * Generates a given number of athletes in a given position and sets
 	 * their buy and sell price based on their positional stat.
 	 * @param size The number of Athletes to be Generated
-	 * @param position position of the Athletes to be Generated
+	 * @param position
 	 */
 	public void generateAthletes(int size, String position) {
-		for(int i=0; i<size; i++) {
-			Athlete athlete = new AthleteGenerator(position,gameStats.getWeek());
-			athlete.setBuyPrice(1000*athlete.getPositionStat());
-			athlete.setSellPrice(500*athlete.getPositionStat());
+		for (int i=0; i < size; i ++) {
+			Athlete athlete = new AthleteGenerator(position,
+					gameStats.getWeek());
+			athlete.setBuyPrice(1000 * athlete.getPositionStat());
+			athlete.setSellPrice(500 * athlete.getPositionStat());
 			playersForSale.add(athlete);
 		}
 	}
@@ -71,7 +65,7 @@ public class MarketPlace{
 	 * Generates 4 random items for the item store
 	 */
 	public void generateItems() {
-		for(int i = 0; i<4; i++) {
+		for (int i = 0; i < 4; i ++) {
 			ItemGenerator item = new ItemGenerator();
 			itemsForSale.add(item);
 		}
@@ -99,8 +93,8 @@ public class MarketPlace{
 	 */
 	public int getPlayerCount() {
 		int i = 0;
-		for(Athlete athlete: playersForSale) {
-			if(!athlete.getName().equals("Purchased")) {
+		for (Athlete athlete: playersForSale) {
+			if (!athlete.getName().equals("Purchased")) {
 				i ++;
 			}
 		}
@@ -115,7 +109,6 @@ public class MarketPlace{
 		return gameStats;
 	}
 	
-
 	/**
 	 * Gets all the players for sale on the setup screen
 	 * @return the ArrayList containing all the setup screen players for sale
@@ -129,12 +122,11 @@ public class MarketPlace{
 	 * only even used on game initialization
 	 */
 	public void createSetUp() {
-		for(int i=0; i<5; i++) {
-			setupPlayers.add(new AthleteGenerator("A",gameStats.getWeek()));
+		for(int i = 0; i < 5; i ++) {
+			setupPlayers.add(new AthleteGenerator("A", gameStats.getWeek()));
 		}
-		for(int i=0; i<5; i++) {
-			setupPlayers.add(new AthleteGenerator("D",gameStats.getWeek()));
+		for(int i = 0; i < 5; i ++) {
+			setupPlayers.add(new AthleteGenerator("D", gameStats.getWeek()));
 		}
 	}
-
 }

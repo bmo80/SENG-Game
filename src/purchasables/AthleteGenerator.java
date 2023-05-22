@@ -49,7 +49,8 @@ public class AthleteGenerator extends Athlete {
 	private int week;
 	
 	/**
-	 * Constructor for AthleteGenerator. Initializes the variables and creates the Athlete.
+	 * Constructor for AthleteGenerator. Initializes the variables
+	 * and creates the Athlete.
 	 * @param pos Position of the Athlete you would like to create
 	 * @param currentWeek current week of the season you are playing
 	 */
@@ -59,8 +60,8 @@ public class AthleteGenerator extends Athlete {
 		week = currentWeek;
 		try {
 			setName();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		setAttack();
@@ -73,12 +74,12 @@ public class AthleteGenerator extends Athlete {
 	
 	/**
 	 * Joins the First and Last name for the athlete
-	 * @throws FileNotFoundException throws an exception if the file cant be found
+	 * @throws FileNotFoundException  throws an exception if the file cant be found
 	 */
 	private void setName() throws FileNotFoundException {
 		setFirstName();
 		setLastName();
-		name = firstName +" "+ lastName;
+		name = firstName + " " + lastName;
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class AthleteGenerator extends Athlete {
 	 */
 	private void setFirstName() {
 		FileReader file = new FileReader("firstNames.txt");
-		firstName = file.name;
+		firstName = file.getName();
 	}
 	
 	/**
@@ -94,7 +95,7 @@ public class AthleteGenerator extends Athlete {
 	 */
 	private void setLastName() {
 		FileReader file = new FileReader("lastNames.txt");
-		lastName = file.name;
+		lastName = file.getName();
 	}
 	
 	/**
@@ -102,9 +103,9 @@ public class AthleteGenerator extends Athlete {
 	 * @return value of the Athletes positional stat
 	 */
 	private int getHighNumber() {
-		min = 2+week;
-		max = 5+week;
-		int random_high = (int)(Math.random()*(max-min+1)+min); 
+		min = 2 + (Math.floorDiv(week,2));
+		max = 5 + (Math.floorDiv(week,2));
+		int random_high = (int)(Math.random() * (max - min + 1) + min); 
 		return random_high;
 	}
 	
@@ -115,7 +116,7 @@ public class AthleteGenerator extends Athlete {
 	private int getLowNumber() {
 		min = 0;
 		max = 2;
-		int random_low = (int)(Math.random()*(max-min+1)+min); 
+		int random_low = (int)(Math.random() * (max - min + 1) + min); 
 		return random_low;
 	}
 	
@@ -124,9 +125,10 @@ public class AthleteGenerator extends Athlete {
 	 * value based on that
 	 */
 	private void setAttack() {
-		if(position == "A") {
+		if( position == "A") {
 			changeAttack(getHighNumber());
-		} else {
+		}
+		else {
 			changeAttack(getLowNumber());
 		}
 	}
@@ -137,9 +139,10 @@ public class AthleteGenerator extends Athlete {
 	 */
 	private void setDefence() {
 		int val;
-		if(position == "D") {
+		if( position == "D") {
 			val = getHighNumber();
-		} else {
+		}
+		else {
 			val = getLowNumber();
 		}
 		defence = val;

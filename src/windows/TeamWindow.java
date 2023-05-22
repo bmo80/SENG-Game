@@ -1,6 +1,5 @@
 package windows;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import sengGame.MainGame;
 import javax.swing.SwingConstants;
 
 import purchasables.Athlete;
-import purchasables.Item;
 
 /**
  * TeamWindow class displays the players current team and allows
@@ -24,6 +22,7 @@ import purchasables.Item;
  *
  */
 public class TeamWindow {
+
 	/**
 	 * Variable to store the current fram
 	 */
@@ -56,8 +55,8 @@ public class TeamWindow {
 	/**
 	 * Button variables for the active team
 	 */
-	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
-
+	private JButton Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
+	
 	/**
 	 * Constructor variable for the TeamWindow, sets the required variables
 	 * and initializes the frame
@@ -80,6 +79,7 @@ public class TeamWindow {
 		ClubWindow clubWindow = new ClubWindow(game, mainMenu);
 		frmTeam.dispose();
 	}
+	
 	/**
 	 * Sets the default athlete selected to be a default athlete
 	 * if there are no players on team
@@ -106,11 +106,13 @@ public class TeamWindow {
 		frmTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTeam.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: $%s",game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",
+				game.getMoney()));
 		lblMoney.setBounds(12, 12, 257, 15);
 		frmTeam.getContentPane().add(lblMoney);
 		
-		JLabel lblWeek = new JLabel(String.format("Week: %s",game.getWeek()));
+		JLabel lblWeek = new JLabel(String.format("Week: %s",
+				game.getWeek()));
 		lblWeek.setBounds(12, 28, 95, 15);
 		frmTeam.getContentPane().add(lblWeek);
 		
@@ -144,7 +146,8 @@ public class TeamWindow {
 		lblAthleteStam.setBounds(399, 179, 108, 15);
 		frmTeam.getContentPane().add(lblAthleteStam);
 		
-		lblInjured = new JLabel(String.format((athleteSelected.getIsInjured()?"Injured":"Healthy")));
+		lblInjured = new JLabel(String.format((athleteSelected.getIsInjured()?
+				"Injured":"Healthy")));
 		lblInjured.setBounds(399, 206, 108, 15);
 		frmTeam.getContentPane().add(lblInjured);
 		
@@ -152,8 +155,6 @@ public class TeamWindow {
 				athleteSelected.getPreviousInjuries()));
 		lblPreviousInjuries.setBounds(399, 233, 169, 15);
 		frmTeam.getContentPane().add(lblPreviousInjuries);
-		
-		
 		
 		 Athlete1 = new JButton("Athlete 1");
 		Athlete1.addActionListener(new ActionListener() {
@@ -303,8 +304,9 @@ public class TeamWindow {
 		JButton btnSwap = new JButton("Swap");
 		btnSwap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(previousAthlete.getName().equals("NULL") || athleteSelected.getName().equals("NULL")) {
-					//MESSAGE
+				if(previousAthlete.getName().equals("NULL") || 
+						athleteSelected.getName().equals("NULL")) {
+					//NOT ALLOWED
 				}else {
 					game.getTeams().swap(previousAthlete, athleteSelected);
 					
@@ -315,13 +317,11 @@ public class TeamWindow {
 		btnSwap.setBounds(414, 288, 117, 25);
 		frmTeam.getContentPane().add(btnSwap);
 		
-		JLabel lblTeamName = new JLabel(String.format("%s's Team", game.getPlayerName()));
+		JLabel lblTeamName = new JLabel(String.format("%s's Team",
+				game.getPlayerName()));
 		lblTeamName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamName.setBounds(163, 12, 229, 15);
 		frmTeam.getContentPane().add(lblTeamName);
-		
-		
-		
 	}
 	
 	/**
@@ -330,12 +330,16 @@ public class TeamWindow {
 	 */
 	private void updateLabels(Athlete athlete) {
 		lblAthleteName.setText(athlete.getName());
-		lblAthletePos.setText(String.format("Position: %s", athlete.getPosition()));
-		lblAthleteAtt.setText(String.format("Attack: %s", Integer.toString(athlete.getAttack())));
-		lblAthleteDef.setText(String.format("Defence: %s", Integer.toString(athlete.getDefence())));
+		lblAthletePos.setText(String.format("Position: %s",
+				athlete.getPosition()));
+		lblAthleteAtt.setText(String.format("Attack: %s",
+				Integer.toString(athlete.getAttack())));
+		lblAthleteDef.setText(String.format("Defence: %s",
+				Integer.toString(athlete.getDefence())));
 		lblAthleteStam.setText(String.format("Stamina: %s",
 				athleteSelected.getStamina()));
-		lblInjured.setText(String.format((athleteSelected.getIsInjured()?"Injured":"Healthy")));
+		lblInjured.setText(String.format((athleteSelected.getIsInjured()?
+				"Injured":"Healthy")));
 		lblPreviousInjuries.setText(String.format("Previous Injures: %s",
 				athleteSelected.getPreviousInjuries()));
 	}
@@ -347,17 +351,19 @@ public class TeamWindow {
 	private void setButtons() {
 		ArrayList<JButton> teamList = new ArrayList<JButton>();
 		ArrayList<JButton> benchList = new ArrayList<JButton>();
-		Collections.addAll(benchList, Bench1, Bench2, Bench3, Bench4, Bench5);
-		Collections.addAll(teamList, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6);
+		Collections.addAll(benchList, Bench1, Bench2,
+				Bench3, Bench4, Bench5);
+		Collections.addAll(teamList, Athlete1, Athlete2,
+				Athlete3, Athlete4, Athlete5, Athlete6);
 		int index = 1;
 		for(JButton button: teamList) {
 			setTeamName(index, button);
-			index++;
+			index ++;
 		}
 		index = 1;
 		for(JButton button: benchList) {
 			setBenchName(index, button);
-			index++;
+			index ++;
 		}
 	}
 	
@@ -367,9 +373,10 @@ public class TeamWindow {
 	 * @param athlete respective button for the athlete
 	 */
 	private void setTeamName(int index, JButton athlete) {
-		if(game.getTeams().getTeamList().size() >= index) {
-			athlete.setText(game.getTeams().getTeamList().get(index-1).getName());
-		} else {
+		if (game.getTeams().getTeamList().size() >= index) {
+			athlete.setText(game.getTeams().getTeamList().get(index - 1).getName());
+		}
+		else {
 			athlete.setEnabled(false);
 			athlete.setText("Empty Slot");
 		}
@@ -381,13 +388,12 @@ public class TeamWindow {
 	 * @param athlete respective button for the athlete
 	 */
 	private void setBenchName(int index, JButton athlete) {
-		if(game.getTeams().getBench().size() >= index) {
-			athlete.setText(game.getTeams().getBench().get(index-1).getName());
-		}else {
+		if (game.getTeams().getBench().size() >= index) {
+			athlete.setText(game.getTeams().getBench().get(index - 1).getName());
+		}
+		else {
 			athlete.setEnabled(false);
 			athlete.setText("Empty Slot");
 		}
 	}
-	
-	
 }

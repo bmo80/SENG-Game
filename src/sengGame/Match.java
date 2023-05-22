@@ -2,11 +2,7 @@ package sengGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import javax.swing.JFrame;
-
 import purchasables.Athlete;
-import purchasables.TeamManager;
 
 /**
  * Match class deals with all the logic of playing a match from start to finish
@@ -15,10 +11,7 @@ import purchasables.TeamManager;
  *
  */
 public class Match{
-	/**
-	 * Stores the amount of money the player won for their match.
-	 */
-	private int moneyWon;
+	
 	/**
 	 * Stores the current instance of maingame
 	 */
@@ -69,6 +62,7 @@ public class Match{
 	public int getPlayerIndex() {
 		return currentPlayerIndex;
 	}
+	
 	/**
 	 * gets the current opponents player who is playings index
 	 * @return the index of the player
@@ -76,6 +70,7 @@ public class Match{
 	public int getOpponentIndex() {
 		return currentOppIndex;
 	}
+	
 	/**
 	 * Gets the player teams overall score
 	 * @return the player teams score
@@ -83,6 +78,7 @@ public class Match{
 	public int getPlayerScore() {
 		return playerScore;
 	}
+	
 	/**
 	 * Gets the ArrayList of all the athlete scores
 	 * @return the ArrayList of all the athlete scores
@@ -90,6 +86,7 @@ public class Match{
 	public ArrayList<Integer> getAthleteScores() {
 		return athleteScores;
 	}
+	
 	/**
 	 * Gets the total score of the opponents team
 	 * @return the total score of the opponents team
@@ -110,33 +107,27 @@ public class Match{
 	 * Checks every player in the team for injuries
 	 * @return True or False depending if all players are injured or not
 	 */
-	public Boolean checkAllInjured() {
-		for(Athlete athlete: playerTeam) {
-			if(!athlete.getIsInjured()) {
+	public static Boolean checkAllInjured(ArrayList<Athlete> team) {
+		for (Athlete athlete: team) {
+			if (!athlete.getIsInjured()) {
 				return false;
 			}
 		}return true;
 	}
 	
 	/**
-	 * Checks if enough players in the team are eligible to play.
-	 * Checks if there are 6 players, if they are all injured
-	 * or if one side has ran out of players.
-	 * @return True if the team is able to play. False if it fails one of the checks.
+	 * Checks every player in the team for injuries
+	 * @return True or False depending if all players are injured or not
 	 */
 	public boolean verifyAbleToPlay() {
-		if(playerTeam.size() != 6) {
-			//Send - Not enough players error message
-			System.out.println("Team not full, need more players");
-			return false;
-		}
-		else if(checkAllInjured()) {
-			//Send - No healthy players error message
-			System.out.println("No healthy Athletes in team");
+		if (checkAllInjured(playerTeam)) {
 			return false;
 		}
 		else if((currentPlayerIndex >= 6) || (currentOppIndex >= 6)) {
-			endMatch();
+			//All athletes defeated
+			return false;
+		}
+		else if (playerTeam.size() < 6) {
 			return false;
 		}
 		return true;
@@ -152,25 +143,26 @@ public class Match{
 	public void verseAthletes(int playerIndex, int oppIndex) {
 		Athlete playerAthlete = playerTeam.get(playerIndex);
 		Athlete opponentAthlete = opponents.get(oppIndex);
-		if(playerAthlete.getIsInjured()) {
-			System.out.println(String.format("%s is injured, going to next player",playerTeam.get(playerIndex)));
+		if (playerAthlete.getIsInjured()) {
 			currentPlayerIndex ++;
 		}
-		else if(opponentAthlete.getIsInjured()){
+		else if (opponentAthlete.getIsInjured()){
 			currentOppIndex ++;		
 		}
-		else if(playerAthlete.getPositionStat() > opponentAthlete.getPositionStat()) {
+		else if (playerAthlete.getPositionStat() > 
+		opponentAthlete.getPositionStat()) {
 			playerScore ++;
-			playerAthlete.changeStamina(-gameStats.getDifficulty()-1);
+			playerAthlete.changeStamina((-gameStats.getDifficulty()) - 1);
 			int newScore = athleteScores.get(playerIndex) + 1;
 			athleteScores.set(playerIndex, newScore);
-			opponentAthlete.changeStamina(-gameStats.getDifficulty()-3);
+			opponentAthlete.changeStamina((-gameStats.getDifficulty()) - 3);
 			currentOppIndex ++;
 		}
-		else if(playerAthlete.getPositionStat() < opponentAthlete.getPositionStat()) {
+		else if (playerAthlete.getPositionStat() < 
+				opponentAthlete.getPositionStat()) {
 			oppsScore ++;
-			opponentAthlete.changeStamina(-gameStats.getDifficulty()-1);
-			playerAthlete.changeStamina(-gameStats.getDifficulty()-3);
+			opponentAthlete.changeStamina((-gameStats.getDifficulty()) - 1);
+			playerAthlete.changeStamina((-gameStats.getDifficulty()) - 3);
 			currentPlayerIndex ++;
 		}
 		else {
@@ -183,58 +175,49 @@ public class Match{
 	 * Logic for determining Who won the game and what stats to update.
 	 * All Athletes lose 1 stamina after the game.
 	 */
-	public void endMatch() {
-		System.out.println("Match over, all athletes lose stamina");
-		for(Athlete athlete: playerTeam) {
+	public String endMatch() {
+		for (Athlete athlete: playerTeam) {
 			athlete.changeStamina(-1);
 		}
-		//This is an implementation of criteria 3b.iv
-		if(checkAllInjured()) {
-			//Send message - All athletes were injured so default loss
-			System.out.println("By the end of the match, all athletes were injured so the match was lost");
+		if (checkAllInjured(playerTeam)) {
+			//All athletes were injured so default loss
+			return "By the end of the match, "
+					+ "all athletes were injured so the match was lost";
 		}
-		else if(oppsScore>playerScore) {
-			//Send message - Opponents win
-			System.out.println(oppsScore);
-			System.out.println(playerScore);
-			System.out.println("The opponents won the match");
-			gameStats.losses += 1;
-			gameStats.changeMoney(10000*(3-gameStats.getDifficulty()));
+		else if (oppsScore > playerScore) {
+			//Opponents win
+			gameStats.addLoss();
+			return "The opponents won the match";
 		}
-		else if(playerScore>oppsScore){
-			//Send message - You won!
-			gameStats.wins += 1;
-			System.out.println("You won the match! Here is your reward...");
-			//Arbitrary points and money atm
-			gameStats.changePoints(3+gameStats.getDifficulty());
-			gameStats.changeMoney(10000*(3-gameStats.getDifficulty()));
+		else if (playerScore > oppsScore){
+			//Player win
+			gameStats.addWin();
+			gameStats.changePoints(3 + gameStats.getDifficulty());
+			gameStats.changeMoney(10000 * (3 - gameStats.getDifficulty()));
+			return String.format("You won the match! You gained %s points and"
+					+ " $%s",3 + gameStats.getDifficulty(),
+					10000 * (3 - gameStats.getDifficulty()));
 		}
 		else {
 			//Tie condition - Some rewards
-			//Send message 
-			gameStats.draws += 1;
-			System.out.println("The match was a tie. Here is a minor reward...");
+			gameStats.addDraw();
 			gameStats.changePoints(gameStats.getDifficulty());
-			gameStats.changeMoney(1000*(3-gameStats.getDifficulty()));
+			gameStats.changeMoney(1000 * (3 - gameStats.getDifficulty()));
+			return String.format("The match was a tie. You gained %s points and"
+					+ " $%s",gameStats.getDifficulty(),
+					1000 * (3 - gameStats.getDifficulty()));
 		}
-		
 	}
 	
 	/**
 	 * checks that while all the conditions to play are met
 	 * then the game continues.
 	 */
-	public void playMatch() {
-		while(verifyAbleToPlay()) {
+	public String playMatch() {
+		while (verifyAbleToPlay()) {
 			verseAthletes(currentPlayerIndex,currentOppIndex);
-
 		}
+		return endMatch();
 	}
 	
-	/**
-	 * Gets the amount of money the player won
-	 */
-	public void getMoneyWon() {
-		return moneyWon;
-	}
 }

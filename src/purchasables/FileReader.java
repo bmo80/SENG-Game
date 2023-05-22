@@ -13,11 +13,10 @@ import java.util.Scanner;
  *
  */
 public class FileReader {
-	
 	/**
 	 * Stores generated name to be set later
 	 */
-	public String name;
+	private String name;
 	
 	/**
 	 * Constructor for fileReader class. Takes in a filename and attempts
@@ -27,7 +26,8 @@ public class FileReader {
 	FileReader(String filename) {
 		try {
 			readFile(filename);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -45,11 +45,11 @@ public class FileReader {
 		File file = new File("src/purchasables/"+filename);
 		Scanner scanner = new Scanner(file);
 		int count = 0;
-		while(count < index) {
+		while( count < index) {
 			scanner.nextLine();
-			count++;
+			count ++;
 		}
-		setName(scanner.nextLine());
+		setName( scanner.nextLine());
 		scanner.close();
 	}
 	
@@ -59,5 +59,13 @@ public class FileReader {
 	 */
 	private void setName(String givenName) {
 		name = givenName;
+	}
+	
+	/**
+	 * Gets generated name
+	 * @return name name of athlete
+	 */
+	public String getName() {
+		return name;
 	}
 }

@@ -3,13 +3,8 @@ package purchasables;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * The ItemGenerator class creates an Item Object with randomly created Attribute values
- * @author Blair Brydon
- * @author Ben Moore
- *
- */
 public class ItemGenerator extends Item{
+
 		/**
 		 * MIN and MAX constants for random number generation
 		 */
@@ -33,7 +28,8 @@ public class ItemGenerator extends Item{
 		 */
 		public ItemGenerator() {
 			super();
-			Collections.addAll(potentialItems, "Stamina", "Attack", "Defence", "Heal") ;
+			Collections.addAll(potentialItems, "Stamina", "Attack",
+					"Defence", "Heal") ;
 			Collections.addAll(types, "Small", "Medium", "Large");
 			setRandomName();
 			setRandomType();
@@ -44,7 +40,7 @@ public class ItemGenerator extends Item{
 		 * Randomly sets the name of the item to be 1 of 4 names.
 		 */
 		private void setRandomName() {
-			randomNum = (int)(Math.random()*(MAX-MIN+1)+MIN);
+			randomNum = (int)(Math.random() * (MAX - MIN + 1) + MIN);
 			randomNum += 1;
 			this.setName(potentialItems.get(randomNum));
 		}
@@ -53,7 +49,7 @@ public class ItemGenerator extends Item{
 		 * Randomly sets the type to 1 of 3 types
 		 */
 		private void setRandomType() {
-			int value = (int)(Math.random()*(MAX-MIN+1)+MIN);
+			int value = (int)(Math.random() * (MAX - MIN + 1) + MIN);
 			this.setType(types.get(value));
 		}
 		
@@ -62,18 +58,17 @@ public class ItemGenerator extends Item{
 		 * on its type
 		 */
 		private void setRandomEffect() {
-			if(this.getType().equals("Large")) {
+			if( this.getType().equals("Large")) {
 				this.setEffect(3);
 				this.setBuyPrice(5000);
 			}
-			else if(this.getType().equals("Medium")) {
+			else if( this.getType().equals("Medium")) {
 				this.setEffect(2);
 				this.setBuyPrice(2500);
-			} else {
+			}
+			else {
 				this.setEffect(1);
 				this.setBuyPrice(1000);
 			}
-					
 		}
-		
 }
