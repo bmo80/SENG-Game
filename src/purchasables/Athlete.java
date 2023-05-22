@@ -50,7 +50,7 @@ public class Athlete extends Purchasable {
 	 * Overrides the system.out to print Athletes
 	 */
 	public String toString() {
-		return String.format("%s: ATK(%s) DEF(%s) POS(%s)) "+
+		return String.format("%s: ATK(%s) DEF(%s) POS(%s) "+
 				(isInjured?"Injured":""),name, attack, defence, position);
 	}
 	
@@ -186,22 +186,15 @@ public class Athlete extends Purchasable {
 	}
 	
 	public void changePosition(String newPosition) {
-		//Could add more dynamic options
 		if(newPosition.toUpperCase() == "D" || newPosition.toUpperCase() == "A") {
 			position = newPosition.toUpperCase();
-		}else {
-			//Call exception - Input must be 'A' or 'D'
 		}
 	}
 	
+	
 	public void changeIsInjured(boolean injury) {
-		if(injury == true) {
-			if(isInjured == true) {
-				// Call Exception - Athlete is already injured
-			}else {
-				previousInjuries ++;
-				isInjured = injury;
-			}
+		if(injury == true && isInjured != true) {
+			previousInjuries ++;
 		}
 		isInjured = injury;
 	}

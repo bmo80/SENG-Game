@@ -28,7 +28,7 @@ public class RandomEvent {
 	 */
 	public String runEvent(int generatedNumber) {
 		Athlete mostInjured = gameStats.getTeams().getMostInjured();
-				
+
 		if(generatedNumber>85) {
 			return increaseStat(gameStats);
 		}

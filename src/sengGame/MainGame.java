@@ -170,7 +170,7 @@ public class MainGame {
 
 	
 	public void addItem(Item item) {
-		if(inventory.size()>10) {
+		if(inventory.size()>=10) {
 			System.out.println("Inventory Full");
 		}
 		else {
