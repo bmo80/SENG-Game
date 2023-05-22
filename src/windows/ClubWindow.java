@@ -17,7 +17,6 @@ public class ClubWindow {
 	private MainGame game;
 	private JFrame mainMenu;
 
-
 	/**
 	 * Create the application.
 	 */
@@ -43,7 +42,7 @@ public class ClubWindow {
 		frmClub.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmClub.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %s", game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s", game.getMoney()));
 		lblMoney.setBounds(12, 12, 502, 15);
 		frmClub.getContentPane().add(lblMoney);
 		

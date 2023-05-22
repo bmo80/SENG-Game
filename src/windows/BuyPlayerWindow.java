@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -157,22 +158,24 @@ public class BuyPlayerWindow {
 		
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				market.getGameStats().getTeams().addAthlete(market.getPlayersForSale().get(athleteSelected-1));
-				market.getGameStats().changeMoney(-market.getPlayersForSale().get(athleteSelected-1).getBuyPrice());
-				lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
-//				prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
-				updateButton(athleteSelected);
-				updateTeamSlots();
-				Athlete athlete = new Athlete("Purchased",1,1,"A");
-				market.getPlayersForSale().set(athleteSelected-1, athlete);
+			public void actionPerformed(ActionEvent e) {
+				if(market.getPlayersForSale().get(athleteSelected-1).getName().equals("Purchased")) {
+					int confirm = JOptionPane.showConfirmDialog(null,"Please select a new player to buy","Player not selected",
+							JOptionPane.DEFAULT_OPTION);
+				} else {
+					market.getGameStats().getTeams().addAthlete(market.getPlayersForSale().get(athleteSelected-1));
+					market.getGameStats().changeMoney(-market.getPlayersForSale().get(athleteSelected-1).getBuyPrice());
+					lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+//					prevObj.lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
+					updateButton(athleteSelected);
+					updateTeamSlots();
+					Athlete athlete = new Athlete("Purchased",1,1,"A");
+					market.getPlayersForSale().set(athleteSelected-1, athlete);
+				}
 			}
 		});
 		btnPurchase.setBounds(369, 290, 134, 25);
-		frmPlayerTrading.getContentPane().add(btnPurchase);
-		
-		
-		
+		frmPlayerTrading.getContentPane().add(btnPurchase);	
 	}
 	
 	private void playerStatDisplay(int number) {

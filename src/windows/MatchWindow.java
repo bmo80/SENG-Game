@@ -30,11 +30,14 @@ public class MatchWindow {
 	public MatchWindow(Match currentMatch, JFrame curStadiumWindow) {
 		match = currentMatch;
 		frmStadium = curStadiumWindow;
-		frmStadium.setVisible(false);
-		match.playMatch();
-		initialize();
-		frmPlayMatch.setVisible(true);
-		
+		if(match.verifyAbleToPlay()) {
+			frmStadium.setVisible(false);
+			match.playMatch();
+			initialize();
+			frmPlayMatch.setVisible(true);
+		} else {
+			System.out.println("Hello");
+		}
 	}
 
 	/**

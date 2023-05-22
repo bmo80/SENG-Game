@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import purchasables.Item;
 import sengGame.MainGame;
@@ -120,6 +121,10 @@ public class BuyItemWindow {
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(market.getItemsForSale().get(itemSelected-1).getName().equals("Purchased")) {
+					int confirm = JOptionPane.showConfirmDialog(null,"Please select a new item to buy","Item not selected",
+							JOptionPane.DEFAULT_OPTION);
+				}
 				market.getGameStats().getInventory().add(market.getItemsForSale().get(itemSelected-1));
 				market.getGameStats().changeMoney(-market.getItemsForSale().get(itemSelected-1).getBuyPrice());
 				lblMoney.setText(String.format("Money: $%s", 

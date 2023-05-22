@@ -65,7 +65,7 @@ public class TeamWindow {
 		frmTeam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTeam.getContentPane().setLayout(null);
 		
-		JLabel lblMoney = new JLabel(String.format("Money: %S",game.getMoney()));
+		JLabel lblMoney = new JLabel(String.format("Money: $%s",game.getMoney()));
 		lblMoney.setBounds(12, 12, 257, 15);
 		frmTeam.getContentPane().add(lblMoney);
 		

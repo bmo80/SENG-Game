@@ -135,15 +135,21 @@ public class StadiumWindow {
 				int result = JOptionPane.showConfirmDialog(frmStadium, "Are you sure you want to play Team "+buttonSelected+"?",
 						"Confirm Team Selection", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(result == JOptionPane.YES_OPTION) {
-					ArrayList<Athlete> blankTeam = new ArrayList<Athlete>();
-					Athlete athlete = new Athlete("Match played",1,1,"A");
-					blankTeam.add(athlete);
-					stadium.getEnemyTeams().set(buttonSelected-1, blankTeam);
-					MatchWindow window = new MatchWindow(new Match(stadium.getGameStats(),teamChosen), frmStadium);
-					setButtons();
-					updateMainWindow();
-				} 
-				
+					Match match = new Match(stadium.getGameStats(),teamChosen);
+					
+					if(match.verifyAbleToPlay()) {
+						MatchWindow window = new MatchWindow(match, frmStadium);
+						ArrayList<Athlete> blankTeam = new ArrayList<Athlete>();
+						Athlete athlete = new Athlete("Match played",1,1,"A");
+						blankTeam.add(athlete);
+						stadium.getEnemyTeams().set(buttonSelected-1, blankTeam);
+						setButtons();
+						updateMainWindow();
+					} else {
+						int confirm = JOptionPane.showConfirmDialog(null,"Not enough viable athletes\n(need 6)","Not enough Athletes",
+								JOptionPane.DEFAULT_OPTION);
+					}
+				}
 			}
 		});
 		btnChoose.setBounds(351, 280, 89, 23);

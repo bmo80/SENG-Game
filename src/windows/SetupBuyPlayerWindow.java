@@ -198,18 +198,24 @@ public class SetupBuyPlayerWindow {
 		btnPurchase = new JButton("Purchase");
 		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(money - market.getSetupPlayers().get(athleteSelected-1).getBuyPrice() < 0) {
-					//BANNED
+				if(market.getSetupPlayers().get(athleteSelected-1).getName() == "Purchased") {
+					int confirm = JOptionPane.showConfirmDialog(null,"Please select a new player to buy","Player not selected",
+							JOptionPane.DEFAULT_OPTION);
+				} else {
+					if(money - market.getSetupPlayers().get(athleteSelected-1).getBuyPrice() < 0) {
+						//BANNED
+					}
+					else {
+						teams.addAthlete(market.getSetupPlayers().get(athleteSelected-1));
+						money -= market.getSetupPlayers().get(athleteSelected-1).getBuyPrice();
+						lblMoney.setText(String.format("Money: %s",money));
+						updateTeamSlots();
+						Athlete athlete = new Athlete("Purchased",1,1,"A");
+						market.getSetupPlayers().set(athleteSelected-1, athlete);
+						setAthleteButtons();
+					}
 				}
-				else {
-					teams.addAthlete(market.getSetupPlayers().get(athleteSelected-1));
-					money -= market.getSetupPlayers().get(athleteSelected-1).getBuyPrice();
-					lblMoney.setText(String.format("Money: %s",money));
-					updateTeamSlots();
-					Athlete athlete = new Athlete("Purchased",1,1,"A");
-					market.getSetupPlayers().set(athleteSelected-1, athlete);
-					setAthleteButtons();
-				}
+
 			}
 		});
 		btnPurchase.setBounds(415, 325, 134, 25);
