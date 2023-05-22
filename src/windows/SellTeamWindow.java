@@ -13,17 +13,40 @@ import purchasables.Athlete;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 
+/**
+ * SellTeamWindow class deals with displaying the players current team
+ * and the logic of selling a desired player
+ *@author Blair Brydon
+ *@author Ben Moore
+ *
+ */
 public class SellTeamWindow {
-
+	/**
+	 * Variables to store the current and main frames
+	 */
 	private JFrame frmTeamTrading, mainMenu;
+	/**
+	 * label variables for athlete info display
+	 */
 	private JLabel lblAthleteName, lblAthletePos, lblAthleteAtt,
 	lblAthleteDef, lblAthleteStam, lblInjured, lblPreviousInjuries;
+	/**
+	 * Variable to store the previously selected athlete
+	 */
 	private Athlete previousAthlete;
+	/**
+	 * Variable to store the currently selected athlete
+	 */
 	private Athlete athleteSelected;
+	/**
+	 * MarketPlace variable to store the current market object
+	 */
 	private MarketPlace market;
 
 	/**
-	 * Create the application.
+	 * Constructor for SellteamWindow. Sets the initial variables and initializes the frame
+	 * @param givenMarket the current market instance
+	 * @param givenWindow the main menu frame
 	 */
 	public SellTeamWindow(MarketPlace givenMarket, JFrame givenWindow) {
 		mainMenu = givenWindow;
@@ -33,11 +56,18 @@ public class SellTeamWindow {
 		frmTeamTrading.setVisible(true);
 	}
 	
+	/**
+	 * Creates a new buyplayerwindow and disposes the current frame
+	 */
 	public void closeWindow() {
 		BuyPlayerWindow buyPlayerWindow = new BuyPlayerWindow(market, mainMenu);
 		frmTeamTrading.dispose();
 	}
-	
+	/**
+	 * If the current team is empty, the athlete selected is set to a default athlete,
+	 * otherwise it checks if the bench or team is empty, and sets the athlete selected to be
+	 * this first athlete of the other type
+	 */
 	public void defaultAthlete() {
 		if(market.getGameStats().getTeams().getFreeSlotsCount() == 11) {
 			athleteSelected = new Athlete();
@@ -252,7 +282,10 @@ public class SellTeamWindow {
 		
 		
 	}
-	
+	/**
+	 * update current athlete selected and set previous athlete
+	 * @param athleteIndex index of current athlete selected
+	 */
 	private void setTeamAthlete(int athleteIndex) {
 		if(athleteIndex < market.getGameStats().getTeams().getTeamList().size()) {
 			previousAthlete = athleteSelected;
@@ -263,6 +296,10 @@ public class SellTeamWindow {
 		updateLabels();
 	}
 	
+	/**
+	 * update current Athlete selected to a bench athlete and set previous athlete
+	 * @param athleteIndex index of benched athlete selected
+	 */
 	private void setBenchAthlete(int athleteIndex) {
 		if(athleteIndex < market.getGameStats().getTeams().getBench().size()) {
 			previousAthlete = athleteSelected;
@@ -272,7 +309,9 @@ public class SellTeamWindow {
 		}
 		updateLabels();
 	}
-	
+	/**
+	 * Update labels to show the stats of currently selected athlete
+	 */
 	private void updateLabels() {
 		lblAthleteName.setText(String.format("Name: %s",
 				athleteSelected.getName()));

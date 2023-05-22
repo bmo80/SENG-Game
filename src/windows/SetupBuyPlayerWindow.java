@@ -1,7 +1,6 @@
 package windows;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,22 +19,63 @@ import javax.swing.JPanel;
 import purchasables.Athlete;
 import purchasables.TeamManager;
 
+/**
+ * This is the class for the SetupWindow. Handles the displaying and
+ * logic of purchasing the starting athletes
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class SetupBuyPlayerWindow {
-
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmMakeTeam;
+	/**
+	 * Variable to store current MarketPlace object
+	 */
 	private MarketPlace market;
+	/**
+	 * Label Variables to display respective information
+	 */
 	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, 
-	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
-	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6, Athlete7, Athlete8, Athlete9, Athlete10;
+			lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable;
+	/**
+	 * Button Variables to display respective athlete
+	 */
+	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, 
+			Athlete5, Athlete6, Athlete7, Athlete8, Athlete9, Athlete10;
+	/**
+	 * Variable to store index of current athlete selected
+	 */
 	private int athleteSelected;
+	/**
+	 * Variable to store current player name
+	 */
 	private String playerName;
+	/**
+	 * Variables to store respective information
+	 */
 	private int duration, difficulty, money;
+	/**
+	 * Varaible to store the current team as a TeamManger object
+	 */
 	private TeamManager teams;
+	/**
+	 * Label to display welcome
+	 */
 	private JLabel lblWelcome;
+	/**
+	 * Panel to group together labels
+	 */
 	private JPanel panel;
 
 	/**
-	 * Create the application.
+	 * Constructor for SetupBuyPlayerWindow. Sets the required variables
+	 * and initializes the frame
+	 * @param name current team name
+	 * @param length season length
+	 * @param diff difficulty
 	 */
 	public SetupBuyPlayerWindow(String name, int length, int diff) {
 		playerName = name;
@@ -48,11 +88,16 @@ public class SetupBuyPlayerWindow {
 		initialize();
 		frmMakeTeam.setVisible(true);
 	}
-
+	/**
+	 * Closes the current frame
+	 */
 	public void closeWindow() {
 		frmMakeTeam.dispose();
 	}
-
+	/**
+	 * Calls closeSetupScreen method which opens the main window
+	 * @param game current maingame object
+	 */
 	public void finishedWindow(MainGame game) {
 		game.closeSetupScreen(this);
 	}
@@ -215,7 +260,6 @@ public class SetupBuyPlayerWindow {
 						setAthleteButtons();
 					}
 				}
-
 			}
 		});
 		btnPurchase.setBounds(415, 325, 134, 25);
@@ -230,11 +274,13 @@ public class SetupBuyPlayerWindow {
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(375, 102, 214, 253);
 		frmMakeTeam.getContentPane().add(panel);
-		
-		
-		
-	}
 	
+	}
+	/**
+	 * Displays the currently selected athletes stats in the
+	 * appropriate labels
+	 * @param number index of the currently selected athlete
+	 */
 	private void playerStatDisplay(int number) {
 		lblAthleteName.setText(market.getSetupPlayers().get(number-1).getName());
 		if(market.getSetupPlayers().get(number-1).getPosition() == "A") {
@@ -248,22 +294,27 @@ public class SetupBuyPlayerWindow {
 		lblPrice.setText(String.format("Price: %s", market.getSetupPlayers().get(number-1).getBuyPrice()));
 	}
 	
-
-	
+	/**
+	 * Sets the athlete buttons to their respective athlete in 
+	 * the players team. This uses a support function setButtonName()
+	 */
 	private void setAthleteButtons() {
 		ArrayList<JButton> list = new ArrayList<JButton>();
 		Collections.addAll(list, Athlete1, Athlete2, Athlete3, Athlete4, 
 				Athlete5, Athlete6, Athlete7, Athlete8, Athlete9, Athlete10);
-		
 		int index = 1;
 		for(JButton button: list) {
 			setButtonName(index, button);
 			index++;
 		}
-		
-
 	}
 	
+	/**
+	 * The support function for setAthleteButtons(). Checks if the player at the
+	 * specified index has been purchased and sets their name accordingly.
+	 * @param index index of selected athlete
+	 * @param button the button of the currently selected athlete
+	 */
 	private void setButtonName(int index, JButton button) {
 		if(market.getSetupPlayers().get(index-1).getName().equals("Purchased")) {
 			button.setText("Purchased");
@@ -277,16 +328,19 @@ public class SetupBuyPlayerWindow {
 				setAthleteSelected(index);
 			}
 		});
-		
 	}
 	
-	
+	/**
+	 * Updates the available teams slots after a purchase
+	 */
 	private void updateTeamSlots() {
 			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - teams.getBench().size()));
 			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- teams.getTeamList().size()));
-		
 	}
-	
+	/**
+	 * Sets the athlete selected
+	 * @param num index of athlete selected
+	 */
 	private void setAthleteSelected(int num) {
 		athleteSelected = num;
 	}

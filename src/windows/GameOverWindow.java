@@ -1,10 +1,8 @@
 package windows;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
-
 import sengGame.MainGame;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -12,13 +10,24 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Deals with displaying the end game screen
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class GameOverWindow {
-
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmGameOver;
+	/**
+	 * Variable to store the current main game object
+	 */
 	private MainGame game;
 	
 	/**
-	 * Create the application.
+	 * Constructor for GameOverWindow. Initializes the frame
+	 * @param givenStats current maingame object
 	 */
 	public GameOverWindow(MainGame givenStats) {
 		game = givenStats;

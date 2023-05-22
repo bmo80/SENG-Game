@@ -1,42 +1,60 @@
 package windows;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
-
 import purchasables.Athlete;
-import purchasables.TeamManager;
-import sengGame.MainGame;
 import sengGame.MarketPlace;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/**
+ * BuyPlayerWindow displays all the available players for purchase from the market
+ * and deals with the logic of buying and storing the players correctly.
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class BuyPlayerWindow {
-
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmPlayerTrading;
+	/**
+	 * Variable to store the current MarketPlace
+	 */
 	private MarketPlace market;
+	/**
+	 * Creating variables for the display labels in the window
+	 */
 	JLabel lblAthleteName,lblAthletePos, lblAthleteAtt, lblAthleteDef, 
 	lblAthleteStam, lblPrice,lblTeamSlotsAvailable,lblBenchSlotsAvailable, lblMoney;
+	/**
+	 * Creating variables for the Buttons that will be displayed in the window
+	 */
 	JButton btnPurchase, Athlete1, Athlete2, Athlete3, Athlete4, Athlete5, Athlete6;
+	/**
+	 * Variable to store the index of the current athlete being selected
+	 */
 	private int athleteSelected;
+	/**
+	 * Variable to store the previous MarketPlace window
+	 */
 	private JFrame marketWindow;
 	/**
-	 * Initialize current and prev obj variables
+	 * Initialize variable to store previous obj instance
 	 */
 	public MarketPlaceWindow prevObj;
+	/**
+	 * Variable to store the current obj instance
+	 */
 	private BuyPlayerWindow curObj;
 	/**
 	 * Constructor for the BuyPlayer window.
 	 * @param curmarket the current marketplace
-	 * @param givenWindow 
+	 * @param givenWindow the previous window frame
+	 * @param prevObject instance of the previous frames object
 	 */
 	public BuyPlayerWindow(MarketPlace curmarket, JFrame givenWindow, MarketPlaceWindow prevObject) {
 		marketWindow = givenWindow;
@@ -178,6 +196,11 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.getContentPane().add(btnPurchase);	
 	}
 	
+	/**
+	 * Method to update the labels to display the currently selected athletes
+	 * stats
+	 * @param number index of the athlete selected
+	 */
 	private void playerStatDisplay(int number) {
 		lblAthleteName.setText(market.getPlayersForSale().get(number-1).getName());
 		if(market.getPlayersForSale().get(number-1).getPosition() == "A") {
@@ -191,6 +214,11 @@ public class BuyPlayerWindow {
 		lblPrice.setText(String.format("Price: %s", market.getPlayersForSale().get(number-1).getBuyPrice()));
 	}
 	
+	/**
+	 * Method to update the button selected to purchased when 
+	 * appropriate
+	 * @param index the index of the athlete purchased
+	 */
 	private void updateButton(int index) {
 		switch (index) {
 			case 1:
@@ -220,6 +248,10 @@ public class BuyPlayerWindow {
 		}
 	}
 	
+	/**
+	 * Set the buttons to display the athlete at the appropriate index
+	 * using a helper function setButtonName()
+	 */
 	private void setAthleteButtons() {
 		
 		setButtonName(1);
@@ -283,7 +315,11 @@ public class BuyPlayerWindow {
 		frmPlayerTrading.getContentPane().add(Athlete6);
 
 	}
-	
+	/**
+	 * The helper function that creates the button objects for the 
+	 * respective athletes and sets their names correctly.
+	 * @param index index of the athlete having their button created
+	 */
 	private void setButtonName(int index) {
 		
 		switch (index) {
@@ -340,12 +376,18 @@ public class BuyPlayerWindow {
 		
 	}
 	
+	/**
+	 * Function to update the Team slots left when a new athlete has been purchased
+	 */
 	private void updateTeamSlots() {
 			lblBenchSlotsAvailable.setText(String.format("Bench Slots available: %s/5", 5 - market.getGameStats().getTeams().getBench().size()));
 			lblTeamSlotsAvailable.setText(String.format("Team Slots Available: %s/6", 6- market.getGameStats().getTeams().getTeamList().size()));
 		
 	}
-	
+	/**
+	 * set the index of the current athlete button selected
+	 * @param num index of athlete currently selected
+	 */
 	private void setAthleteSelected(int num) {
 		athleteSelected = num;
 	}

@@ -16,19 +16,53 @@ import javax.swing.SwingConstants;
 import purchasables.Athlete;
 import purchasables.Item;
 
+/**
+ * TeamWindow class displays the players current team and allows
+ * the player to swap players in and out of active play.
+ *@author Blair Brydon
+ *@author Ben Moore
+ *
+ */
 public class TeamWindow {
-
+	/**
+	 * Variable to store the current fram
+	 */
 	private JFrame frmTeam;
+	/**
+	 * Variable to store the maingame object
+	 */
 	private MainGame game;
+	/**
+	 * Athlete object to store the previously selected Athlete
+	 */
 	private Athlete previousAthlete;
+	/**
+	 * Athlete object to store the curently selected Athelte
+	 */
 	private Athlete athleteSelected;
+	/**
+	 * Labels to display Athlete info
+	 */
 	private JLabel lblAthleteName, lblAthletePos, lblAthleteAtt,
 	lblAthleteDef, lblAthleteStam, lblInjured, lblPreviousInjuries;
-	private JFrame mainMenu;
-	JButton Bench1,Bench2,Bench3,Bench4,Bench5;
-	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
 	/**
-	 * Create the application.
+	 * Frame variable to store the main menu frame 
+	 */
+	private JFrame mainMenu;
+	/**
+	 * Button variables for the bench
+	 */
+	JButton Bench1,Bench2,Bench3,Bench4,Bench5;
+	/**
+	 * Button variables for the active team
+	 */
+	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
+
+	/**
+	 * Constructor variable for the TeamWindow, sets the required variables
+	 * and initializes the frame
+	 * @param currentGame current MainGame object
+	 * @param givenWindow current main menu frame
 	 */
 	public TeamWindow(MainGame currentGame, JFrame givenWindow) {
 		mainMenu = givenWindow;
@@ -38,11 +72,18 @@ public class TeamWindow {
 		frmTeam.setVisible(true);
 	}
 	
+	/**
+	 * Creates a new instance of the ClubWindow
+	 * and disposes the current frame
+	 */
 	public void closeWindow() {
 		ClubWindow clubWindow = new ClubWindow(game, mainMenu);
 		frmTeam.dispose();
 	}
-	
+	/**
+	 * Sets the default athlete selected to be a default athlete
+	 * if there are no players on team
+	 */
 	public void defaultAthlete() {
 		if(game.getTeams().getFreeSlotsCount() == 11) {
 			athleteSelected = new Athlete();
@@ -283,7 +324,10 @@ public class TeamWindow {
 		
 	}
 	
-	
+	/**
+	 * Updates the labels for the specified athlete
+	 * @param athlete the specified athlete
+	 */
 	private void updateLabels(Athlete athlete) {
 		lblAthleteName.setText(athlete.getName());
 		lblAthletePos.setText(String.format("Position: %s", athlete.getPosition()));
@@ -296,6 +340,10 @@ public class TeamWindow {
 				athleteSelected.getPreviousInjuries()));
 	}
 	
+	/**
+	 * Set the buttons to display the athlete info of the respective athlete
+	 * Uses helper function setTeamName and setBenchName
+	 */
 	private void setButtons() {
 		ArrayList<JButton> teamList = new ArrayList<JButton>();
 		ArrayList<JButton> benchList = new ArrayList<JButton>();
@@ -313,6 +361,11 @@ public class TeamWindow {
 		}
 	}
 	
+	/**
+	 * Helper function for setButtons to set the Team athlete buttons
+	 * @param index index of athlete on the team
+	 * @param athlete respective button for the athlete
+	 */
 	private void setTeamName(int index, JButton athlete) {
 		if(game.getTeams().getTeamList().size() >= index) {
 			athlete.setText(game.getTeams().getTeamList().get(index-1).getName());
@@ -322,6 +375,11 @@ public class TeamWindow {
 		}
 	}
 	
+	/**
+	 * Helper function for setButtons to set the bench athlete buttons
+	 * @param index index of athlete on the bench
+	 * @param athlete respective button for the athlete
+	 */
 	private void setBenchName(int index, JButton athlete) {
 		if(game.getTeams().getBench().size() >= index) {
 			athlete.setText(game.getTeams().getBench().get(index-1).getName());

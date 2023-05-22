@@ -18,15 +18,35 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * The Bye Window deals with displaying what random events
+ * happened during the bye week
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class ByeWindow {
-
+	/**
+	 * Variable for the current frame
+	 */
 	private JFrame frmByeWindow;
+	/**
+	 * Variable to store the current instance of MainGame
+	 */
 	private MainGame game;
+	/**
+	 * Variable to store the athlete that was trained
+	 */
 	private Athlete trainedAthlete;
+	/**
+	 * String that describes what random event happened
+	 */
 	private String eventInfo;
 
 	/**
-	 * Create the application.
+	 * Constructor for the Bye Window. Sets required variables and 
+	 * initializes the frame
+	 * @param currentGame current maingame instance
+	 * @param athleteName name of the athlete having the bye event done on
 	 */
 	public ByeWindow(MainGame currentGame,String athleteName) {
 		game = currentGame;
@@ -37,7 +57,9 @@ public class ByeWindow {
 		frmByeWindow.setVisible(true);
 		
 	}
-	
+	/**
+	 * Method to re launch the main screen after the bye and dispose of the window
+	 */
 	public void closeWindow() {
 		game.launchMainScreen();
 		frmByeWindow.dispose();

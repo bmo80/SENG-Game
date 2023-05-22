@@ -22,18 +22,46 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+/**
+ * MainWindow Deals with display all the options from the main window.
+ * These are Going to stadium, marketplace, club or taking a bye
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class MainWindow {
-
+	
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmMainGame;
+	/**
+	 * Varaible to store current MainGame object
+	 */
 	private MainGame game;
+	/**
+	 * Variable to store the MainWindow object
+	 */
 	private MainWindow main;
+	/**
+	 * Variable to store the current marketplace instance
+	 */
 	private MarketPlace market;
+	/**
+	 * Variable to store the current stadium instance
+	 */
 	private Stadium stadium;
-	JLabel MoneyLbl;
-	JLabel lblRecord;
+	/**
+	 * Variables to store Money and record labels
+	 */
+	JLabel MoneyLbl, lblRecord;
 
 	/**
-	 * Create the application.
+	 * Constructor for the MainWindow. Sets the initial variables and
+	 * initializes the frame
+	 * @param getGame current instance of maingame
+	 * @param givenMarket current instance of the marketplace
+	 * @param givenStadium current instance of the stadium
 	 */
 	public MainWindow(MainGame getGame,MarketPlace givenMarket, Stadium givenStadium) {
 		game = getGame;
@@ -43,11 +71,16 @@ public class MainWindow {
 		initialize();
 		frmMainGame.setVisible(true);		
 	}
-
+	
+	/**
+	 * Dispose this window
+	 */
 	public void closeWindow() {
 		frmMainGame.dispose();
 	}
-	
+	/**
+	 * Show this window
+	 */
 	public void showWindow() {
 		frmMainGame.setVisible(true);
 	}

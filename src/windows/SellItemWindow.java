@@ -1,6 +1,5 @@
 package windows;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,27 +8,53 @@ import java.util.Collections;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import purchasables.Item;
 import sengGame.MainGame;
 import sengGame.MarketPlace;
 
+/**
+ * Window Class for Selling items. Deals with displaying the correct items
+ * and processing the purchasing
+ *@author Blair Brydon
+ *@author Ben Moore
+ */
 public class SellItemWindow {
-
-	private JFrame frmSellItems, prevWindow;
-	private JLabel lblItemName, lblItemType, lblItemEffect;
-	private Item itemSelected;
-	private MainGame game;
-	private MarketPlace market;
-	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
-	private BuyItemWindow prevObj;
 	/**
-	 *initialize prev 
+	 * Variables for the current and previous frames
 	 */
+	private JFrame frmSellItems, prevWindow;
+	/**
+	 * Variables for the necessary display labels
+	 */
+	private JLabel lblItemName, lblItemType, lblItemEffect;
+	/**
+	 * Variable Item to keep track of the currently selected item
+	 */
+	private Item itemSelected;
+	/**
+	 * Variable to store current MainGame object
+	 */
+	private MainGame game;
+	/**
+	 * Variable to store current MarketPlace object
+	 */
+	private MarketPlace market;
+	/**
+	 * Variables for the item buttons to display the respective item
+	 */
+	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10;
+	/**
+	 * Varaible to store the previous windows object
+	 */
+	private BuyItemWindow prevObj;
+
 	
 	/**
-	 * Create the application.
+	 * Constructor for the sell item window. Initializes the frame
+	 * @param givenMarket the current market instance
+	 * @param givenWindow the previous window
+	 * @param prevObject the previous windows object
 	 */
 	public SellItemWindow(MarketPlace givenMarket, JFrame givenWindow, BuyItemWindow prevObject) {
 		market = givenMarket;
@@ -40,12 +65,17 @@ public class SellItemWindow {
 		initialize();
 		frmSellItems.setVisible(true);
 	}
-	
+	/**
+	 * Closes the current window and sets the previous one to be visible
+	 */
 	public void closeWindow() {
 		prevWindow.setVisible(true);
 		frmSellItems.dispose();
 	}
-	
+	/**
+	 * sets the item selected to be either a default item
+	 * or the first item in the players inventory upon initialization
+	 */
 	public void defaultItem() {
 		if(game.getInventory().size() == 0) {
 			itemSelected = new Item();
@@ -54,8 +84,6 @@ public class SellItemWindow {
 		}
 	}
 
-	
-	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -225,6 +253,11 @@ public class SellItemWindow {
 		
 	}
 	
+	/**
+	 * Sets the selected button to be the corresponding item
+	 * @param btn the button to be set
+	 * @param index the index of the corresponding item
+	 */
 	private void setButton(JButton btn, int index) {
 		if(market.getGameStats().getInventory().size() >= index) {
 			btn.setText(market.getGameStats().getInventory().get(index-1).getName());
@@ -234,6 +267,11 @@ public class SellItemWindow {
 		}
 		
 	}
+	
+	/**
+	 * Sets the currently selected item to the corresponding variable
+	 * @param itemIndex the index of the selected item
+	 */
 	private void setItemSelected(int itemIndex) {
 		if(itemIndex<game.getInventory().size()) {
 			itemSelected = game.getInventory().get(itemIndex);
@@ -242,7 +280,9 @@ public class SellItemWindow {
 		}
 		updateLabels();
 	}
-	
+	/**
+	 * Updates the labels to be the current item selected
+	 */
 	private void updateLabels() {
 		lblItemName.setText(String.format("Name: %s",
 				itemSelected.getName()));
@@ -252,6 +292,11 @@ public class SellItemWindow {
 				itemSelected.getEffect()));
 	}
 	
+	/**
+	 * Loops through the item buttons and sets the correct button to
+	 * the corresponding item in the player inventory. Uses the setButton
+	 * helper method 
+	 */
 	private void setButtonNames() {
 		ArrayList<JButton> list = new ArrayList<JButton>();
 		int index = 1;

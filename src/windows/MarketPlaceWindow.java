@@ -15,19 +15,44 @@ import sengGame.MainGame;
 import sengGame.MarketPlace;
 
 
-
+/**
+ * Deals with displaying the options of the marketplace
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class MarketPlaceWindow{
-
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmMarketplace;
+	/**
+	 * Variable to store the current marketplace instance
+	 */
 	private MarketPlace market;
+	/**
+	 * Variable to store the mainmenu frame
+	 */
 	private JFrame mainMenu;
 	/**
-	 * Create variables to keep track of current and prev object instances
+	 * Variable to keep track of previous Window object
 	 */
 	private MainWindow prevObj;
+	/**
+	 * Variable to keep track of current Window object
+	 */
 	private MarketPlaceWindow curObj;
-	
+	/**
+	 * Label to keep track to current money
+	 */
 	JLabel lblMoney;
+	
+	/**
+	 * Constructor for the MarketPlace window. Initializes the frame.
+	 * @param currentMarket current MarketPlace object
+	 * @param window current main menu frame
+	 * @param prevObject MainWindow object
+	 */
 	public MarketPlaceWindow(MarketPlace currentMarket, JFrame window, MainWindow prevObject) {
 		mainMenu = window;
 		market = currentMarket;
@@ -37,6 +62,9 @@ public class MarketPlaceWindow{
 		frmMarketplace.setVisible(true);
 	}
 	
+	/**
+	 * Closes the current window and opens the main menu
+	 */
 	public void closeWindow() {
 		mainMenu.setVisible(true);
 		frmMarketplace.dispose();
@@ -70,7 +98,6 @@ public class MarketPlaceWindow{
 		btnBuysellPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BuyPlayerWindow window = new BuyPlayerWindow(market, frmMarketplace, curObj);
-//				lblMoney.setText(String.format("Money: $%s",market.getGameStats().getMoney()));
 				frmMarketplace.setVisible(false);
 			}
 		});
@@ -82,8 +109,6 @@ public class MarketPlaceWindow{
 			public void actionPerformed(ActionEvent e) {
 				BuyItemWindow window = new BuyItemWindow(market, frmMarketplace, curObj);
 				frmMarketplace.setVisible(false);
-//				lblMoney.setText(String.format("Money: %s",market.getGameStats().getMoney()));
-//				mainObj.MoneyLbl.setText(String.format("Money: %s",market.getGameStats().getMoney()));
 			}
 		});
 		btnBuyAndSell.setBounds(265, 94, 195, 70);

@@ -1,30 +1,50 @@
 package windows;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import purchasables.Athlete;
 import purchasables.Item;
 import sengGame.MainGame;
 
+/**
+ * Inventory Window deals with the displaying of the current items in
+ * the players inventory and the logic of using the selected item on a player
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class InventoryWindow {
-
+	/**
+	 * Create frame variables to store potential frames
+	 */
 	private JFrame frmInventory, mainMenu;
+	/**
+	 * Create variables for labels to be initialized
+	 */
 	private JLabel lblItemName, lblItemType, lblItemEffect;
+	/**
+	 * Variable to keep track of the current Item selected
+	 */
 	private Item itemSelected;
+	/**
+	 * Variable to store the running maingame object
+	 */
 	private MainGame game;
+	/**
+	 * Creating Item buttons variables to be initialized
+	 */
 	JButton Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10; 
 	
+	
 	/**
-	 * Create the application.
+	 * Constructor for Inventory Window. Initializes the frame
+	 * @param givenGame current instance of main game
+	 * @param givenWindow the main menu window
 	 */
 	public InventoryWindow(MainGame givenGame, JFrame givenWindow) {
 		game = givenGame;
@@ -33,12 +53,18 @@ public class InventoryWindow {
 		initialize();
 		frmInventory.setVisible(true);
 	}
-	
+	/**
+	 * Creates a new instance of the club window and disposes the current one
+	 */
 	public void closeWindow() {
 		ClubWindow clubWindow = new ClubWindow(game, mainMenu);
 		frmInventory.dispose();
 	}
 	
+	/**
+	 * If the inventory is empty create a new default item
+	 * If it is not then grab the first item in the inventory
+	 */
 	public void defaultItem() {
 		if(game.getInventory().size() == 0) {
 			itemSelected = new Item();
@@ -218,6 +244,10 @@ public class InventoryWindow {
 		frmInventory.getContentPane().add(btnUseItem);
 	}
 	
+	/**
+	 * Sets the item selected based on the current button clicked
+	 * @param itemIndex the index/value of the current button clicked
+	 */
 	private void setItemSelected(int itemIndex) {
 		if(itemIndex<game.getInventory().size()) {
 			itemSelected = game.getInventory().get(itemIndex);
@@ -227,6 +257,9 @@ public class InventoryWindow {
 		updateLabels();
 	}
 	
+	/**
+	 * Method to update the display labels to the current item selected
+	 */
 	private void updateLabels() {
 		lblItemName.setText(String.format("Name: %s",
 				itemSelected.getName()));
@@ -235,7 +268,9 @@ public class InventoryWindow {
 		lblItemEffect.setText(String.format("Effect: %s",
 				itemSelected.getEffect()));
 	}
-	
+	/**
+	 * Set the buttons to display the respective items in the player inventory
+	 */
 	private void setButtons() {
 		ArrayList<JButton> items = new ArrayList<JButton>();
 		Collections.addAll(items, Item1,Item2,Item3,Item4,Item5,Item6,Item7,Item8,Item9,Item10);

@@ -1,32 +1,43 @@
 package windows;
 
-import java.awt.EventQueue;
+
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.swing.JFrame;
-
 import sengGame.Match;
-import sengGame.Stadium;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * MatchWindow Class deals with showing the results from the recent match played
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class MatchWindow {
-
-	private JFrame frmPlayMatch, frmStadium;
-	private JFrame mainMenu;
+	/**
+	 * Variables to store the current,stadium and mainmenu frames
+	 */
+	private JFrame frmPlayMatch, frmStadium, mainMenu;
+	/**
+	 * Variable to store the current match object
+	 */
 	private Match match;
+	/**
+	 * Variables to store the labels to be initialized
+	 */
 	JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, 
 	lblPlayer6, lblScores, lblScore,lblWinLose;
 
 	
-
 	/**
-	 * Create the application.
+	 * Constructor for the MatchWindow. Checks if the conditions
+	 * are met to be able to play then initializes the frame to show
+	 * the results
+	 * @param currentMatch current match object
+	 * @param curStadiumWindow stadium frame
 	 */
-
 	public MatchWindow(Match currentMatch, JFrame curStadiumWindow) {
 		match = currentMatch;
 		frmStadium = curStadiumWindow;
@@ -112,6 +123,10 @@ public class MatchWindow {
 		frmPlayMatch.getContentPane().add(btnFinish);
 	}
 	
+	/**
+	 * Updates the players labels to show how many goals each
+	 * player scored
+	 */
 	private void showPlayerScores() {
 		ArrayList<JLabel> list = new ArrayList<JLabel>();
 		Collections.addAll(list, lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6);
@@ -121,12 +136,20 @@ public class MatchWindow {
 			index++;
 		}
 	}
-	
+	/**
+	 * Support function for showPlayerScores which sets the specified label
+	 * and athlete index to show correct score.
+	 * @param label the label to be set
+	 * @param index the index of the athletes player score
+	 */
 	private void setLabelScore(JLabel label, int index) {
 		label.setText(String.format("%s scored %s goals this match", 
 				match.getPlayerTeam().get(index-1).getName(), match.getAthleteScores().get(index-1)));
 	}
 	
+	/**
+	 * Updates the label to show the final match score
+	 */
 	private void showGameScore() {
 		lblScores.setText(String.format("%s : %s",
 				match.getPlayerScore(), match.getOppsScore()));

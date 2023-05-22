@@ -1,34 +1,37 @@
 package windows;
 
-import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-
-import sengGame.MainGame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * SetupWindow asks the player for the Team name,
+ * difficulty and duration.
+ *@author Blair Brydon
+ *@author Ben Moore
+ *
+ */
 public class SetupWindow {
-
+	/**
+	 * Variable to store the current frame
+	 */
 	private JFrame frmSetup;
-//	private MainGame game;
+	/**
+	 * Varaible to store the players Team name
+	 */
 	private JTextField txtName;
-	private int difficulty;
 
 
 	/**
-	 * Create the application.
+	 * Constructor for the setup window, initializes the frame
 	 */
 	public SetupWindow() {
-//		game = getGame;
 		initialize();
 		frmSetup.setVisible(true);		
 	}

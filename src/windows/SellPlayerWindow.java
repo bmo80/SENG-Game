@@ -1,11 +1,9 @@
 package windows;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import purchasables.Athlete;
 import sengGame.MarketPlace;
 import javax.swing.JButton;
@@ -15,23 +13,54 @@ import java.util.Collections;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+/**
+ * SellPlayerWindow class deals with showing the players current team
+ * and the logic of if the player is sold
+ *@author Blair Brydon
+ *@author Ben Moore
+ *
+ */
 public class SellPlayerWindow {
-
+	/**
+	 * Variable for storing the current frame
+	 */
 	private JFrame frmManageTeam;
+	/**
+	 * Variable for storing the current MarketPlace object
+	 */
 	private MarketPlace market;
-	private int sold;
+	/**
+	 * Variable for storing the currently selected athlete
+	 */
 	private Athlete athleteSelected;
+	/**
+	 * Buttons for the corresponding Athletes in the players team
+	 */
 	JButton Athlete1,Athlete2,Athlete3,Athlete4,Athlete5,Athlete6;
+	/**
+	 * Buttons for the corresponding Athletes on the players bench
+	 */
 	JButton bench1,bench2,bench3,bench4,bench5;
+	/**
+	 * Labels for the required labels in the frame
+	 */
 	JLabel lblName, lblPosition, lblAttack, lblDefense, lblSellPrice, lblMoney;
+	/**
+	 * Varaible to store the previous frame
+	 */
 	private JFrame prevWindow;
 	
 	/**
 	 * Initialize varaibles for previous obj
 	 */
 	private BuyPlayerWindow prevObj;
+
+	
 	/**
-	 * Create the application.
+	 * SellPlayerWindow Constructor. Sets the variables and initializes the frame
+	 * @param currentMarket current MarketPlace object
+	 * @param givenWindow BuyPlayerWindow window frame
+	 * @param prevObject BuyPlayerWindow window object
 	 */
 	public SellPlayerWindow(MarketPlace currentMarket, JFrame givenWindow, BuyPlayerWindow prevObject) {
 		prevWindow = givenWindow;
@@ -276,6 +305,12 @@ public class SellPlayerWindow {
 		frmManageTeam.getContentPane().add(lblNewLabel_2);
 	}
 	
+	/**
+	 * Sets the button for the corresponding athlete. If there is no
+	 * athlete, the button is disabled and the text is set to "Empty Slot"
+	 * @param index index of the athlete
+	 * @param athlete button of the corresponding athlete to be set
+	 */
 	private void setTeamName(int index, JButton athlete) {
 		if(market.getGameStats().getTeams().getTeamList().size() >= index) {
 			athlete.setText(market.getGameStats().getTeams().getTeamList().get(index-1).getName());
@@ -285,6 +320,12 @@ public class SellPlayerWindow {
 		}
 	}
 	
+	/**
+	 * Sets the button for the corresponding athlete on the bench.If there is no
+	 * athlete for that slot, the button is disabled and the text is set to "Empty Slot"
+	 * @param index the index of the benched athlete
+	 * @param athlete the button of the corresponding athlete
+	 */
 	private void setBenchName(int index, JButton athlete) {
 		if(market.getGameStats().getTeams().getBench().size() >= index) {
 			athlete.setText(market.getGameStats().getTeams().getBench().get(index-1).getName());
@@ -294,6 +335,10 @@ public class SellPlayerWindow {
 		}
 	}
 	
+	/**
+	 * Updates the labels to display the stats of the currently selected athlete
+	 * @param athlete the currently selected athlete
+	 */
 	private void updateLabels(Athlete athlete) {
 		lblName.setText(athlete.getName());
 		lblPosition.setText(String.format("Position: %s", athlete.getPosition()));
@@ -302,7 +347,7 @@ public class SellPlayerWindow {
 		lblSellPrice.setText(String.format("Sell Price: %s", Integer.toString(athlete.getSellPrice())));
 	}
 	
-	/*
+	/**
 	 * Sets all of the buttons for the team and bench using
 	 * support functions setTeamName and setBenchName
 	 */

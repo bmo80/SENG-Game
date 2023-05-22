@@ -1,35 +1,64 @@
 package windows;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import purchasables.Item;
-import sengGame.MainGame;
 import sengGame.MarketPlace;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * BuyItemWindow deals with displaying the items available for purchase from
+ * the MarketPlace and handling when they are bought.
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class BuyItemWindow {
 
+	/**
+	 * Variable name for the current frame
+	 */
 	private JFrame frmItemTrading;
+	/**
+	 * Variable to store the current marketplace object in
+	 */
 	private MarketPlace market;
+	/**
+	 * Variable to store the previous MarketPlace frame in
+	 */
 	private JFrame prevWindow;
+	/**
+	 * Creating the variables for the labels that are used in the frame
+	 */
 	private JLabel lblPrice, lblName, lblType, lblEffect, lblWeek,lblBuyItems;
+	/**
+	 * Creating the variables for the buttons that are used in the frame
+	 */
 	private JButton btnItem1,btnItem2,btnItem3,btnItem4,btnDone,btnPurchase;
+	/**
+	 * Value to keep track of the item index that is being selected
+	 */
 	private int itemSelected;
+	/**
+	 * Label for the money display
+	 */
 	public JLabel lblMoney;
 	/**
-	 * Initialize previous and current obj variables
+	 * Initialize variable to store previous object instance
 	 */
 	MarketPlaceWindow prevObj;
+	/**
+	 * Variable to store the current object instance
+	 */
 	BuyItemWindow curObj;
 	
 	/**
-	 * Create the application.
+	 * Constructor for the BuyItemwindow
+	 * @param currentMarket the current marketplace objevt
+	 * @param givenWindow the window of the previous frame
+	 * @param prevObject the instance of the previous object
 	 */
 	public BuyItemWindow(MarketPlace currentMarket, JFrame givenWindow, MarketPlaceWindow prevObject) {
 		prevWindow = givenWindow;
@@ -225,7 +254,7 @@ public class BuyItemWindow {
 	/**
 	 * The support function which initializes the Buttons and Checks 
 	 * if any have been Purchased.
-	 * @param index
+	 * @param index index of player thats button is being updated
 	 */
 	private void setButtonName(int index) {
 		

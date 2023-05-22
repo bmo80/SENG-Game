@@ -1,24 +1,37 @@
 package windows;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import sengGame.MainGame;
 import javax.swing.SwingConstants;
 
+/**
+ * Deals with displaying the options for the players club
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class ClubWindow {
-
+	/**
+	 * Varaible to store the current frame
+	 */
 	private JFrame frmClub;
+	/**
+	 * Variable to store the current maingame object
+	 */
 	private MainGame game;
+	/**
+	 * Variable to store the main menu window
+	 */
 	private JFrame mainMenu;
 
 	/**
-	 * Create the application.
+	 * Constructor for the ClubWindow. Inits required variables and frame
+	 * @param currentGame current instance of maingame
+	 * @param window the MainWindow 
 	 */
 	public ClubWindow(MainGame currentGame, JFrame window) {
 		mainMenu = window;
@@ -26,7 +39,9 @@ public class ClubWindow {
 		initialize();
 		frmClub.setVisible(true);
 	}
-	
+	/**
+	 * Closes the current window and opens the main screen
+	 */
 	public void closeWindow() {
 		mainMenu.setVisible(true);
 		frmClub.dispose();

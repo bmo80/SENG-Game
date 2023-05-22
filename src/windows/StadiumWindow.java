@@ -17,18 +17,54 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
 
+/**
+ * Stadium Window class shows the player the available teams for player
+ * and then setups the match between the players team and the selected team
+ *@author Blair Brydon
+ *@author Ben Moore
+ *
+ */
 public class StadiumWindow {
-
-	private JFrame frmStadium, mainMenu;
-	private JButton btnTeam1, btnTeam2, btnTeam3;
-	private JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
-	private int buttonSelected;
-	private Stadium stadium;
-	private MainWindow main;
-	private ArrayList<Athlete> teamChosen;
-	JLabel lblMoney, lblWeek;
 	/**
-	 * Create the application.
+	 * Variables to store the current frame and the main frame
+	 */
+	private JFrame frmStadium, mainMenu;
+	/**
+	 * Button variables to show the team number
+	 */
+	private JButton btnTeam1, btnTeam2, btnTeam3;
+	/**
+	 * Labels to show the players from the opposing team
+	 */
+	private JLabel lblPlayer1, lblPlayer2, lblPlayer3, lblPlayer4, lblPlayer5, lblPlayer6;
+	/**
+	 * Variable to store the current team button selected
+	 */
+	private int buttonSelected;
+	/**
+	 * Variable to store the current instance of stadium
+	 */
+	private Stadium stadium;
+	/**
+	 * Variable to store current MainWindow object
+	 */
+	private MainWindow main;
+	/**
+	 * ArrayList that stores the current enemy team chosen
+	 */
+	private ArrayList<Athlete> teamChosen;
+	/**
+	 * Labels to display the week and money
+	 */
+	JLabel lblMoney, lblWeek;
+
+
+	/**
+	 * Constructor method for the Stadium Window. Sets initial variables
+	 * and initializes the frame
+	 * @param curStadium current stadium object
+	 * @param mainGame current main menu frame
+	 * @param curMain current main menu object
 	 */
 	public StadiumWindow(Stadium curStadium, JFrame mainGame, MainWindow curMain) {
 		mainMenu = mainGame;
@@ -211,6 +247,9 @@ public class StadiumWindow {
 		}
 	}
 	
+	/**
+	 * Update the values displayed in main window
+	 */
 	private void updateMainWindow() {
 		lblMoney.setText(String.format("Money: $%s",stadium.getGameStats().getMoney()));
 		main.MoneyLbl.setText(String.format("Money: $%s",stadium.getGameStats().getMoney()));
