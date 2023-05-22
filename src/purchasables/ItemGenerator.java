@@ -3,6 +3,12 @@ package purchasables;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The ItemGenerator class creates an Item Object with randomly created Attribute values
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class ItemGenerator extends Item{
 		/**
 		 * MIN and MAX constants for random number generation

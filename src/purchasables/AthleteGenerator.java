@@ -2,7 +2,11 @@ package purchasables;
 
 import java.io.FileNotFoundException;
 
-
+/**
+ * The AthleteGenerator class creates an Athlete object with randomly assigned attributes.
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
 public class AthleteGenerator extends Athlete {
 	
 	/**
@@ -69,7 +73,7 @@ public class AthleteGenerator extends Athlete {
 	
 	/**
 	 * Joins the First and Last name for the athlete
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException throws an exception if the file cant be found
 	 */
 	private void setName() throws FileNotFoundException {
 		setFirstName();

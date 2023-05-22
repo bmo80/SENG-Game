@@ -5,6 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ *The FileReader Class reads a random last and first name from the given text files
+ * to create a random name 
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class FileReader {
 	
 	/**
@@ -29,7 +36,7 @@ public class FileReader {
 	/**
 	 * Reads a file into a scanner and randomly pulls a value from it.
 	 * @param filename the file to be read
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException throws and exception if the file cannot be found
 	 */
 	private void readFile(String filename) throws FileNotFoundException {
 		Random rand = new Random();
@@ -48,7 +55,7 @@ public class FileReader {
 	
 	/**
 	 * Sets the name drawn so it can be retrieved
-	 * @param name name to be set
+	 * @param givenName name to be set
 	 */
 	private void setName(String givenName) {
 		name = givenName;

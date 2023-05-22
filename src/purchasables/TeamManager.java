@@ -3,6 +3,13 @@ package purchasables;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * The TeamManager class allows for the storing and manipulation of
+ * any given team.
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class TeamManager {
 	
 	/**

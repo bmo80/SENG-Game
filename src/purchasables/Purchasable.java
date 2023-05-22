@@ -1,5 +1,12 @@
 package purchasables;
 
+/**
+ * Purchasable is the parent class of both Athlete and Item. The
+ * class keeps track of the buying and selling prices for both objects.
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class Purchasable {
 	
 	/**
@@ -56,7 +63,7 @@ public class Purchasable {
 	
 	/**
 	 * Gets the description of the product
-	 * @return
+	 * @return the description
 	 */
 	public String getDescription() {
 		return description;

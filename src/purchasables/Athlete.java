@@ -1,5 +1,11 @@
 package purchasables;
 
+/**
+ * Class Athlete contains all the information pertaining to an Athlete object.
+ * @author Blair Brydon
+ * @author Ben Moore
+ */
+ 
 public class Athlete extends Purchasable {
 	/**
 	 * Variable to store the name of the Athlete
@@ -124,7 +130,7 @@ public class Athlete extends Purchasable {
 	
 	/**
 	 * Gets the number of previous injuries
-	 * @return
+	 * @return the previous number of injuries
 	 */
 	public int getPreviousInjuries() {
 		return previousInjuries;

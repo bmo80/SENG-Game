@@ -1,5 +1,11 @@
 package purchasables;
 
+/**
+ * The Item Class stores all attributes relating to an Item Object
+ * @author Blair Brydon
+ * @author Ben Moore
+ *
+ */
 public class Item extends Purchasable{
 	/**
 	 * Stores name of the Item
