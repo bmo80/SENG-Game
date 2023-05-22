@@ -1,3 +1,3 @@
-After downloading this source folder:
-javac -cp src -d bin mainMenus/MainGame.java
+After downloading this source folder:\n
+javac -cp src -d bin src/mainMenus/MainGame.java\n
 java -cp bin mainMenus.MainGame
