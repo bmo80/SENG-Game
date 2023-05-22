@@ -191,11 +191,12 @@ public class MainGame {
 	}
 	
 	
-	/*
+	/**
 	 * Bye method takes an athlete to train then changes current week,
 	 * Resets the Market, Stadium and athlete stamina. After training
 	 * the method then runs the random event generator
-	 * @param athleteName 		Athlete to be trained
+	 * @param athleteName
+	 * @return
 	 */
 	public String takeBye(String athleteName) {
 		currentWeek ++;
@@ -205,9 +206,12 @@ public class MainGame {
 		return event.generateEvent();
 	}
 
- 	/*
+ 	
+
+ 	/**
  	 * Takes athlete to train and increases their position stat 
- 	 * depending on the difficulty. 
+ 	 * depending on the difficulty.  
+ 	 * @param athleteName the athlete who is to be trained
  	 */
 	public void trainAthlete(String athleteName) {
 		Athlete athlete = teams.getAthleteFromString(athleteName);
@@ -219,7 +223,13 @@ public class MainGame {
 	}
 	
 	
-	
+	/**
+	 * Checks if the game can be continued to be played. there are 2 situation this fails
+	 * Not enough players in the market and the players team to play a game or
+	 * this was the last week
+	 * @param market the current instance of market
+	 * @return True or False if the season has ended
+	 */
 	public boolean checkGameEnd(MarketPlace market) {
 		if(teams.getFreeSlotsCount() - market.getPlayerCount() >= 6) {
 			//NOT ENOUGH PLAYERS END GAME
@@ -235,7 +245,10 @@ public class MainGame {
 	
 	//Gui code
 	
-	
+	/**
+	 * Initializes a new market place and launches the main Window
+	 * with a new stadium if the game has not ended
+	 */
 	public void launchMainScreen() {
 		MarketPlace market = new MarketPlace(this);
 		if(checkGameEnd(market)) {
@@ -246,19 +259,29 @@ public class MainGame {
 					new Stadium(this));
 		}
 	}
-		
+	
+	/**
+	 * Method that finishes the game and shows the end game screen
+	 */
 	public void finishGame() {
 		//Open final window
 		GameOverWindow finalWindow = new GameOverWindow(this);
 	}
 	
+	/**
+	 * Closes the setup screen and launches the main screen
+	 * @param setupWindow the setup window to be closed
+	 */
 	public void closeSetupScreen(SetupBuyPlayerWindow setupWindow) {
 		setupWindow.closeWindow();
 		launchMainScreen();
 	}
 	
 	
-	//main method for testing and running game
+	/**
+	 * Main method from where the program is started
+	 * @param args default parameter for main method
+	 */
 	public static void main(String[] args) {
 		//Implement tests
 		SetupWindow setupWindow = new SetupWindow();	

@@ -12,13 +12,32 @@ import windows.MarketPlaceWindow;
 
 public class MarketPlace{
 	
-	//Number constant to define amount of atk/def players
+	/**
+	 * Constant for the number of Athletes to be generated
+	 */
 	private int NUMBER = 3;
+	/**
+	 * Initializes an Array to hold all current players for sale
+	 */
 	private ArrayList<Athlete> playersForSale = new ArrayList<Athlete>();
+	/**
+	 * Initializes an Array to hold all current Items for sale
+	 */
 	private ArrayList<Item> itemsForSale = new ArrayList<Item>();
+	/**
+	 * MainGame instance to hold the current MainGame object
+	 */
 	private MainGame gameStats;
+	/**
+	 * Initializes an Array to hold all the players available for purchase on the setup screen.
+	 */
 	private ArrayList<Athlete> setupPlayers = new ArrayList<Athlete>();
 
+	/**
+	 * Constructor for market place. Generates 6 Athletes, 3 of each type
+	 * and 4 random items.
+	 * @param game
+	 */
 	public MarketPlace(MainGame game) {
 		gameStats = game;
 		generateAthletes(NUMBER, "A");
@@ -27,7 +46,8 @@ public class MarketPlace{
 	}	
 	
 	/**
-	 * Generates a given number of athletes in a given position
+	 * Generates a given number of athletes in a given position and sets
+	 * their buy and sell price based on their positional stat.
 	 * @param size The number of Athletes to be Generated
 	 * @param position
 	 */
@@ -40,7 +60,9 @@ public class MarketPlace{
 		}
 	}
 	
-	//JUST FOR TESTING
+	/**
+	 * Generates 4 random items for the item store
+	 */
 	public void generateItems() {
 		for(int i = 0; i<4; i++) {
 			ItemGenerator item = new ItemGenerator();
@@ -86,11 +108,11 @@ public class MarketPlace{
 		return gameStats;
 	}
 	
+
 	/**
-	 * Generates the items for sale in the marketplace
+	 * Gets all the players for sale on the setup screen
+	 * @return the ArrayList containing all the setup screen players for sale
 	 */
-	
-	
 	public ArrayList<Athlete> getSetupPlayers() {
 		return setupPlayers;
 	}

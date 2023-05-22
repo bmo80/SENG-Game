@@ -11,20 +11,19 @@ import windows.StadiumWindow;
 
 public class Stadium {
 
-	/*
+	/**
 	 * stores all game variables from MainGame class
 	 */
 	private MainGame gameStats;
 	
-	/*
+	/**
 	 * Stores a list of opposing teams 
 	 */
 	private ArrayList<ArrayList<Athlete>> enemyTeams;
-	private Match match;
-	private ArrayList<Athlete> selectedTeam;
-	/*
+	
+	/**
 	 * Constructor method, generates enemy teams and runs main method
-	 * @param currentStats 		GameInfo
+	 * @param currentStats current instance of maingame
 	 */
 	public Stadium(MainGame currentStats) {
 		gameStats = currentStats;
@@ -37,11 +36,11 @@ public class Stadium {
 		}
 	}
 	
-	/*
+	/**
 	 * method for generating enemy teams for opponents list
-	 * @param size 		size of team generated
-	 * @param position 		Which position each athlete will be
-	 * @param players 		list to be filled with athletes
+	 * @param size size of team generated
+	 * @param position Which position each athlete will be
+	 * @param players list to be filled with athletes
 	 */
 	public void generateAthletes(int size, String position,ArrayList<Athlete> players) {
 		for(int i=0; i<size; i++) {
@@ -50,10 +49,18 @@ public class Stadium {
 		}
 	}
 	
+	/**
+	 * Gets the list of current enemy teams available to play
+	 * @return the list of enemy teams available to play
+	 */
 	public ArrayList<ArrayList<Athlete>> getEnemyTeams() {
 		return enemyTeams;
 	}
 	
+	/**
+	 * Gets the current main game object
+	 * @return the current main game object
+	 */
 	public MainGame getGameStats() {
 		return gameStats;
 	}
